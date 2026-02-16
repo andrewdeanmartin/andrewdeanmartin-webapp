@@ -1,0 +1,27 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.cursor/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules/
+
+# Build artifacts
+*.log
+
+# Root-level legacy copies (site lives in site/)
+/index.html
+/script.js
+/styles.css
+/space-invaders.js
+/prompt-refinement-demo.html
+/package.json
+/qa-test.js
+/webapp-quality-review-prompt.md
+/agent-pipeline-run/

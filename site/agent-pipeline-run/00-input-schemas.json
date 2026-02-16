@@ -1,0 +1,37 @@
+{
+  "scenario": "Workflow analysis — schema compatibility and migration path",
+  "schemas": [
+    {
+      "id": "schema-a",
+      "name": "Legacy Order System",
+      "entities": 12,
+      "records_approx": 45000,
+      "fields": [
+        {"name": "order_id", "type": "string", "pk": true},
+        {"name": "customer_id", "type": "string", "ref": "customers"},
+        {"name": "order_date", "type": "date"},
+        {"name": "status", "type": "enum", "values": ["pending", "shipped", "cancelled"]},
+        {"name": "line_items", "type": "json", "notes": "Nested structure, varies by product type"}
+      ],
+      "integrations": ["inventory_db", "shipping_api"]
+    },
+    {
+      "id": "schema-b",
+      "name": "Target Commerce Platform",
+      "entities": 8,
+      "records_approx": 0,
+      "fields": [
+        {"name": "id", "type": "uuid", "pk": true},
+        {"name": "customer_ref", "type": "string", "ref": "customers"},
+        {"name": "created_at", "type": "timestamp"},
+        {"name": "state", "type": "enum", "values": ["draft", "confirmed", "fulfilled"]},
+        {"name": "items", "type": "array", "schema": "line_item"}
+      ],
+      "integrations": ["payment_gateway", "fulfillment"]
+    }
+  ],
+  "metadata": {
+    "submitted_at": "2025-02-14T18:00:00Z",
+    "scope": "Phase 1 analysis requested"
+  }
+}

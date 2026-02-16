@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Refinement Demo — Andrew Martin</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Demo overrides using site design system */
+        :root {
+            --iphone-bg: #1c1c1e;
+            --chat-bg: #000000;
+            --user-bubble: var(--color-primary);
+            --ai-bubble: #2c2c2e;
+            --text-white: #ffffff;
+            --text-secondary: #8e8e93;
+        }
+
+        [data-theme="dark"] {
+            --demo-surface: var(--color-surface);
+            --demo-border: var(--color-border);
+        }
+
+        body {
+            font-family: var(--font-body), system-ui, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            padding: 2rem 1.25rem 3rem;
+        }
+
+        .demo-nav {
+            max-width: 1200px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .demo-nav a {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .demo-nav a:hover {
+            color: var(--color-warm);
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: var(--color-text);
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 {
+            font-family: var(--font-display), Georgia, serif;
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .demo-controls {
+            text-align: center;
+            margin-bottom: 1.75rem;
+        }
+
+        .scenario-selector {
+            display: inline-flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .scenario-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            transition: all 0.2s;
+        }
+
+        .scenario-btn:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.12);
+        }
+
+        .scenario-btn.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .demo-stage {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 968px) {
+            .demo-stage {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .stage-container {
+            position: relative;
+        }
+
+        .stage-label {
+            text-align: center;
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .stage-number {
+            background: var(--color-primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .iphone {
+            width: 100%;
+            max-width: 390px;
+            margin: 0 auto;
+            background: var(--iphone-bg);
+            border-radius: 50px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+            position: relative;
+        }
+
+        .iphone::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 28px;
+            background: var(--iphone-bg);
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .iphone-notch {
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 6px;
+            background: #0a0a0a;
+            border-radius: 10px;
+            z-index: 11;
+        }
+
+        .iphone-screen {
+            background: var(--chat-bg);
+            border-radius: 40px;
+            overflow: hidden;
+            height: 700px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: rgba(28, 28, 30, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 50px 20px 12px;
+            border-bottom: 1px solid #2c2c2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .chat-title { color: var(--text-white); font-size: 1rem; font-weight: 600; }
+        .chat-subtitle { color: var(--text-secondary); font-size: 0.8rem; }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message {
+            display: flex;
+            gap: 8px;
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user { flex-direction: row-reverse; }
+
+        .message-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .message.user .message-bubble {
+            background: var(--user-bubble);
+            color: var(--text-white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.ai .message-bubble {
+            background: var(--ai-bubble);
+            color: var(--text-white);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-bubble.typing {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+
+        .chat-input {
+            background: rgba(28, 28, 30, 0.95);
+            padding: 12px;
+            border-top: 1px solid #2c2c2e;
+        }
+
+        .input-wrapper {
+            background: var(--ai-bubble);
+            border-radius: 20px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-white);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .input-wrapper input::placeholder { color: var(--text-secondary); }
+
+        .copy-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--color-accent);
+            color: white;
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1.1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 20;
+        }
+
+        .copy-indicator.visible { opacity: 1; }
+
+        .controls { text-align: center; margin-top: 1.75rem; }
+
+        .play-btn {
+            padding: 1rem 2.5rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.2);
+        }
+
+        .play-btn:hover:not(:disabled) {
+            background: var(--color-primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(30, 58, 95, 0.25);
+        }
+
+        .play-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .info-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .info-card h3 {
+            font-family: var(--font-display);
+            color: var(--color-primary);
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card p {
+            color: var(--color-text-muted);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--color-text-muted);
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+        }
+
+        footer a:hover { text-decoration: underline; }
+
+        .structured-label {
+            display: inline-block;
+            background: rgba(30, 58, 95, 0.15);
+            color: var(--color-primary);
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .message-bubble pre {
+            white-space: pre-wrap;
+            font-family: inherit;
+            margin: 8px 0 0 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="demo-nav">
+        <a href="index.html">← Back to portfolio</a>
+    </nav>
+    <div class="container">
+        <header>
+            <h1>Prompt Refinement Demo</h1>
+            <p class="subtitle">Watch how a rough prompt becomes a structured, enterprise-ready prompt—then see the difference in output quality.</p>
+        </header>
+
+        <div class="demo-controls">
+            <div class="scenario-selector">
+                <button class="scenario-btn active" data-scenario="stakeholder">Stakeholder Update</button>
+                <button class="scenario-btn" data-scenario="architecture">Architecture Review</button>
+                <button class="scenario-btn" data-scenario="migration">Migration Analysis</button>
+            </div>
+        </div>
+
+        <div class="demo-stage">
+            <!-- STAGE 1: Prompt Optimizer -->
+            <div class="stage-container">
+                <div class="stage-label">
+                    <span class="stage-number">1</span>
+                    Prompt Optimizer
+                </div>
+                <div class="iphone" id="phone1">
+                    <div class="iphone-notch"></div>
+                    <div class="iphone-screen">
+                        <div class="chat-header">
+                            <div>
+                                <div class="chat-title">Prompt Engineer</div>
+                                <div class="chat-subtitle">Meta-Prompt Assistant</div>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="messages1"></div>
+                        <div class="chat-input">
+                            <div class="input-wrapper">
+                                <input type="text" placeholder="Message" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAGE 2: Final Chat -->
+            <div class="stage-container">
+                <div class="stage-label">
+                    <span class="stage-number">2</span>
+                    ChatGPT / Claude
+                </div>
+                <div class="iphone" id="phone2">
+                    <div class="iphone-notch"></div>
+                    <div class="iphone-screen">
+                        <div class="chat-header">
+                            <div>
+                                <div class="chat-title">ChatGPT</div>
+                                <div class="chat-subtitle">GPT-4</div>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="messages2"></div>
+                        <div class="chat-input">
+                            <div class="input-wrapper">
+                                <input type="text" placeholder="Message" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="copy-indicator" id="copyIndicator">Copied! ✓</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="play-btn" id="playBtn">▶ Play Demo</button>
+        </div>
+
+        <div class="info-card">
+            <h3>Why Structured Prompts Matter</h3>
+            <p><strong>The problem:</strong> Vague prompts like "update leadership on the project" produce inconsistent, low-quality outputs. Every team member gets different results. No repeatability, no audit trail, no governance.</p>
+            <p><strong>The solution:</strong> Structured prompts using the Role → Task → Context → Requirements → Output framework eliminate ambiguity and produce consistent, professional results.</p>
+            <p><strong>Result:</strong> Repeatable outputs. Clear expectations. Works across any LLM (ChatGPT, Claude, Gemini, Copilot).</p>
+        </div>
+
+        <footer>
+            <p>Built by <a href="https://linkedin.com/in/andrewdeanmartin" target="_blank">Andrew Dean Martin</a></p>
+            <p style="margin-top:8px;font-size:0.85rem;">Director, Commercial Technology & Innovation @ PwC</p>
+        </footer>
+    </div>
+
+    <script>
+        const scenarios = {
+            stakeholder: {
+                roughPrompt: "update leadership on the project",
+                refinedPrompt: `You are a delivery lead providing a sprint progress update to executive stakeholders (VP-level and above, non-technical audience).
+
+Your task: Summarize the current sprint's progress, identify any blockers requiring leadership attention or escalation, and outline clear next steps with accountability.
+
+Context and constraints:
+• Audience expects outcome-focused communication, not implementation details
+• Keep each section to 2-3 bullets maximum (respect executive time)
+• Use plain language—avoid jargon, acronyms, or technical terms
+• Highlight items that require executive decision-making or resources
+• Be honest about status; don't sugarcoat blockers
+
+Required output structure:
+
+**1. Sprint Progress** (what was delivered)
+   - List 2-3 key deliverables or outcomes completed this sprint
+   - Focus on business value, not tasks
+
+**2. Current Status** 
+   - State clearly: On track / At risk / Blocked
+   - Include brief explanation (one sentence)
+
+**3. Blockers/Issues**
+   - List any items requiring leadership action, budget approval, or escalation
+   - For each blocker, state: what it is, why it matters, what decision is needed
+
+**4. Next Steps** 
+   - Top 3 priorities for the next sprint
+   - Include expected completion dates where relevant
+
+**5. Support Needs**
+   - Any resources, approvals, or decisions required from leadership
+   - Be specific about timing (e.g., "Budget approval needed by Friday to maintain timeline")
+
+Now, provide the update based on the following project context:
+
+Project: [Describe your project name and current sprint goals]
+Current sprint dates: [Start date - End date]
+Key context: [Any relevant background leadership should know]`,
+                finalAnswer: `**1. Sprint Progress**
+• Completed user authentication module with SSO integration (enables 500+ enterprise users to access platform)
+• Deployed staging environment with automated CI/CD pipeline (reduced deployment time from 4 hours to 15 minutes)
+• Resolved 12 of 15 P1 bugs identified in QA testing
+
+**2. Current Status**
+On track for production release on schedule (March 15).
+
+**3. Blockers/Issues**
+• **Legal review for data retention policy** — Currently blocking production deployment. Legal team has 2-week backlog; we need sign-off by March 8 to maintain launch date. Decision needed: Can we expedite legal review or adjust launch timeline?
+• **Azure production infrastructure budget** — Requires $12K/month approval. Estimate submitted February 1, pending finance approval. Need decision by Friday (Feb 16) to provision resources in time for launch.
+
+**4. Next Steps**
+1. Complete final security penetration test (estimated 3 days, completion Feb 19)
+2. Production deployment pending legal sign-off (target: March 10-12)
+3. Begin user training materials development (Feb 20-28)
+
+**5. Support Needs**
+• **Expedite legal review** — Request priority review from legal team (currently 2-week backlog)
+• **Budget approval by Feb 16** — $12K/month Azure production infrastructure to maintain timeline
+• **Stakeholder communication** — Need exec sponsor to notify end users of March 15 launch date`
+            },
+            architecture: {
+                roughPrompt: "check if this system is ready for production",
+                refinedPrompt: `You are a senior software architect conducting a production readiness assessment for a system about to be deployed to production.
+
+Your task: Evaluate the system across four critical dimensions—reliability, scalability, security, and operational readiness. Identify any blocking issues and provide a prioritized remediation roadmap with effort estimates.
+
+Context and constraints:
+• Audience: Engineering leadership and CTO (technical but executive-level)
+• Tone: Direct, evidence-based, no speculation—cite specific findings
+• Scope: Full-stack assessment covering frontend, backend, infrastructure, CI/CD, monitoring, and documentation
+• Classify every finding by severity: Critical (blocks production) / High (address before launch) / Medium (post-launch) / Low (technical debt)
+• Include specific evidence for each finding—no vague statements like "security is weak"
+• Provide realistic remediation effort estimates for Critical and High severity items
+
+Assessment criteria:
+
+**Reliability:**
+• Error handling and recovery mechanisms
+• Circuit breakers for external dependencies
+• Database connection pooling and failover
+• Graceful degradation strategies
+
+**Scalability:**
+• Load testing results (can it handle expected traffic?)
+• Horizontal scaling capability
+• Database query performance and indexing
+• Caching strategy (if applicable)
+
+**Security:**
+• Authentication and authorization mechanisms
+• Input validation and sanitization (SQL injection, XSS, CSRF protection)
+• Secrets management (no hardcoded credentials)
+• API security (rate limiting, HTTPS enforcement)
+• Dependency vulnerabilities (recent CVE scan results)
+
+**Operational Readiness:**
+• Monitoring and alerting (error rates, latency, resource utilization)
+• Logging strategy (structured logs, retention policy)
+• Deployment automation and rollback capability
+• Documentation (runbooks, architecture diagrams, API specs)
+
+Required output structure:
+
+**1. Executive Summary** (max 5 sentences)
+   - Overall production readiness: Ready / Ready with conditions / Not ready
+   - Number of Critical/High/Medium/Low findings
+   - Top 3 risks to production stability
+   - Estimated total remediation effort
+
+**2. Critical Findings** (blocks production deployment)
+   - For each: Title, specific evidence, business impact, remediation steps, effort estimate
+
+**3. High Priority Findings** (must address before or immediately after launch)
+   - Same format as Critical
+
+**4. Medium and Low Findings** (summarized)
+   - Brief list, can be addressed post-launch
+
+**5. Prioritized Action Plan**
+   - Week-by-week roadmap to production readiness
+   - Clear ownership for each item
+
+Now, assess the following system:
+
+[Paste system documentation, architecture diagrams, codebase overview, or provide access to the repository]`,
+                finalAnswer: `**1. Executive Summary**
+System is NOT ready for production deployment. Assessment identified 3 Critical and 5 High severity findings that must be addressed. Primary risks: (1) SQL injection vulnerabilities in 3 API endpoints, (2) no circuit breakers causing cascading failures, (3) insufficient monitoring/alerting. Overall system health score: 6.8/10. Estimated remediation effort: 48-72 hours (2-3 weeks calendar time with testing).
+
+**2. Critical Findings**
+
+**[CRITICAL] SQL Injection Vulnerability in User Input Endpoints**
+• **Evidence:** Manual testing confirmed 3 API endpoints (/api/search, /api/users/filter, /api/reports/query) accept unvalidated user input and pass it directly to SQL queries using string concatenation. Proof-of-concept exploit successful in staging environment.
+• **Business Impact:** Attackers can read/modify/delete database records, extract sensitive customer data, or cause data corruption. Regulatory violation (GDPR, SOC2).
+• **Remediation:** 
+  1. Replace all dynamic SQL with parameterized queries/prepared statements
+  2. Implement input validation middleware with whitelist-based sanitization
+  3. Add automated SQL injection testing to CI/CD pipeline
+  4. Conduct penetration test after fix
+• **Effort:** 16 hours development + 8 hours testing = 24 hours total
+
+**[CRITICAL] No Circuit Breakers on External Dependencies**
+• **Evidence:** Load testing revealed that when the payment gateway API becomes unavailable, the entire application hangs (120s timeout per request). Under load (500 concurrent users), this caused memory exhaustion and application crash.
+• **Business Impact:** Single external service failure takes down entire platform. No graceful degradation. Customer-facing outages.
+• **Remediation:**
+  1. Implement circuit breaker pattern for all external API calls (payment gateway, email service, analytics)
+  2. Define fallback behavior (queue for retry, show cached data, or fail gracefully with user message)
+  3. Add circuit breaker state to monitoring dashboards
+• **Effort:** 24 hours development + 12 hours testing = 36 hours total
+
+**3. High Priority Findings**
+
+**[HIGH] Insufficient Monitoring and Alerting**
+• **Evidence:** No alerting configured for error rates, API latency, or database connection pool exhaustion. Operations team discovers issues when customers report problems.
+• **Remediation:** Configure CloudWatch alarms for error rate >1%, p95 latency >2s, DB connection pool >80%, CPU >75%. Integrate with PagerDuty for on-call escalation.
+• **Effort:** 8 hours
+
+**[HIGH] Missing Database Indexes on High-Traffic Queries**
+• **Evidence:** Query profiling shows 4 frequently-used queries (user search, report generation) performing full table scans. Average query time: 3.2 seconds under load.
+• **Remediation:** Add composite indexes on user.email + user.status, reports.created_at + reports.user_id. Estimated performance improvement: 3.2s → 180ms.
+• **Effort:** 4 hours (includes testing and staged rollout)
+
+**[HIGH] Secrets Hardcoded in Configuration Files**
+• **Evidence:** Database connection strings, API keys, and JWT signing secrets found in plaintext in application.yml committed to git repository.
+• **Remediation:** Migrate to AWS Secrets Manager. Update deployment pipeline to fetch secrets at runtime. Rotate all exposed credentials.
+• **Effort:** 12 hours
+
+**4. Medium and Low Findings** (Post-Launch)
+• [MEDIUM] Test coverage at 23% (target: 60% for critical paths)
+• [MEDIUM] No automated backup verification (backups run but never tested for restore)
+• [LOW] API documentation outdated (6 new endpoints not documented)
+• [LOW] Error messages expose stack traces in production mode
+
+**5. Prioritized Action Plan**
+
+**Week 1 (48 hours):**
+• Fix SQL injection vulnerabilities (P0 blocker)
+• Rotate hardcoded secrets and migrate to Secrets Manager
+• Add database indexes
+
+**Week 2 (32 hours):**
+• Implement circuit breakers for external dependencies
+• Configure monitoring and alerting (CloudWatch + PagerDuty)
+• Conduct penetration test on fixed vulnerabilities
+
+**Week 3 (16 hours):**
+• Final load testing with all fixes in place
+• Document runbooks for operations team
+• Validation and sign-off for production deployment
+
+**Recommendation:** Do NOT deploy to production until Critical findings are resolved and High findings have mitigation plans in place. Estimated timeline to production readiness: 3 weeks.`
+            },
+            migration: {
+                roughPrompt: "analyze this for migration",
+                refinedPrompt: `You are a platform solutions architect conducting a migration feasibility analysis for a client considering migrating from their current system/platform to a new target platform.
+
+Your task: Assess the source system's complexity, identify migration risks, estimate effort and cost, and recommend the most appropriate migration approach (lift-and-shift, re-platform, or re-architect).
+
+Context and constraints:
+• Audience: Technical leadership (CTO, Engineering Managers) and project sponsors (VP/C-level decision-makers)
+• Tone: Analytical, risk-aware, evidence-based—no sugar-coating
+• Scope: Full assessment covering data model, custom code, integrations, compliance requirements, and user training
+• Provide specific metrics wherever possible (e.g., "127 custom objects" not "many customizations")
+• Classify complexity and risk as Low / Medium / High for each area, with specific reasoning
+• Include estimated effort in person-hours or T-shirt sizes (S/M/L/XL)
+• Highlight compliance, regulatory, and contractual constraints (downtime windows, data residency, audit trails)
+
+Assessment criteria:
+
+**Data Model:**
+• Number and complexity of objects/tables/entities
+• Relationships and dependencies (many-to-many, hierarchical, self-referencing)
+• Data volume (number of records, storage size)
+• Data quality issues (incomplete records, inconsistent formats, duplicate entries)
+• Historical data retention requirements
+
+**Customizations:**
+• Custom code (triggers, workflows, business logic, scripts)
+• UI customizations (layouts, components, custom pages)
+• Reports and dashboards
+• Email templates and communication automation
+
+**Integrations:**
+• Number and type of integrations (APIs, batch jobs, middleware, ETL)
+• Integration patterns (real-time vs. batch, inbound vs. outbound)
+• Third-party systems involved (CRM, ERP, marketing automation, BI tools)
+• API compatibility (REST, SOAP, deprecated endpoints)
+
+**Compliance and Governance:**
+• Data privacy regulations (GDPR, CCPA, HIPAA)
+• Audit trail and change tracking requirements
+• Data residency and sovereignty constraints
+• Role-based access control (RBAC) and permission model complexity
+
+**User Adoption:**
+• Number of users and user roles
+• Geographic distribution and language requirements
+• Training complexity (how different is the target platform?)
+• Change management considerations
+
+Required output structure:
+
+**1. Current State Assessment**
+Provide a quantified summary of the source system:
+   • Data model: [number] objects, [number] fields, [number] relationship types, [volume] records
+   • Customizations: [number] workflows, [number] custom scripts ([LOC]), [number] custom UI components
+   • Integrations: [number] active integrations—list each by name and type (real-time API, batch, webhook, etc.)
+   • Users: [number] active users across [number] roles/profiles
+
+**2. Migration Considerations** (Table Format)
+
+| Area | Complexity | Risk Level | Key Findings & Notes |
+|------|------------|------------|----------------------|
+| Data migration | [L/M/H] | [L/M/H] | Volume: [X] records. [any data quality issues? legacy formats requiring transformation?] |
+| Custom logic | [L/M/H] | [L/M/H] | [how much code needs rewrite? equivalent features in target platform?] |
+| Integrations | [L/M/H] | [L/M/H] | [how many require rebuild? API compatibility issues?] |
+| Compliance | [L/M/H] | [L/M/H] | [any regulatory constraints? data residency? audit requirements?] |
+| User training | [L/M/H] | [L/M/H] | [how different is target platform UX? training effort required?] |
+
+**3. Migration Approach Recommendation**
+   • **Recommended approach:** Lift-and-shift / Re-platform / Re-architect / Hybrid
+   • **Rationale:** [Why this approach? What are the tradeoffs?]
+   • **Alternatives considered:** [What other approaches were evaluated and why were they rejected?]
+
+**4. Effort and Cost Estimate**
+   • **Total estimated effort:** [X]-[Y] person-weeks or [X]-[Y] person-hours
+   • **Breakdown by phase:**
+     - Discovery and design: [X] weeks
+     - Data migration (build + test): [X] weeks
+     - Custom logic rebuild: [X] weeks
+     - Integration rebuild/reconfiguration: [X] weeks
+     - Testing and validation: [X] weeks
+     - User training and change management: [X] weeks
+   • **Estimated cost range:** $[X] - $[Y] (assuming [hourly rate] or [team composition])
+
+**5. Key Risks and Mitigation Strategies**
+   • **Risk 1:** [What could go wrong?]
+     - Likelihood: [Low/Medium/High]
+     - Impact: [Low/Medium/High]
+     - Mitigation: [How to reduce or avoid this risk?]
+   • **Risk 2:** [repeat format]
+   • **Risk 3:** [repeat format]
+
+**6. Timeline and Milestones**
+   • **Phase 1:** Discovery and planning ([dates])
+   • **Phase 2:** Data migration pilot ([dates])
+   • **Phase 3:** Full migration and testing ([dates])
+   • **Phase 4:** Go-live ([date])
+   • **Critical path items:** [What must happen sequentially? What blocks other work?]
+
+**7. Go/No-Go Recommendation**
+   • **Recommendation:** Proceed / Proceed with conditions / Do not proceed at this time
+   • **Justification:** [Clear reasoning based on findings]
+
+Now, analyze the following system for migration:
+
+[Paste or provide: system/platform name, documentation, data model/schema, integration architecture, user count, compliance requirements, or repository access]`,
+                finalAnswer: `**1. Current State Assessment**
+
+**Source Platform:** Salesforce Classic (custom CRM implementation for B2B SaaS company)
+**Data Model:**
+   • 127 custom objects, 412 custom fields, 23 relationship types (mix of lookup, master-detail, hierarchical)
+   • Data volume: 2.4M records (Accounts: 48K, Contacts: 312K, Custom objects: 2.04M)
+   • Storage: 87 GB total (data + files)
+
+**Customizations:**
+   • 34 workflow automations (Workflow Rules + Process Builder)
+   • 8 Apex classes (2,400 lines of code total)—business logic for commission calculations, territory assignment, and custom approval workflows
+   • 12 Visualforce pages (legacy custom UI)
+   • 47 custom reports and 8 dashboards
+
+**Integrations:**
+   • 6 active integrations:
+     1. Marketo (marketing automation)—real-time API, bidirectional sync of leads/contacts
+     2. NetSuite (ERP/billing)—batch nightly sync, order and invoice data
+     3. Slack (notifications)—outbound webhooks for deal alerts
+     4. DocuSign (e-signature)—real-time API for contract generation
+     5. Zendesk (support ticketing)—bidirectional API sync of cases/tickets
+     6. Tableau (BI/analytics)—read-only API extract, daily refresh
+
+**Users:**
+   • 200 active users across 12 roles/profiles
+   • Geographic distribution: US (120 users), EMEA (50 users), APAC (30 users)
+   • 3 languages required (English, German, Japanese)
+
+---
+
+**2. Migration Considerations**
+
+| Area | Complexity | Risk Level | Key Findings & Notes |
+|------|------------|------------|----------------------|
+| **Data migration** | High | Medium | Volume: 2.4M records. Data quality issues: 28% of legacy records have incomplete required fields (phone, industry classification). 3 legacy data formats require transformation (date formats, picklist value mapping, record type consolidation). Historical data back to 2012 must be preserved for audit/compliance. |
+| **Custom logic** | Medium | High | 8 Apex classes require rewrite—target platform (HubSpot Enterprise) has no direct equivalent for Apex. Commission calculation logic is complex (multi-tier, region-based). Territory assignment uses geolocation + account attributes. Approval workflows use custom conditions not available in standard target platform workflows. Estimated rewrite: 120-160 hours. |
+| **Integrations** | High | High | **Critical issue:** 4 of 6 integrations use Salesforce-specific APIs with no direct equivalent in target platform. Marketo, NetSuite, Zendesk, DocuSign all require rebuild (not just reconfiguration). Only Slack and Tableau can be adapted. Integration rebuild estimated at 200-280 hours. API rate limits on target platform may require throttling strategy for high-volume syncs. |
+| **Compliance** | Medium | Medium | GDPR compliance: must maintain audit trail of all data changes (target platform supports this). Data residency: EU customers require EU data center (target platform supports EU hosting). No HIPAA or SOC2 blockers. Existing Salesforce audit logs must be exported and archived before migration. |
+| **User training** | Medium | Low | Target platform (HubSpot) has significantly different UX—particularly for sales team workflows. Estimated training: 4 hours per user (800 hours total across 200 users). Change management: sales team is resistant to change (historical issue). Executive sponsorship required for adoption. |
+
+---
+
+**3. Migration Approach Recommendation**
+
+**Recommended approach:** **Re-platform (not lift-and-shift)**
+
+**Rationale:**
+Lift-and-shift is not feasible because the target platform (HubSpot Enterprise) has fundamentally different architecture and data models compared to Salesforce. Custom Apex logic and Visualforce pages have no direct equivalent and must be rebuilt using HubSpot's workflow automation and custom objects/properties. However, full re-architecture is not required—core business processes (lead-to-cash, support case management) map well to target platform's native features.
+
+**Alternatives considered:**
+   • **Lift-and-shift:** Rejected—target platform does not support Apex or Visualforce. Would require staying on Salesforce ecosystem.
+   • **Re-architect:** Rejected—unnecessary cost and risk. Core workflows align well with HubSpot's native capabilities. Re-architect only if planning significant business process changes (not the case here).
+   • **Hybrid (retain Salesforce + integrate):** Considered but rejected—adds complexity, cost, and ongoing maintenance burden. Client's goal is to consolidate onto single platform.
+
+---
+
+**4. Effort and Cost Estimate**
+
+**Total estimated effort:** 16-20 weeks (calendar time), 1,400-1,800 person-hours
+
+**Breakdown by phase:**
+   • **Discovery and design:** 2 weeks (80 hours)—field mapping, integration design, data quality remediation plan
+   • **Data migration build + pilot:** 3 weeks (120 hours)—ETL scripts, data quality fixes, pilot with 10K records
+   • **Custom logic rebuild:** 4-5 weeks (160-200 hours)—rebuild Apex logic in HubSpot workflows + custom code actions
+   • **Integration rebuild:** 5-6 weeks (200-280 hours)—rebuild Marketo, NetSuite, Zendesk, DocuSign integrations
+   • **Full data migration + validation:** 2 weeks (80 hours)—migrate 2.4M records, validate data integrity, reconciliation
+   • **Testing and UAT:** 3 weeks (120 hours)—functional testing, integration testing, user acceptance testing
+   • **User training and change management:** 4 weeks (160 hours distributed)—training sessions, documentation, go-live support
+
+**Estimated cost range:** $280,000 - $340,000
+   • Assumptions: $200/hour blended rate (mix of senior architects, developers, data engineers)
+   • Cost includes: migration execution, integration rebuild, training, 4 weeks post-go-live support
+   • Does NOT include: target platform licensing costs, third-party integration tool costs (e.g., Zapier, Workato), or client internal team time
+
+---
+
+**5. Key Risks and Mitigation Strategies**
+
+**Risk 1: Integration API incompatibility**
+   • **Likelihood:** High (already confirmed 4 of 6 integrations require rebuild)
+   • **Impact:** High (business processes break if integrations fail)
+   • **Mitigation:** 
+     - Conduct API compatibility assessment with each vendor in discovery phase
+     - Build integration stubs early for testing (week 4-5)
+     - Plan for parallel run period (2 weeks) where both old and new integrations run simultaneously for validation
+     - Negotiate extended support from integration partners (Marketo, NetSuite) during transition
+
+**Risk 2: Data quality issues cause migration delays**
+   • **Likelihood:** Medium (28% incomplete records already identified)
+   • **Impact:** Medium (migration timeline extends 2-4 weeks if data cleanup required)
+   • **Mitigation:**
+     - Begin data quality remediation in parallel with discovery (don't wait for migration phase)
+     - Define "minimum viable data quality" threshold for go-live (not everything needs to be perfect)
+     - Use data validation scripts to identify issues early
+     - Consider phased migration (clean data first, legacy data later)
+
+**Risk 3: User adoption failure (sales team resistance)**
+   • **Likelihood:** Medium (historical resistance to change)
+   • **Impact:** High (migration succeeds technically but fails operationally)
+   • **Mitigation:**
+     - Secure executive sponsor (VP Sales) commitment to champion change
+     - Involve sales team "power users" in UAT and design decisions (create ownership)
+     - Provide 1:1 coaching for top performers (not just group training)
+     - Plan for 4-week hypercare period post-go-live with dedicated support resources
+     - Measure and report adoption metrics weekly (logins, deal updates, pipeline accuracy)
+
+**Risk 4: Downtime window exceeds contractual SLA**
+   • **Likelihood:** Low (with proper planning)
+   • **Impact:** High (contractual penalties if downtime >8 hours)
+   • **Mitigation:**
+     - Migration during planned maintenance window (Saturday night)
+     - Cutover rehearsal 2 weeks before go-live (validate timing)
+     - Rollback plan if cutover exceeds 6 hours (gives 2-hour buffer)
+     - Communicate cutover plan to customers 3 weeks in advance
+
+---
+
+**6. Timeline and Milestones**
+
+**Phase 1: Discovery and Planning** (Weeks 1-2)
+   • Data model mapping and field-level design
+   • Integration API compatibility assessment
+   • Data quality assessment and remediation plan
+   • Milestone: Signed-off design document
+
+**Phase 2: Build and Pilot** (Weeks 3-8)
+   • Data migration scripts + pilot (10K records)
+   • Custom logic rebuild (Apex → HubSpot workflows)
+   • Integration rebuild (4 integrations requiring new build)
+   • Milestone: Pilot environment validated with sample data
+
+**Phase 3: Full Migration and Testing** (Weeks 9-14)
+   • Full data migration (2.4M records)
+   • End-to-end integration testing
+   • User acceptance testing (UAT) with 20 users
+   • Milestone: UAT sign-off
+
+**Phase 4: Training and Go-Live** (Weeks 15-16)
+   • User training (200 users, 4 hours each)
+   • Cutover window (Saturday night, 8-hour window)
+   • Go-live and hypercare support (Week 17-20)
+   • Milestone: Production cutover complete, all integrations operational
+
+**Critical path items:**
+   • Integration API compatibility testing (must complete by Week 5 to avoid delays)
+   • Data quality remediation (must begin Week 2, complete by Week 8)
+   • UAT sign-off (blocking go-live decision)
+
+---
+
+**7. Go/No-Go Recommendation**
+
+**Recommendation:** **Proceed with conditions**
+
+**Justification:**
+Migration is feasible and business case is sound (client consolidating tools, reducing Salesforce licensing costs). However, success depends on:
+   1. **Executive sponsorship secured** (VP Sales commits to change management and adoption)
+   2. **Integration partners engaged early** (Marketo, NetSuite, Zendesk confirm API compatibility within 2 weeks)
+   3. **Data quality remediation begins immediately** (don't wait for migration phase—start now)
+   4. **Realistic timeline expectations** (16-20 weeks is aggressive; 22-24 weeks is safer with buffer for unknowns)
+
+**Conditions for proceeding:**
+   • Sign-off from VP Sales on change management plan and training commitment
+   • Confirmation from NetSuite and Marketo on API compatibility within 2 weeks
+   • Budget approved for full scope ($280-340K + platform licensing)
+   • Acceptance of 22-24 week timeline (not 12-14 weeks as initially hoped)
+
+**Do NOT proceed if:**
+   • Integration partners cannot confirm API compatibility (would require re-architecture or different target platform)
+   • Sales leadership unwilling to commit to change management (migration will technically succeed but operationally fail)
+   • Budget constrained to <$200K (insufficient for quality migration + integration rebuild + training)`
+            }
+        };
+
+        let currentScenario = 'stakeholder';
+        let isPlaying = false;
+
+        const messages1 = document.getElementById('messages1');
+        const messages2 = document.getElementById('messages2');
+        const playBtn = document.getElementById('playBtn');
+        const copyIndicator = document.getElementById('copyIndicator');
+        const scenarioBtns = document.querySelectorAll('.scenario-btn');
+
+        scenarioBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (isPlaying) return;
+                scenarioBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentScenario = btn.dataset.scenario;
+                resetDemo();
+            });
+        });
+
+        function addMessage(container, type, content, isStructured = false) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    const msg = document.createElement('div');
+                    msg.className = `message ${type}`;
+                    
+                    const bubble = document.createElement('div');
+                    bubble.className = 'message-bubble';
+                    
+                    if (isStructured) {
+                        const label = document.createElement('div');
+                        label.className = 'structured-label';
+                        label.textContent = 'Structured Prompt';
+                        bubble.appendChild(label);
+                    }
+                    
+                    const text = document.createElement('pre');
+                    text.textContent = content;
+                    bubble.appendChild(text);
+                    
+                    msg.appendChild(bubble);
+                    container.appendChild(msg);
+                    container.scrollTop = container.scrollHeight;
+                    resolve();
+                }, 300);
+            });
+        }
+
+        function addTypingIndicator(container) {
+            const msg = document.createElement('div');
+            msg.className = 'message ai';
+            msg.id = 'typing-indicator';
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble typing';
+            bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            
+            msg.appendChild(bubble);
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        function showCopyIndicator() {
+            copyIndicator.classList.add('visible');
+            setTimeout(() => {
+                copyIndicator.classList.remove('visible');
+            }, 1500);
+        }
+
+        async function playDemo() {
+            if (isPlaying) return;
+            isPlaying = true;
+            playBtn.disabled = true;
+            playBtn.textContent = 'Playing...';
+
+            const scenario = scenarios[currentScenario];
+
+            // Stage 1: Prompt Optimizer
+            await addMessage(messages1, 'user', scenario.roughPrompt);
+            await new Promise(r => setTimeout(r, 800));
+            
+            addTypingIndicator(messages1);
+            await new Promise(r => setTimeout(r, 2000));
+            removeTypingIndicator();
+            
+            await addMessage(messages1, 'ai', scenario.refinedPrompt, true);
+            await new Promise(r => setTimeout(r, 1500));
+
+            // Copy transition
+            showCopyIndicator();
+            await new Promise(r => setTimeout(r, 2000));
+
+            // Stage 2: Final chat with refined prompt
+            await addMessage(messages2, 'user', scenario.refinedPrompt);
+            await new Promise(r => setTimeout(r, 800));
+            
+            addTypingIndicator(messages2);
+            await new Promise(r => setTimeout(r, 2500));
+            removeTypingIndicator();
+            
+            await addMessage(messages2, 'ai', scenario.finalAnswer);
+
+            playBtn.textContent = '↻ Play Again';
+            playBtn.disabled = false;
+            isPlaying = false;
+        }
+
+        function resetDemo() {
+            messages1.innerHTML = '';
+            messages2.innerHTML = '';
+            playBtn.textContent = '▶ Play Demo';
+            playBtn.disabled = false;
+            isPlaying = false;
+        }
+
+        playBtn.addEventListener('click', () => {
+            if (playBtn.textContent === '↻ Play Again') {
+                resetDemo();
+            } else {
+                playDemo();
+            }
+        });
+    </script>
+</body>
+</html>

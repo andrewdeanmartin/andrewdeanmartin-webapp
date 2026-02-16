@@ -1,0 +1,7 @@
+{
+  "checkpoint": "Item #447 — line_items schema mapping",
+  "decision": "Create Custom Path",
+  "decided_at": "2025-02-14T18:02:30Z",
+  "rationale": "Define new category and routing rule for variable product-type structures. Custom transform to flatten/typed array for Schema B.",
+  "pipeline_resumed": true
+}
