@@ -6,7 +6,7 @@
 >
 > **Source file:** `site/index.html`
 >
-> **Last updated:** February 2026. Matches current site: no Journey section, Impact = 3 cards (Weeks→Hours, 90%, 15+ Prototypes), Connect email andrewdeanmartin@gmail.com.
+> **Last updated:** February 2026. Matches current site: no Journey section, Impact = 3 cards (Weeks→Hours, 90%, 15+ in 2 months), Connect email andrewdeanmartin@gmail.com.
 
 **How to resume work (for Cursor):** Open this file and say: *"I'm back on the portfolio. COPY-EDITING-BRIEF is source of truth for copy; live site is site/index.html. What should we tackle next?"* Or name a section (e.g. "Demos intro", "Impact", "Connect") to edit. Local preview: `python3 -m http.server 8080` from `site/`, then open http://localhost:8080.
 
@@ -19,7 +19,7 @@
 | Field | Current Text |
 |-------|-------------|
 | **Page title** | Andrew Dean Martin \| Turn AI Ambition into What Actually Ships |
-| **Meta description** | I help leaders turn AI investment into solutions that work in their context. Senior Director, Advisory, PwC. A leader who speaks strategy and code, unblocks teams, and enables others so ideas become real, fast. |
+| **Meta description** | I help leaders turn AI investment into solutions that work in their context. Senior Director, Advisory, PwC. I speak strategy and code, unblock teams, and enable others so ideas become real, fast. |
 | **OG title** | *(same as page title)* |
 | **OG description** | *(same as meta description)* |
 
@@ -47,7 +47,7 @@ Logo text: **ADM**
 
 **Description:**
 > I help leaders turn AI investment into solutions that work in their context.<br>
-> A leader who speaks strategy and code, I unblock teams, build when it matters, and enable others, so ideas become real, fast.
+> I speak strategy and code, unblock teams, build when it matters, and enable others, so ideas become real, fast.
 
 **CTAs:** "See It In Action" · "Connect"
 
@@ -59,16 +59,16 @@ Logo text: **ADM**
 **Section title:** The Short Version
 
 **Paragraph 1:**
-> I build something most days (until my Cursor limit hits). I'm the person teams call when AI ambition collides with delivery reality: unclear scope, legacy systems, compliance constraints, and a deadline that won't move.
+> I build something most days. I'm the person teams call when AI ambition collides with delivery reality: unclear scope, legacy systems, compliance constraints, and a deadline that won't move.
 
 **Paragraph 2:**
-> 18 years in tech, 15 in consulting (PwC since 2010). Startups to Fortune 1; I've worked across the Americas, Asia, and Europe. I work across Salesforce, Microsoft Dynamics 365, Veeva, and Dataverse. I help turn roadmaps into working outcomes (demos, prototypes, use cases), often in the same week. Strategy, architecture, hands-on when it unblocks. The real challenge isn't having good ideas; it's making them real, governed, and scalable. The demos below show how.
+> 18 years in tech, 15 in consulting (PwC since 2010). Startups to Fortune 1; I've worked across the Americas, Asia, and Europe. I help turn roadmaps into working outcomes (demos, prototypes, use cases), often in the same week. Strategy, architecture, hands-on when it unblocks. The real challenge isn't having good ideas; it's making them real, governed, and scalable. The demos below show how.
 
 **Stats:**
 | Value | Label |
 |-------|-------|
 | 18+ | Years in Technology |
-| 15+ | Production Prototypes Shipped |
+| 15+ | Shipped in 2 Months |
 | 4 | Territories Launched in 6 Months |
 
 ---
@@ -81,12 +81,12 @@ Logo text: **ADM**
 ### Card 1 (featured, full-width):
 **Title:** Strategy + Engineering in One Leader
 **Body:**
-> Unblock teams fast. I present to leadership and can ship the demo that moves the investment forward when it matters: narrative and CI/CD pipeline in the same week. Most people at my level do one or the other. I've been in both and lead teams that deliver.
+> Unblock teams fast. I present to leadership and can ship the demo that moves the investment forward when it matters: narrative and CI/CD pipeline in the same week. I've been in both and lead teams that deliver.
 
 ### Card 2:
 **Title:** Prototype-Led Leadership
 **Body:**
-> Stop debating abstractions. I lead with working demos (built in days, by me or the team) so stakeholders react to something real. A mediocre prototype beats a perfect deck.
+> I lead with working demos (built in days, by me or the team) so stakeholders react to something real instead of debating abstractions. A mediocre prototype beats a perfect deck.
 
 ### Card 3:
 **Title:** AI as Method, Not Magic
@@ -101,7 +101,7 @@ Logo text: **ADM**
 ### Card 5:
 **Title:** Startups to Fortune 1
 **Body:**
-> I've worked across the full spectrum: early-stage and the largest enterprises, in the Americas, Asia, and Europe. I don't need to learn your context from zero.
+> I've worked across the full spectrum: early-stage and the largest enterprises, in the Americas, Asia, and Europe. I've been there before—so I ramp fast.
 
 ---
 
@@ -111,7 +111,7 @@ Logo text: **ADM**
 **Section title:** Demos
 
 **Intro paragraph (starts with bridge from How I Work):**
-> One run: 847 items, 612 auto-processed, 1 human checkpoint. Replay it below, then see the methodology, the assessment lens, and the reliability math. Four tools; built to be explored, not just watched.
+> One example run: 847 items, 612 auto-processed, 1 human checkpoint. Replay it below, then see the methodology, the assessment lens, and the reliability math. Four tools; built to be explored, not just watched.
 
 **Tab names:** Agent Pipeline · Prompt Engineering · Codebase Assessment · Reliability Paradox
 
@@ -120,7 +120,7 @@ Logo text: **ADM**
 ### Demo 4a: Agent Pipeline
 
 **Intro:**
-> From a real multi-agent run (anonymized). Cursor agents analyzed two schemas, hit a human checkpoint, produced a deliverable. Watch it replay.
+> From a real multi-agent run (anonymized). AI agents analyzed two schemas, hit a human checkpoint, produced a deliverable. Watch it replay.
 
 **Input label:**
 > **Input:** `agent-pipeline-run/00-input-schemas.json` (Legacy Order System → Target Commerce Platform).
@@ -170,7 +170,7 @@ Logo text: **ADM**
 ### Demo 4b: Prompt Engineering (SharpPrompt)
 
 **Intro:**
-> Vague requests → useless output. Transform "I need X" into prompts that actually work. Role → Task → Context → Requirements → Output. Useful output, not garbage.
+> Vague requests → inconsistent output. Transform "I need X" into prompts that actually work. Role → Task → Context → Requirements → Output. Consistent, useful results.
 
 **Drag source label:**
 > Your rough prompt: drag or tap into the Optimizer →
@@ -227,7 +227,7 @@ Logo text: **ADM**
 ### Demo 4c: Codebase Assessment
 
 **Intro:**
-> Representative of engagements across enterprise codebases. Before you acquire or integrate: know exactly what needs fixing and how long it'll take. 8 workstreams: architecture, security, testing, performance, and more.
+> Representative of engagements across enterprise codebases. Before an acquisition or integration, get clarity on what needs fixing and how long it'll take. 8 workstreams: architecture, security, testing, performance, and more.
 
 **Walkthrough step 1 label:** 8 Workstreams
 **Walkthrough step 1 body:**
@@ -334,13 +334,13 @@ Logo text: **ADM**
 > This way of working has produced measurable results.
 
 **Intro paragraph:**
-> Three things that matter most: take the full cycle (assessment, recommendations, and a real prototype) from weeks to hours; cut cycle time by orders of magnitude; and ship demos that move decisions.
+> Three things that matter most: full cycle from weeks to hours; cycle time cut by orders of magnitude; and demos that move decisions.
 
 | Metric | Label | Context |
 |--------|-------|---------|
-| Weeks → Hours | Full Cycle to Artifact | From assessment through recommendations to something you can actually run. What used to take weeks now happens in hours. Real artifact, not just a deck. |
+| Weeks → Hours | Full Cycle to Artifact | From assessment through recommendations to something you can run. What used to take weeks now happens in hours. Real artifact, not just a deck. |
 | 90% | Cycle Time Cut | Built a GenAI-powered tool that compressed survey and assessment cycles by up to 90%. |
-| 15+ | Prototypes Shipped | Working demos that accelerated investment decisions and unblocked client conversations. |
+| 15+ | Shipped in 2 Months | Since January 2026. Working demos that accelerated investment decisions and unblocked client conversations. |
 
 ---
 
@@ -362,7 +362,7 @@ Logo text: **ADM**
 ## 7. Footer
 
 **CTA text:**
-> Working on AI delivery or enterprise modernization? Let's talk.
+> If that's your world, let's talk.
 
 **CTA button:** "Get in Touch"
 
