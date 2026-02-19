@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShoreHome — Financial Sizing & Valuation Framework</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --border: #2d3a4d;
+      --text: #e6edf3;
+      --muted: #8b9cb3;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --amber: #d29922;
+      --red: #f85149;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 1.5rem;
+      line-height: 1.5;
+    }
+    h1 { font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0; color: var(--text); }
+    .subtitle { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.5rem; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    section h2 { font-size: 1rem; font-weight: 600; margin: 0 0 1rem 0; color: var(--accent); }
+    .grid { display: grid; gap: 1rem; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+    .field { display: flex; flex-direction: column; gap: 0.25rem; }
+    .field label { font-size: 0.8125rem; color: var(--muted); }
+    .field input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 0.75rem;
+      color: var(--text);
+      font-size: 1rem;
+    }
+    .field input::placeholder { color: var(--muted); opacity: 0.7; }
+    .field input:focus { outline: none; border-color: var(--accent); }
+    .row { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+    .currency { position: relative; }
+    .currency::before { content: '$'; position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    .currency input { padding-left: 1.75rem; }
+    .results { font-size: 0.9375rem; }
+    .results table { width: 100%; border-collapse: collapse; }
+    .results th, .results td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+    .results th { color: var(--muted); font-weight: 500; font-size: 0.8125rem; }
+    .results td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .results .highlight { color: var(--accent); font-weight: 600; }
+    .results .good { color: var(--green); }
+    .results .warn { color: var(--amber); }
+    .results .bad { color: var(--red); }
+    .range { color: var(--muted); font-size: 0.8125rem; }
+    .footnote { font-size: 0.75rem; color: var(--muted); margin-top: 1rem; }
+    button {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 6px;
+      padding: 0.6rem 1.25rem;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.1); }
+    .stress-box { background: var(--bg); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 0.5rem; }
+    .stress-box strong { color: var(--amber); }
+  </style>
+</head>
+<body>
+  <h1>ShoreHome — Financial Sizing & Valuation Framework</h1>
+  <p class="subtitle">Rough-order inputs → SDE, valuation range, and stress check. Not a substitute for verified P&L or professional valuation.</p>
+
+  <section>
+    <h2>1. Revenue & Cost of Goods Sold</h2>
+    <div class="grid grid-2">
+      <div class="field">
+        <label for="revenue">Total revenue (annual)</label>
+        <div class="row currency"><input type="number" id="revenue" placeholder="0" min="0" step="1000" inputmode="numeric"></div>
+      </div>
+      <div class="field">
+        <label for="cogs">Materials / COGS (annual)</label>
+        <div class="row currency"><input type="number" id="cogs" placeholder="0" min="0" step="1000"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Operating Expenses</h2>
+    <div class="grid grid-2">
+      <div class="field">
+        <label for="labor">Labor (wages + subs)</label>
+        <div class="row currency"><input type="number" id="labor" placeholder="0" min="0" step="1000"></div>
+      </div>
+      <div class="field">
+        <label for="overhead">Overhead (rent, insurance, marketing, other)</label>
+        <div class="row currency"><input type="number" id="overhead" placeholder="0" min="0" step="1000"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Owner & Add-backs (for SDE)</h2>
+    <div class="grid grid-2">
+      <div class="field">
+        <label for="ownerComp">Owner compensation (salary + benefits + perks)</label>
+        <div class="row currency"><input type="number" id="ownerComp" placeholder="0" min="0" step="1000"></div>
+      </div>
+      <div class="field">
+        <label for="addbacks">Other add-backs (interest, D&A, one-time, personal run-through)</label>
+        <div class="row currency"><input type="number" id="addbacks" placeholder="0" min="0" step="1000"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Debt Service (optional)</h2>
+    <div class="grid grid-2">
+      <div class="field">
+        <label for="debtService">Annual debt service (e.g. Kubota equipment)</label>
+        <div class="row currency"><input type="number" id="debtService" placeholder="0" min="0" step="100"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Stress test (optional)</h2>
+    <div class="grid grid-2">
+      <div class="field">
+        <label for="stressPct">Revenue decline to test (e.g. 20 for –20%)</label>
+        <div class="row"><input type="number" id="stressPct" placeholder="20" min="0" max="100" step="5" style="max-width:6rem"> %</div>
+      </div>
+    </div>
+  </section>
+
+  <p><button type="button" id="calc" onclick="runCalc()">Calculate SDE & valuation</button></p>
+
+  <section class="results" id="results" hidden>
+    <h2>Results</h2>
+    <table>
+      <tr><th>Metric</th><th class="num">Value</th></tr>
+      <tr><td>Gross profit</td><td class="num" id="outGross"></td></tr>
+      <tr><td>Gross margin</td><td class="num" id="outGrossPct"></td></tr>
+      <tr><td>Operating expenses (labor + overhead)</td><td class="num" id="outOpEx"></td></tr>
+      <tr><td><strong>SDE</strong> (Seller's Discretionary Earnings)</td><td class="num highlight" id="outSDE"></td></tr>
+      <tr><td>SDE margin (SDE / revenue)</td><td class="num" id="outSDEMargin"></td></tr>
+      <tr><td>Debt service coverage (SDE ÷ debt service)</td><td class="num" id="outCoverage"></td></tr>
+    </table>
+    <h3 style="margin: 1.25rem 0 0.5rem 0; font-size: 0.9375rem;">Valuation range (roofing / outdoor living)</h3>
+    <p class="range">SDE multiples: low 1.61× · mid 3.06× · high 4.41× (industry range). Revenue multiple mid ~0.50×.</p>
+    <table>
+      <tr><th>Method</th><th class="num">Low</th><th class="num">Mid</th><th class="num">High</th></tr>
+      <tr><td>SDE multiple</td><td class="num" id="outValSDELow"></td><td class="num" id="outValSDEMid"></td><td class="num" id="outValSDEHigh"></td></tr>
+      <tr><td>Revenue multiple (0.23×–0.86×)</td><td class="num" id="outValRevLow"></td><td class="num" id="outValRevMid"></td><td class="num" id="outValRevHigh"></td></tr>
+    </table>
+    <div class="stress-box" id="stressBox" hidden>
+      <strong>Stress scenario</strong> (revenue <span id="stressLabel"></span>): implied SDE <span id="stressSDE"></span> → valuation range <span id="stressVal"></span> (mid multiple).
+    </div>
+    <p class="footnote">Based on desk research (roofing SDE multiples ~3.06× avg; revenue ~0.50×). Adjust multiples for quality of earnings, customer concentration, and key-person risk. Kubota UCC payoff is not included in debt service above—add if known.</p>
+  </section>
+
+  <script>
+    var MULT = { sdeLow: 1.61, sdeMid: 3.06, sdeHigh: 4.41, revLow: 0.23, revMid: 0.5, revHigh: 0.86 };
+
+    function el(id) { return document.getElementById(id); }
+    function num(id) {
+      var node = el(id);
+      return node && !isNaN(parseFloat(node.value)) ? parseFloat(node.value) : 0;
+    }
+    function fmt(n) { return n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0, minimumFractionDigits: 0 }); }
+    function pct(n) { return (n * 100).toFixed(1) + '%'; }
+
+    function runCalc() {
+      try {
+        var revenue = num('revenue');
+        var cogs = num('cogs');
+        var labor = num('labor');
+        var overhead = num('overhead');
+        var ownerComp = num('ownerComp');
+        var addbacks = num('addbacks');
+        var debtService = num('debtService');
+        var stressPct = num('stressPct') || 0;
+
+        var gross = revenue - cogs;
+        var grossPct = revenue ? gross / revenue : 0;
+        var opEx = labor + overhead;
+        var sde = gross - opEx + ownerComp + addbacks;
+
+        var sdeMargin = revenue ? sde / revenue : 0;
+        var coverage = debtService > 0 ? sde / debtService : null;
+
+        el('outGross').textContent = fmt(gross);
+        el('outGrossPct').textContent = pct(grossPct);
+        el('outOpEx').textContent = fmt(opEx);
+        el('outSDE').textContent = fmt(sde);
+        el('outSDEMargin').textContent = pct(sdeMargin);
+        if (coverage !== null) {
+          el('outCoverage').textContent = coverage.toFixed(1) + '×';
+          el('outCoverage').className = 'num ' + (coverage >= 1.25 ? 'good' : coverage >= 1 ? 'warn' : 'bad');
+        } else {
+          el('outCoverage').textContent = '—';
+          el('outCoverage').className = 'num';
+        }
+
+        el('outValSDELow').textContent = fmt(sde * MULT.sdeLow);
+        el('outValSDEMid').textContent = fmt(sde * MULT.sdeMid);
+        el('outValSDEHigh').textContent = fmt(sde * MULT.sdeHigh);
+        el('outValRevLow').textContent = fmt(revenue * MULT.revLow);
+        el('outValRevMid').textContent = fmt(revenue * MULT.revMid);
+        el('outValRevHigh').textContent = fmt(revenue * MULT.revHigh);
+
+        if (stressPct > 0 && revenue > 0) {
+          var stressRev = revenue * (1 - stressPct / 100);
+          var stressSde = stressRev - cogs * (stressRev / revenue) - opEx + ownerComp + addbacks;
+          el('stressLabel').textContent = '-' + stressPct + '%';
+          el('stressSDE').textContent = fmt(Math.max(0, stressSde));
+          el('stressVal').textContent = fmt(Math.max(0, stressSde) * MULT.sdeMid);
+          el('stressBox').removeAttribute('hidden');
+        } else {
+          el('stressBox').setAttribute('hidden', 'hidden');
+        }
+
+        el('results').removeAttribute('hidden');
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
