@@ -289,6 +289,9 @@
         el.classList.add('active');
       });
     }
+    demoTabs.forEach(function (tab) {
+      tab.setAttribute('tabindex', tab.classList.contains('active') ? '0' : '-1');
+    });
   }
 
   // Handle demo tab clicks — JS-driven switching for 5+ tabs
@@ -298,6 +301,21 @@
       var targetId = tab.getAttribute('href').slice(1);
       history.replaceState(null, '', '#' + targetId);
       syncDemoTabFromHash();
+    });
+  });
+
+  demoTabs.forEach(function (tab, index) {
+    tab.addEventListener('keydown', function (e) {
+      var key = e.key;
+      if (key !== 'ArrowLeft' && key !== 'ArrowRight' && key !== 'Home' && key !== 'End') return;
+      e.preventDefault();
+      var next = index;
+      if (key === 'ArrowLeft') next = (index - 1 + demoTabs.length) % demoTabs.length;
+      else if (key === 'ArrowRight') next = (index + 1) % demoTabs.length;
+      else if (key === 'Home') next = 0;
+      else if (key === 'End') next = demoTabs.length - 1;
+      demoTabs[next].click();
+      demoTabs[next].focus();
     });
   });
 

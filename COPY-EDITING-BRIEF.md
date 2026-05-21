@@ -6,7 +6,7 @@
 >
 > **Source file:** `site/index.html`
 >
-> **Last updated:** February 2026. Matches current site: no Journey section, Impact = 3 cards (Weeks→Hours, 90%, 15+ in 2 months), Connect email andrewdeanmartin@gmail.com.
+> **Last updated:** May 2026. Matches current site: no Journey section, Impact = 3 cards (Weeks→Hours, 3 weeks→2 hours survey, 20+ demos), Connect email andrewdeanmartin@gmail.com + Substack.
 
 **How to resume work (for Cursor):** Open this file and say: *"I'm back on the portfolio. COPY-EDITING-BRIEF is source of truth for copy; live site is site/index.html. What should we tackle next?"* Or name a section (e.g. "Demos intro", "Impact", "Connect") to edit. Local preview: `python3 -m http.server 8080` from `site/`, then open http://localhost:8080.
 
@@ -68,8 +68,8 @@ Logo text: **ADM**
 | Value | Label |
 |-------|-------|
 | 18+ | Years in Technology |
-| 15+ | Shipped in 2 Months |
-| 4 | Territories Launched in 6 Months |
+| 20+ | Demos & Prototypes Shipped |
+| 4 | International Territories Launched in 6 Months |
 
 ---
 
@@ -339,8 +339,10 @@ Logo text: **ADM**
 | Metric | Label | Context |
 |--------|-------|---------|
 | Weeks → Hours | Full Cycle to Artifact | From assessment through recommendations to something you can run. What used to take weeks now happens in hours. Real artifact, not just a deck. |
-| 90% | Cycle Time Cut | Built a GenAI-powered tool that compressed survey and assessment cycles by up to 90%. |
-| 15+ | Shipped in 2 Months | Since January 2026. Working demos that accelerated investment decisions and unblocked client conversations. |
+| 3 Weeks → 2 Hours | Survey Analysis | Built a GenAI agent that reads, codes, and summarizes engagement surveys — work that used to take weeks now finishes in hours. |
+| 20+ | Demos & Prototypes | Agent pipelines, diagnostics, and client walkthroughs — built to move investment decisions, not sit in a repo. |
+
+**Social proof:** No colleague or client quotes on the public site. Performance-review language and PwC attribution are out of scope. Trust currency = Impact metrics, demos, and quantifiable results (see BUILD-PLAN.md).
 
 ---
 
@@ -355,7 +357,7 @@ Logo text: **ADM**
 **Body:**
 > Working on AI delivery, enterprise modernization, or making agentic systems work in regulated environments? I'd like to hear about it.
 
-**CTAs:** LinkedIn · Email (andrewdeanmartin@gmail.com)
+**CTAs:** LinkedIn · Email (andrewdeanmartin@gmail.com) · Substack ([substack.com/@builtnotscoped](https://substack.com/@builtnotscoped) — *Built Not Scoped*)
 
 ---
 

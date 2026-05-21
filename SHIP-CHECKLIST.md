@@ -7,9 +7,8 @@ Use this before calling the site "done and shipped."
 ## Must-have before go-live
 
 ### 1. OG / social image
-- **What:** `site/og-image.png` (1200×630 px) for LinkedIn, Twitter, etc.
-- **Why:** `index.html` references `https://andrewdeanmartin.com/og-image.png`. If the file is missing, shares show no image or a broken preview.
-- **Do:** Create an image (name + tagline or key visual), save as `site/og-image.png`. No code change needed if the path stays the same.
+- **Status:** Done — `site/og-image.png` is 1200×630 px.
+- **Verify:** Share a link on LinkedIn or use a preview tool after deploy to confirm the crop looks right.
 
 ### 2. Deploy and domain
 - **What:** Deploy the `site/` folder (or repo with `site` as publish directory). Point andrewdeanmartin.com to that host.

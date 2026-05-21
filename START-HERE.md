@@ -21,6 +21,16 @@ cd site && python3 -m http.server 8080
 
 Then open **http://localhost:8080**
 
+**Quick health check (no browser):**
+```bash
+npm run smoke
+```
+
+**Full interactive QA (requires `npm install` once):**
+```bash
+npm run test:headless
+```
+
 ---
 
 ## To get Cursor moving

@@ -14,7 +14,7 @@ The page is a single story: **who** → **how** → **see it** → **proof** →
 | **About** | Why I'm the one: delivery reality, roadmaps → outcomes. | "The demos below show how." |
 | **How I Work** | Methods: strategy+engineering, prototypes, AI as method, governance, range. | *(Bridge)* Those approaches show up in the tools below. |
 | **Demos** | See it in practice: four tools that put the approach into action. | *(Bridge)* This way of working has produced measurable results. |
-| **Impact** | Proof: weeks→hours, 90% cycle cut, 15+ prototypes shipped. | *(Bridge)* If that sounds like the partnership you need— |
+| **Impact** | Proof: weeks→hours, survey analysis 3 weeks→2 hours, 20+ demos shipped. | *(Bridge)* If that sounds like the partnership you need— |
 | **Connect** | Next: let's compare notes and turn your ambition into what ships. | — |
 
 ---
