@@ -214,6 +214,28 @@ export const jsonStore = {
     return load();
   },
 
+  async resetAll() {
+    const store = load();
+    const client = store.clients.find((c) => c.slug === 'b9');
+    const fresh = emptyStore();
+    if (client) {
+      fresh.clients.push({
+        id: client.id,
+        name: client.name,
+        slug: client.slug,
+        metadata: {},
+        createdAt: client.createdAt,
+      });
+    }
+    save(fresh);
+    return {
+      ok: true,
+      clearedAt: new Date().toISOString(),
+      sessionsRemoved: store.sessions.length,
+      answersRemoved: store.answers.length,
+    };
+  },
+
   async getLatestOutcome() {
     const store = load();
     const sessions = store.sessions

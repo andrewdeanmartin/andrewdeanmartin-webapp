@@ -63,6 +63,9 @@
       return fetch(baseUrl() + '/v1/admin/backup', { headers: headers() })
         .then(function (r) { return r.json(); });
     },
+    adminResetAll: function () {
+      return request('POST', '/v1/admin/reset', { confirm: true });
+    },
     fetchKnowledge: function (name) {
       return fetch('/b9/knowledge/' + name + '.json').then(function (r) { return r.json(); });
     },

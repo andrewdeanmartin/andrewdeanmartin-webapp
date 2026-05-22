@@ -60,4 +60,12 @@ router.get('/backup', async (req, res) => {
   res.json(backup);
 });
 
+router.post('/reset', async (req, res) => {
+  if (req.body?.confirm !== true) {
+    return res.status(400).json({ error: 'Send { confirm: true } to reset all B9 workspace data' });
+  }
+  const result = await jsonStore.resetAll();
+  res.json(result);
+});
+
 export default router;

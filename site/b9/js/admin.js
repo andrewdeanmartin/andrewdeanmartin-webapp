@@ -104,4 +104,33 @@
         alert('Backup failed: ' + (e.message || ''));
       });
   });
+
+  document.getElementById('admin-reset').addEventListener('click', function () {
+    var status = document.getElementById('admin-reset-status');
+    if (
+      !window.confirm(
+        'Reset all B9 data on the server? This removes sessions, plans, stack survey, TOM, and baselines. This cannot be undone.'
+      )
+    ) {
+      return;
+    }
+    status.textContent = 'Resetting…';
+    status.className = 'b9-msg';
+    B9Api.adminResetAll()
+      .then(function (result) {
+        status.textContent =
+          'Reset complete — ' +
+          (result.sessionsRemoved || 0) +
+          ' session(s) cleared. Pete will see a clean workspace on next visit.';
+        status.className = 'b9-msg b9-msg--ok';
+        document.getElementById('stack-profile-json').textContent = 'No stack profile saved yet.';
+        document.getElementById('detail').style.display = 'none';
+        selectedId = null;
+        loadSessions();
+      })
+      .catch(function (e) {
+        status.textContent = 'Reset failed: ' + (e.message || '');
+        status.className = 'b9-msg b9-msg--error';
+      });
+  });
 })();
