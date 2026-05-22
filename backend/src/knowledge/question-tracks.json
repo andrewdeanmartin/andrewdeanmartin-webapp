@@ -1,0 +1,159 @@
+{
+  "tracks": {
+    "setup": {
+      "id": "setup",
+      "kind": "foundation",
+      "label": "Getting started",
+      "description": "Who you are, how you relate to B9, and ground rules.",
+      "questions": [
+        {"id": "setup-1", "text": "Who is filling this out? (Your name is enough — no official title needed.)", "type": "text", "why": "Personalizes the plan without assuming an org chart.", "extractKeys": ["people"]},
+        {"id": "setup-2", "text": "What is your relationship to B9? (e.g. family, advisor, coordinator, owner, vendor)", "type": "textarea", "why": "Clarifies influence and who else should be in the room.", "extractKeys": ["people"]},
+        {"id": "setup-3", "text": "Who on the team would help implement changes you recommend?", "type": "textarea", "why": "Identifies allies for adoption.", "extractKeys": ["people"]},
+        {"id": "setup-4", "text": "What tools does B9 use today? (StaffConnect, email, accounting, CRM, comms)", "type": "textarea", "why": "Determines augment vs integrate patterns.", "extractKeys": ["tool"]},
+        {"id": "setup-5", "text": "Across the business, where does work feel most stuck or manual right now?", "type": "textarea", "why": "Surfaces the highest-level pain signal for prioritization.", "extractKeys": ["pain"], "branchKey": "pain"},
+        {"id": "setup-6", "text": "What should AI never do at B9? (hard lines)", "type": "textarea", "why": "Captures non-negotiables for outcomes.", "extractKeys": ["risk"]},
+        {"id": "setup-7", "text": "Who needs to sign off before anything goes live?", "type": "textarea", "why": "Clarifies approval chain.", "extractKeys": ["people"]},
+        {"id": "setup-8", "text": "What would a good first 30 days look like?", "type": "textarea", "why": "Sets near-term success criteria.", "extractKeys": ["opportunity"]},
+        {"id": "setup-9", "text": "Any channels or tools you're eager to wire together? (WhatsApp, SMS, Zapier, StaffConnect, email, other — describe the dream)", "type": "textarea", "why": "Captures integration appetite without assuming it's ready to ship.", "extractKeys": ["tool", "opportunity"], "branchKey": "integration_appetite"}
+      ]
+    },
+    "strategy": {
+      "id": "strategy",
+      "kind": "strategy",
+      "label": "Business strategy",
+      "description": "Eight owner-level questions that shape phasing. Best answered by Brenda or leadership.",
+      "questions": [
+        {"id": "brenda-1", "text": "What % of B9's pipeline (last 12 months) came from RFP / procurement / supplier-registration channels vs warm intros, repeat clients, referrals?", "type": "textarea", "why": "THE gating question — shapes Branch A priority.", "extractKeys": ["rfp_pct", "opportunity"], "branchKey": "rfp_pct"},
+        {"id": "brenda-2", "text": "What is your 3-year ambition for B9? (Lifestyle / 2-3x growth / platform / exit-grooming / other)", "type": "textarea", "why": "Sets strategic frame for all recommendations.", "extractKeys": ["ambition"], "branchKey": "ambition"},
+        {"id": "brenda-3", "text": "Roughly how many retained/repeat clients in a typical quarter? How many active 1099 talent on the roster?", "type": "textarea", "why": "Scale signals for expansion and talent tracks.", "extractKeys": ["retained_clients", "talent_count"], "branchKey": "retained_clients,talent_count"},
+        {"id": "brenda-4", "text": "What is your single biggest operational pain right now — what would you change tomorrow?", "type": "textarea", "why": "Unprompted pain drives branch and top-3 selection.", "extractKeys": ["pain"], "branchKey": "pain"},
+        {"id": "brenda-5", "text": "Where does B9 talent live geographically? Rough mix of NYC, Illinois, California talent and bookings.", "type": "textarea", "why": "Triggers compliance flags (NYC LL 144, IL HB 3773, CA ADMT).", "extractKeys": ["geography", "risk"], "branchKey": "geography"},
+        {"id": "brenda-6", "text": "Current tech stack and any 6-12 month plans to change tools?", "type": "textarea", "why": "Augment vs buy vs integrate.", "extractKeys": ["tool"]},
+        {"id": "brenda-7", "text": "How does your team feel about AI handling talent communications directly? (Open / cautious / off-limits)", "type": "select", "options": ["open", "cautious", "off-limits"], "why": "Gates Group D talent experience use cases.", "extractKeys": ["talent_ai_tolerance"], "branchKey": "talent_ai_tolerance"},
+        {"id": "brenda-8", "text": "What would success look like 6 months from now if any of this works?", "type": "textarea", "why": "Sets KPI baseline and stop/continue criteria.", "extractKeys": ["opportunity"]}
+      ]
+    },
+    "wf_marketing": {
+      "id": "wf_marketing",
+      "kind": "workflow",
+      "phaseId": "marketing-demand-gen",
+      "label": "Marketing / Demand Gen",
+      "description": "How leads arrive — SEO, partnerships, RFP portals, referrals.",
+      "questions": [
+        {"id": "wf_marketing-1", "text": "Marketing / Demand Gen — How do new leads find B9 today? Who owns follow-up?", "type": "textarea", "why": "Maps the top of the funnel before AI recommendations.", "extractKeys": ["tool", "people"]},
+        {"id": "wf_marketing-2", "text": "Where is the most manual work in this phase? (content, outreach, list building, etc.)", "type": "textarea", "why": "Surfaces automation candidates tied to this workflow.", "extractKeys": ["pain"]},
+        {"id": "wf_marketing-3", "text": "What would \"better\" look like here in 90 days?", "type": "textarea", "why": "Sets a measurable target for this process.", "extractKeys": ["opportunity"]}
+      ]
+    },
+    "wf_discovery": {
+      "id": "wf_discovery",
+      "kind": "workflow",
+      "phaseId": "discovery-scoping",
+      "label": "Discovery / Scoping",
+      "description": "Inquiry handling and qualification — first 24–72 hours.",
+      "questions": [
+        {"id": "wf_discovery-1", "text": "Discovery / Scoping — Walk through what happens when a new inquiry arrives. Who does what?", "type": "textarea", "why": "Grounds AI suggestions in the actual handoff pattern.", "extractKeys": ["people", "tool"]},
+        {"id": "wf_discovery-2", "text": "Where is the most copy-paste, retyping, or hunting for info in this phase?", "type": "textarea", "why": "Email triage and brief intake are common Phase 1 wins here.", "extractKeys": ["pain"]},
+        {"id": "wf_discovery-3", "text": "What usually delays moving from inquiry to quote?", "type": "textarea", "why": "Identifies bottlenecks AI can draft around, not replace.", "extractKeys": ["pain", "opportunity"]}
+      ]
+    },
+    "wf_proposal": {
+      "id": "wf_proposal",
+      "kind": "workflow",
+      "phaseId": "proposal-quote-pricing",
+      "label": "Proposal / Quote / Pricing",
+      "description": "Proposals, RFP responses, capability decks, pricing.",
+      "questions": [
+        {"id": "wf_proposal-1", "text": "Proposal / Quote — How does a quote or proposal get built today? (tools, templates, who writes)", "type": "textarea", "why": "Validates ROI-02 and RFP-related priorities.", "extractKeys": ["tool", "people"]},
+        {"id": "wf_proposal-2", "text": "What parts are always rewritten from scratch vs reused?", "type": "textarea", "why": "Template + AI draft opportunities live here.", "extractKeys": ["pain"]},
+        {"id": "wf_proposal-3", "text": "Typical turnaround time today, and what would \"fast enough\" mean?", "type": "textarea", "why": "Sets a KPI for quote automation.", "extractKeys": ["opportunity"]}
+      ]
+    },
+    "wf_talent_sourcing": {
+      "id": "wf_talent_sourcing",
+      "kind": "workflow",
+      "phaseId": "talent-sourcing",
+      "label": "Talent Sourcing / Vetting",
+      "description": "How 1099 talent is discovered, vetted, onboarded, profiled.",
+      "questions": [
+        {"id": "wf_talent_sourcing-1", "text": "Talent Sourcing — How does someone new get onto the B9 roster end-to-end?", "type": "textarea", "why": "Maps compliance-sensitive steps before suggesting AI.", "extractKeys": ["people", "tool"]},
+        {"id": "wf_talent_sourcing-2", "text": "What is repetitive in vetting, onboarding, or profile updates?", "type": "textarea", "why": "Job descriptions and FAQ bots may apply — with gates.", "extractKeys": ["pain"]},
+        {"id": "wf_talent_sourcing-3", "text": "Any geography or compliance concerns in this workflow? (NYC, IL, CA)", "type": "textarea", "why": "Triggers hiring-law flags early.", "extractKeys": ["geography", "risk"]}
+      ]
+    },
+    "wf_casting": {
+      "id": "wf_casting",
+      "kind": "workflow",
+      "phaseId": "casting-matching",
+      "label": "Casting / Matching / Booking",
+      "description": "Match talent to roles, client approval, confirm bookings.",
+      "questions": [
+        {"id": "wf_casting-1", "text": "Casting / Matching — How do you go from brief to confirmed bookings?", "type": "textarea", "why": "Human selection must stay central; AI is decision support only.", "extractKeys": ["people", "tool"]},
+        {"id": "wf_casting-2", "text": "Where do double-bookings, mismatches, or slow confirmations happen?", "type": "textarea", "why": "Conflict detection and matching assist signals.", "extractKeys": ["pain"]},
+        {"id": "wf_casting-3", "text": "How much of casting is art/judgment vs searchable criteria?", "type": "textarea", "why": "Calibrates how far automation can go.", "extractKeys": ["risk"]}
+      ]
+    },
+    "wf_pre_event": {
+      "id": "wf_pre_event",
+      "kind": "workflow",
+      "phaseId": "pre-event-prep",
+      "label": "Pre-Event Prep / Logistics",
+      "description": "Call sheets, briefings, brand training, travel, COIs.",
+      "questions": [
+        {"id": "wf_pre_event-1", "text": "Pre-Event Prep — What gets assembled before talent hits the ground?", "type": "textarea", "why": "Checklists and briefing docs are strong AI draft targets.", "extractKeys": ["tool", "people"]},
+        {"id": "wf_pre_event-2", "text": "What gets missed or rushed when timelines compress?", "type": "textarea", "why": "Surfaces failure modes under pressure.", "extractKeys": ["pain"]},
+        {"id": "wf_pre_event-3", "text": "Any brand training or quiz steps? Who owns them?", "type": "textarea", "why": "ROI-06 compliance gates apply here.", "extractKeys": ["risk", "people"]}
+      ]
+    },
+    "wf_event_day": {
+      "id": "wf_event_day",
+      "kind": "workflow",
+      "phaseId": "event-day-ops",
+      "label": "Event Day / Execution",
+      "description": "Check-in, real-time issues, supervision, no-show recovery.",
+      "questions": [
+        {"id": "wf_event_day-1", "text": "Event Day — What does coordination look like hour-by-hour?", "type": "textarea", "why": "Informs ops-excellence branch and no-show workflows.", "extractKeys": ["people", "tool"]},
+        {"id": "wf_event_day-2", "text": "What goes wrong most often? (no-shows, comms gaps, client surprises)", "type": "textarea", "why": "Direct input to Branch B priorities.", "extractKeys": ["pain"], "branchKey": "pain"},
+        {"id": "wf_event_day-3", "text": "How are issues escalated and resolved today?", "type": "textarea", "why": "AI can draft comms — humans still own recovery.", "extractKeys": ["opportunity"]}
+      ]
+    },
+    "wf_post_event": {
+      "id": "wf_post_event",
+      "kind": "workflow",
+      "phaseId": "post-event-recap",
+      "label": "Post-Event / Recap",
+      "description": "Recaps, client feedback, talent feedback, asset archival.",
+      "questions": [
+        {"id": "wf_post_event-1", "text": "Post-Event — How are recaps and follow-ups produced after an event?", "type": "textarea", "why": "Validates ROI-03 recap automation.", "extractKeys": ["tool", "people"]},
+        {"id": "wf_post_event-2", "text": "How long from event end to client receiving a recap?", "type": "textarea", "why": "Baseline for 48-hour recap target.", "extractKeys": ["opportunity"]},
+        {"id": "wf_post_event-3", "text": "What makes a recap great vs acceptable?", "type": "textarea", "why": "Quality bar for AI drafts.", "extractKeys": ["pain"]}
+      ]
+    },
+    "wf_finance": {
+      "id": "wf_finance",
+      "kind": "workflow",
+      "phaseId": "finance-admin",
+      "label": "Finance / Invoicing / Payroll",
+      "description": "Invoicing, AR, payroll, expenses, 1099/W-2.",
+      "questions": [
+        {"id": "wf_finance-1", "text": "Finance — Walk through invoicing and talent payment after an event.", "type": "textarea", "why": "Cash flow and audit use cases map here.", "extractKeys": ["tool", "people"]},
+        {"id": "wf_finance-2", "text": "Where do billing errors, delays, or manual reconciliation happen?", "type": "textarea", "why": "ROI-11/12 signals.", "extractKeys": ["pain"]},
+        {"id": "wf_finance-3", "text": "Any cash-flow visibility gaps leadership worries about?", "type": "textarea", "why": "Weekly forecast routine candidate.", "extractKeys": ["opportunity"]}
+      ]
+    },
+    "wf_comms_automation": {
+      "id": "wf_comms_automation",
+      "kind": "workflow",
+      "phaseId": "talent-experience",
+      "label": "Comms, WhatsApp & automation",
+      "description": "How messages flow today — and what Pete wants wired up.",
+      "questions": [
+        {"id": "wf_comms-1", "text": "How does B9 talk to talent today? (text, WhatsApp, email, StaffConnect, phone — what do people actually use?)", "type": "textarea", "why": "Maps real channels before recommending WhatsApp or SMS pilots.", "extractKeys": ["tool", "people"]},
+        {"id": "wf_comms-2", "text": "What would you automate first if you could wire WhatsApp or SMS to something else tomorrow?", "type": "textarea", "why": "Surfaces Pete-style integration ideas without over-committing.", "extractKeys": ["opportunity"], "branchKey": "integration_appetite"},
+        {"id": "wf_comms-3", "text": "What has to stay human-reviewed before anything sends? (clients, talent, both?)", "type": "textarea", "why": "Sets assist vs automate boundary for messaging.", "extractKeys": ["risk"]},
+        {"id": "wf_comms-4", "text": "Have talent opted in to business texts/WhatsApp? Any STOP/opt-out process today?", "type": "textarea", "why": "TCPA gate — required before automated outbound.", "extractKeys": ["risk", "geography"]},
+        {"id": "wf_comms-5", "text": "Who would build or maintain the wiring — Pete, a vendor, Andrew, someone on staff?", "type": "textarea", "why": "Scopes L1 Zapier vs L2 API build realistically.", "extractKeys": ["people", "tool"]}
+      ]
+    }
+  }
+}

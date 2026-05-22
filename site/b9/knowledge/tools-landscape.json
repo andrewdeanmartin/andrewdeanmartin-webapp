@@ -1,0 +1,157 @@
+{
+  "intro": "From advisory research (doc 09 — Vendor Evaluation Matrix). Not a shopping list — tools to discuss after Brenda validates stack and priorities. ChatGPT Teams is the default AI workspace, not the only tool.",
+  "disclaimer": "Pricing and fit are directional (~20–50 person boutique agency). Nothing here is a recommendation to buy before discovery.",
+  "categories": [
+    {
+      "id": "foundation",
+      "label": "AI workspace & governance",
+      "when": "Day 1 — shared drafting for the team",
+      "tools": [
+        { "name": "ChatGPT Teams", "purpose": "General AI workspace, admin controls, no training on data", "pricing": "~$30/user/mo", "fit": "good", "notes": "Default L0–L1 starting point for most use cases" },
+        { "name": "Claude for Work", "purpose": "Alternative GenAI workspace, strong long-form", "pricing": "~$30/user/mo", "fit": "good", "notes": "Consider for Brenda if writing quality matters most" },
+        { "name": "Microsoft 365 Copilot", "purpose": "AI in Office apps", "pricing": "~$30/user/mo add-on", "fit": "possible", "notes": "Only if already deep on M365" },
+        { "name": "Google Gemini for Workspace", "purpose": "AI in Gmail/Docs/Sheets", "pricing": "~$20–30/user/mo", "fit": "possible", "notes": "Only if already on Google Workspace" }
+      ]
+    },
+    {
+      "id": "ops-core",
+      "label": "Ops system of record (assumed today)",
+      "when": "Already in place — extend, don't replace in Phase 1",
+      "tools": [
+        { "name": "StaffConnect", "purpose": "Bookings, roster, event ops", "pricing": "Existing", "fit": "good", "notes": "Assumed SoR — API access determines automation ceiling" },
+        { "name": "QuickBooks (or Xero)", "purpose": "Accounting, AR/AP", "pricing": "Existing", "fit": "good", "notes": "Validate which B9 uses" },
+        { "name": "Gmail / Outlook", "purpose": "Client & talent email", "pricing": "Existing", "fit": "good", "notes": "Primary external comms for clients" },
+        { "name": "Google Drive / SharePoint", "purpose": "Templates, rate cards, assets", "pricing": "Existing", "fit": "good", "notes": "Where proposals and SOPs likely live" }
+      ]
+    },
+    {
+      "id": "glue",
+      "label": "Glue & automation (no-code)",
+      "when": "First wiring experiments — Pete's connector interest",
+      "tools": [
+        { "name": "Zapier", "purpose": "Connect apps, triggers → actions", "pricing": "~$20–100/mo", "fit": "good", "notes": "Form → doc, email → task, export → alert" },
+        { "name": "Make (Integromat)", "purpose": "Heavier workflow automation", "pricing": "~$10–50/mo", "fit": "good", "notes": "Alternative to Zapier for complex flows" },
+        { "name": "Google Apps Script", "purpose": "Light custom glue in Workspace", "pricing": "Free", "fit": "good", "notes": "Quote shells, sheet automation" }
+      ]
+    },
+    {
+      "id": "comms",
+      "label": "SMS / WhatsApp / unified inbox",
+      "when": "After assist-first pilots — talent FAQ, no-show, reminders",
+      "tools": [
+        { "name": "Twilio", "purpose": "SMS & WhatsApp Business API", "pricing": "~$0.01/msg + monthly", "fit": "good", "notes": "Best for L1 channel pilot; TCPA opt-in required" },
+        { "name": "Whippy", "purpose": "Staffing-focused omnichannel inbox", "pricing": "~$200–600/mo", "fit": "good", "notes": "After Twilio pilot proves channel" },
+        { "name": "Sense", "purpose": "Conversational AI for staffing", "pricing": "Custom", "fit": "good", "notes": "Mature; recruitment-adjacent" },
+        { "name": "Fountain Cue", "purpose": "Claude-powered hiring copilot", "pricing": "Enterprise", "fit": "skip", "notes": "Wrong segment — gig scale, not boutique premium" }
+      ]
+    },
+    {
+      "id": "rfp",
+      "label": "RFP & procurement",
+      "when": "If RFP ≥10–20% of pipeline (Brenda gating question)",
+      "tools": [
+        { "name": "ChatGPT + Drive library", "purpose": "L0–L1 RFP drafts", "pricing": "~$150/mo (team AI)", "fit": "good", "notes": "Start here if RFP volume is moderate" },
+        { "name": "AutoRFP.ai", "purpose": "AI-native RFP platform", "pricing": "Custom; lighter than Loopio", "fit": "good", "notes": "90-day pilot if RFP 10–30% of revenue" },
+        { "name": "Loopio", "purpose": "Mid-market RFP automation", "pricing": "~$200–400/user/mo", "fit": "possible", "notes": "If RFP >30% — budget $5–15K/yr" },
+        { "name": "Responsive (RFPIO)", "purpose": "Enterprise RFP", "pricing": "Enterprise", "fit": "skip", "notes": "Too heavy unless high RFP volume" },
+        { "name": "TealBook + WBENCLink", "purpose": "Supplier visibility (buyer-side databases)", "pricing": "Free for certified suppliers", "fit": "good", "notes": "Ensure profiles current — not AI, but revenue lever" }
+      ]
+    },
+    {
+      "id": "dispatch",
+      "label": "Event-day dispatch & no-show",
+      "when": "Branch B / operational excellence path",
+      "tools": [
+        { "name": "StaffConnect API + Twilio", "purpose": "Custom no-show / standby workflow", "pricing": "Dev + SMS", "fit": "possible", "notes": "Depends on StaffConnect API access" },
+        { "name": "Senegal Software", "purpose": "Event-staffing dispatch + auto-replace", "pricing": "Custom monthly", "fit": "good", "notes": "Built for event staffing specifically" },
+        { "name": "Skedulo", "purpose": "Cross-industry scheduling/dispatch", "pricing": "Per-user", "fit": "possible", "notes": "Only if StaffConnect migration on table" }
+      ]
+    },
+    {
+      "id": "finance",
+      "label": "Cash flow & project finance",
+      "when": "ROI-11 — weekly visibility for leadership",
+      "tools": [
+        { "name": "ChatGPT + Sheets", "purpose": "L0–L1 forecast from QBO export", "pricing": "Minimal", "fit": "good", "notes": "Validate pattern free first" },
+        { "name": "Dryrun", "purpose": "Project-based cash forecasting", "pricing": "~$99–300/mo", "fit": "good", "notes": "Strong fit for event-by-event revenue" },
+        { "name": "Float", "purpose": "Visual cash flow", "pricing": "~$60–100/mo", "fit": "good", "notes": "QBO/Xero integration" },
+        { "name": "Expensify", "purpose": "Receipt capture", "pricing": "~$5–10/user/mo", "fit": "good", "notes": "ROI-14 expense shoebox" }
+      ]
+    },
+    {
+      "id": "content",
+      "label": "Recaps, decks & visual content",
+      "when": "Post-event recaps, capability decks, social",
+      "tools": [
+        { "name": "Canva Pro", "purpose": "Branded layouts, recap visuals", "pricing": "~$15/mo", "fit": "good", "notes": "Pairs with multimodal AI drafts" },
+        { "name": "Tome / Gamma / Decktopus", "purpose": "AI deck generation", "pricing": "~$20–30/mo", "fit": "good", "notes": "Capability deck personalizer (NEW-11)" },
+        { "name": "Snapsight Remix", "purpose": "Live-event multimodal content", "pricing": "Custom", "fit": "good", "notes": "Phase 3 if recap is renewal lever" }
+      ]
+    },
+    {
+      "id": "crm",
+      "label": "CRM & account expansion",
+      "when": "If no CRM today — foundation for expansion signals (NEW-16/17)",
+      "tools": [
+        { "name": "ChatGPT + email exports", "purpose": "L0–L1 expansion signal review", "pricing": "Minimal", "fit": "good", "notes": "Start without new CRM" },
+        { "name": "Folk", "purpose": "Lightweight CRM with AI", "pricing": "~$30–100/user/mo", "fit": "good", "notes": "Founder-friendly" },
+        { "name": "Attio", "purpose": "Modern CRM + workflows", "pricing": "~$34–119/user/mo", "fit": "good", "notes": "Alternative to Folk" },
+        { "name": "HubSpot Service Hub", "purpose": "CRM-native CS", "pricing": "Tiered", "fit": "possible", "notes": "Only if already on HubSpot" },
+        { "name": "Gainsight / ChurnZero", "purpose": "Enterprise CS platforms", "pricing": "Enterprise", "fit": "skip", "notes": "Wrong scale for boutique B9" }
+      ]
+    },
+    {
+      "id": "conversation-intel",
+      "label": "Conversation intelligence (Phase 3)",
+      "when": "Defer unless Brenda pains on call recall",
+      "tools": [
+        { "name": "Avoma", "purpose": "Call recording & summaries", "pricing": "~$19–128/user/mo", "fit": "good", "notes": "Free tier for Brenda-only pilot" },
+        { "name": "Modjo", "purpose": "Sales call analysis", "pricing": "~$60–150/user/mo", "fit": "good", "notes": "Alternative to Avoma" },
+        { "name": "Gong", "purpose": "Enterprise revenue intelligence", "pricing": "~$100–200/user/mo", "fit": "skip", "notes": "Wrong segment today" }
+      ]
+    },
+    {
+      "id": "compliance",
+      "label": "Compliance & bias audit",
+      "when": "Before talent matching (ROI-08) in NYC / IL / CA",
+      "tools": [
+        { "name": "Holistic AI", "purpose": "NYC LL 144 AEDT bias audit", "pricing": "~$5–20K/yr per AEDT", "fit": "good", "notes": "Required before automated matching in NYC" },
+        { "name": "Babl AI", "purpose": "Bias audit alternative", "pricing": "~$5–20K/yr", "fit": "good", "notes": "Independent auditor" },
+        { "name": "Employment counsel", "purpose": "ROI-06/07/08/NEW-02 design review", "pricing": "~$2–5K one-time", "fit": "good", "notes": "Not software — budget anyway" }
+      ]
+    }
+  ],
+  "stackScenarios": [
+    {
+      "id": "minimal",
+      "label": "Minimal Phase 2 baseline",
+      "monthly": "~$235/mo",
+      "items": ["ChatGPT Teams (5 users)", "Twilio low volume", "Canva Pro", "Tome or Gamma"]
+    },
+    {
+      "id": "rfp",
+      "label": "RFP-led (Branch A)",
+      "monthly": "~$735–1,735/mo",
+      "items": ["Baseline above", "AutoRFP.ai or Loopio"]
+    },
+    {
+      "id": "ops",
+      "label": "Operational (Branch B)",
+      "monthly": "~$635–1,335/mo",
+      "items": ["Baseline above", "Senegal Software", "Dryrun"]
+    },
+    {
+      "id": "talent-comms",
+      "label": "Talent comms (Branch D)",
+      "monthly": "~$535–935/mo",
+      "items": ["Baseline above", "Whippy or Sense", "Twilio higher volume"]
+    }
+  ],
+  "surveyQuestions": [
+    "What is B9 on today — StaffConnect, QBO vs Xero, Gmail vs Outlook, Google vs Microsoft?",
+    "Is there a CRM? (HubSpot, Folk, spreadsheets, nothing?)",
+    "How do talent texts work — personal phones, group texts, anything centralized?",
+    "Any 6–12 month plans to change core systems?",
+    "Who administers tools today — Brenda, coordinator, outside IT?"
+  ]
+}

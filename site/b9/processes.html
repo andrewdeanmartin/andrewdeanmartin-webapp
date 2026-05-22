@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Process Map — B9 Transformation</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/og-image.png">
+  <link rel="manifest" href="/b9/manifest.webmanifest">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="B9 Guide">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="/b9/js/b9-theme.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/b9/b9.css">
+</head>
+<body class="b9-app">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="b9-site-header"></div>
+  <nav class="b9-subnav" id="b9-nav" aria-label="B9 guide"></nav>
+  <main id="main-content" class="b9-main b9-main--wide">
+    <div class="b9-hero">
+      <h1>Process map</h1>
+      <p id="process-hint">How B9 likely runs today — then pick a target maturity (assist → connected → agentic) per process to build a Target Operating Model.</p>
+      <p class="b9-muted" id="process-disclaimer"></p>
+    </div>
+
+    <div class="b9-map-toolbar b9-card">
+      <label class="b9-toggle">
+        <input type="checkbox" id="ai-overlay" checked>
+        <span>Show AI overlay</span>
+      </label>
+      <label class="b9-toggle">
+        <input type="checkbox" id="edit-mode">
+        <span>Customize (edit notes)</span>
+      </label>
+      <button type="button" class="b9-btn b9-btn--secondary b9-btn--sm" id="reset-custom" style="display:none">Reset my edits</button>
+    </div>
+
+    <section class="b9-card">
+      <h2>Client journey</h2>
+      <p class="b9-muted">Click a phase to see steps. Numbers are order, not dates.</p>
+      <div class="b9-pipeline" id="pipeline-client" role="tablist"></div>
+    </section>
+
+    <section class="b9-card">
+      <h2>Talent pipeline</h2>
+      <p class="b9-muted">Runs in parallel — converges at casting.</p>
+      <div class="b9-pipeline b9-pipeline--talent" id="pipeline-talent" role="tablist"></div>
+    </section>
+
+    <section class="b9-card">
+      <h2>Cross-cutting</h2>
+      <div class="b9-pipeline b9-pipeline--overlay" id="pipeline-overlay" role="tablist"></div>
+    </section>
+
+    <section class="b9-card b9-map-detail" id="map-detail">
+      <p class="b9-muted">Select a process above to view steps.</p>
+    </section>
+
+    <section class="b9-card b9-tom-panel" id="tom-panel">
+      <div class="b9-tom-panel__head">
+        <div>
+          <h2>Target Operating Model</h2>
+          <p class="b9-muted">Configure maturity per process below, then export Pete's working target.</p>
+        </div>
+        <div class="b9-tom-presets">
+          <button type="button" class="b9-btn b9-btn--secondary b9-btn--sm" data-preset="all-low">All assist</button>
+          <button type="button" class="b9-btn b9-btn--secondary b9-btn--sm" data-preset="balanced">Balanced mix</button>
+          <button type="button" class="b9-btn b9-btn--secondary b9-btn--sm" data-preset="pete-wiring">Pete wiring focus</button>
+        </div>
+      </div>
+      <div id="tom-summary"></div>
+      <p class="b9-muted" id="tom-cost-disclaimer" style="font-size:0.8125rem;margin-top:0.75rem"></p>
+      <p style="margin-top:1rem">
+        <button type="button" class="b9-btn b9-btn--gold" id="export-tom">Download Target Operating Model</button>
+        <button type="button" class="b9-btn b9-btn--secondary" id="copy-tom" style="margin-left:0.5rem">Copy summary</button>
+      </p>
+    </section>
+
+    <div class="b9-card b9-card--muted" style="margin-top:1rem">
+      <h2>Next: validate with Q&amp;A</h2>
+      <p class="b9-muted">When a process doesn't look right, add notes here — then run a short Discover session to capture how B9 actually works.</p>
+      <p style="margin-top:1rem">
+        <a class="b9-btn b9-btn--gold" href="/b9/discover.html" id="discover-from-map">Discover Q&amp;A</a>
+        <a class="b9-btn b9-btn--secondary" href="/b9/plan.html" style="margin-left:0.5rem">Your Plan</a>
+      </p>
+    </div>
+  </main>
+  <div id="b9-site-footer"></div>
+  <script src="/b9/js/b9-shell.js"></script>
+  <script src="/b9/js/b9-pwa.js"></script>
+  <script src="/b9/js/b9-config.js"></script>
+  <script src="/b9/js/b9-auth.js"></script>
+  <script src="/b9/js/b9-nav.js"></script>
+  <script src="/b9/js/b9-api.js"></script>
+  <script src="/b9/js/b9-workspace.js"></script>
+  <script src="/b9/js/processes.js"></script>
+</body>
+</html>

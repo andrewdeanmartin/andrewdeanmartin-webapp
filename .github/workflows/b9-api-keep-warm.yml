@@ -1,0 +1,18 @@
+name: B9 API keep-warm
+
+on:
+  schedule:
+    - cron: '*/14 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render health
+        run: |
+          URL="${B9_API_URL:-https://b9-transform-api.onrender.com}/health"
+          curl -sf "$URL" | head -c 200
+          echo ""
+        env:
+          B9_API_URL: ${{ vars.B9_API_URL }}

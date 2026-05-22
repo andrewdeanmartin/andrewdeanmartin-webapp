@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>B9 AI Transformation — Sign in</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/og-image.png">
+  <link rel="manifest" href="/b9/manifest.webmanifest">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="B9 Guide">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="/b9/js/b9-theme.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/b9/b9.css">
+</head>
+<body class="b9-app b9-login">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="b9-site-header"></div>
+  <main id="main-content" class="b9-login__card">
+    <h1>B9 <span>Transformation</span></h1>
+    <p class="b9-muted">Sign in to continue. Ask Andrew if you need access.</p>
+    <p class="b9-muted" style="font-size:0.8125rem;border-top:1px solid var(--color-border);padding-top:0.75rem;margin-top:0.5rem"><strong>Confidential.</strong> Private client materials — not for distribution.</p>
+    <form id="form">
+      <label for="role">I am</label>
+      <select id="role" name="role">
+        <option value="pete">Pete — driving transformation</option>
+        <option value="brenda">Brenda — strategy &amp; sign-off</option>
+        <option value="staff">Team member</option>
+        <option value="admin">Andrew — advisor</option>
+      </select>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required autocomplete="current-password" autofocus>
+      <button type="submit" class="b9-btn b9-btn--gold" id="submit" style="width:100%">Continue</button>
+    </form>
+    <p class="b9-msg" id="msg" role="alert"></p>
+  </main>
+  <script src="/b9/js/b9-shell.js"></script>
+  <script src="/b9/js/b9-pwa.js"></script>
+  <script src="/b9/js/b9-config.js"></script>
+  <script src="/b9/js/b9-auth.js"></script>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var msg = document.getElementById('msg');
+      if (params.get('err') === 'config') {
+        msg.textContent = 'This area is not configured on the server yet.';
+      }
+      document.getElementById('form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var btn = document.getElementById('submit');
+        btn.disabled = true;
+        msg.textContent = '';
+        fetch('/api/b9-auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            password: document.getElementById('password').value,
+            role: document.getElementById('role').value
+          }),
+          credentials: 'same-origin'
+        })
+          .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (x) {
+            if (x.ok && x.j && x.j.ok) {
+              B9Auth.setSession(x.j.token, x.j.role);
+              window.location.replace('/b9/');
+              return;
+            }
+            msg.textContent = x.j && x.j.error === 'not_configured'
+              ? 'Server configuration incomplete.'
+              : 'Incorrect password.';
+          })
+          .catch(function () { msg.textContent = 'Could not reach the server.'; })
+          .finally(function () { btn.disabled = false; });
+      });
+    })();
+  </script>
+</body>
+</html>

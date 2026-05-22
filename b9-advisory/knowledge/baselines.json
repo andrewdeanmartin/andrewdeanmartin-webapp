@@ -1,0 +1,10 @@
+{
+  "title": "Baseline metrics",
+  "intro": "Capture today's numbers before pilots — makes ROI conversations credible in 30 days.",
+  "fields": [
+    { "id": "quoteTurnaround", "label": "Average quote turnaround", "type": "text", "placeholder": "e.g. 3–5 business days" },
+    { "id": "inboxResponse", "label": "Typical inbox / client response time", "type": "text", "placeholder": "e.g. same day vs 24–48 hrs" },
+    { "id": "coordinatorHours", "label": "Coordinator hours on roster / talent comms (weekly, rough)", "type": "text", "placeholder": "e.g. 15 hrs/week across team" },
+    { "id": "notes", "label": "Other baselines worth tracking", "type": "textarea", "placeholder": "Event-day call volume, no-show rate, etc." }
+  ]
+}

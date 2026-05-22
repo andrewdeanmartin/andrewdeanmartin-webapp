@@ -1,0 +1,168 @@
+{
+  "disclaimer": "Best-guess operating model — not how B9's systems work today. Edit notes and adjust overlays as Pete and Brenda validate reality.",
+  "groups": [
+    { "id": "client", "label": "Client journey" },
+    { "id": "talent", "label": "Talent pipeline" },
+    { "id": "overlay", "label": "Cross-cutting" }
+  ],
+  "processes": [
+    {
+      "id": "marketing-demand-gen",
+      "group": "client",
+      "order": 0,
+      "name": "Marketing / Demand Gen",
+      "summary": "How clients and talent find B9 — before a specific job exists.",
+      "ownerHint": "Brenda / marketing",
+      "discoverTrack": "wf_marketing",
+      "steps": [
+        { "id": "m1", "label": "Awareness", "detail": "Website, referrals, WBENC/NMSDC listings, partnerships, social presence." },
+        { "id": "m2", "label": "Inbound interest", "detail": "Request a Quote, Become a Model, email, or RFP portal alert." },
+        { "id": "m3", "label": "Initial routing", "detail": "Someone decides client vs talent vs spam; assigns to coordinator or Brenda.", "ai": { "useCaseIds": ["ROI-04"], "mode": "assist", "label": "Draft social posts & content calendar", "confidence": "MEDIUM", "rolloutPhase": 1 } },
+        { "id": "m4", "label": "Dormant re-engagement", "detail": "Periodic outreach to past clients who haven't booked recently.", "ai": { "useCaseIds": ["ROI-05"], "mode": "assist", "label": "Personalized win-back draft emails", "confidence": "HIGH", "rolloutPhase": 1 } }
+      ]
+    },
+    {
+      "id": "discovery-scoping",
+      "group": "client",
+      "order": 1,
+      "name": "Discovery / Scoping",
+      "summary": "First 24–72 hours after a client inquiry — understand the ask.",
+      "ownerHint": "Coordinator",
+      "discoverTrack": "wf_discovery",
+      "steps": [
+        { "id": "d1", "label": "Inquiry logged", "detail": "Email or call captured; job folder or thread started (often informal)." },
+        { "id": "d2", "label": "Qualify", "detail": "Budget, dates, market, headcount, brand fit — go/no-go judgment." },
+        { "id": "d3", "label": "Brief intake", "detail": "Collect requirements, venue, dress code, hours, special asks — lots of back-and-forth.", "ai": { "useCaseIds": ["ROI-01"], "mode": "assist", "label": "Triage inbox & draft replies", "confidence": "HIGH", "rolloutPhase": 1 } },
+        { "id": "d4", "label": "Internal handoff", "detail": "Brief summarized for quoting and casting — often retyped from email." },
+        { "id": "d5", "label": "Hand off to quote", "detail": "Coordinator or Brenda triggers proposal workflow when scope is clear." }
+      ]
+    },
+    {
+      "id": "proposal-quote-pricing",
+      "group": "client",
+      "order": 2,
+      "name": "Proposal / Quote / Pricing",
+      "summary": "Turn the brief into a priced offer the client can approve.",
+      "ownerHint": "Coordinator / Brenda",
+      "discoverTrack": "wf_proposal",
+      "steps": [
+        { "id": "p1", "label": "Rate lookup", "detail": "Find rates, past similar jobs, margin rules — may live in head, sheets, or docs." },
+        { "id": "p2", "label": "Scope & line items", "detail": "Roles, counts, hours, travel, overtime, brand training needs.", "ai": { "useCaseIds": ["ROI-02"], "mode": "assist", "label": "Structured quote draft from brief + rate card", "confidence": "HIGH", "rolloutPhase": 1 } },
+        { "id": "p3", "label": "RFP / procurement path", "detail": "If enterprise: capability deck, diverse-spend narrative, formal response.", "ai": { "useCaseIds": ["NEW-10", "NEW-11"], "mode": "assist", "label": "RFP & deck drafts (Phase 2)", "confidence": "HIGH", "rolloutPhase": 2 } },
+        { "id": "p4", "label": "Contract review", "detail": "Client paper or B9 template — insurance, cancellation, payment terms.", "ai": { "useCaseIds": ["ROI-13"], "mode": "assist", "label": "Flag risky contract clauses", "confidence": "HIGH", "rolloutPhase": 1 } },
+        { "id": "p5", "label": "Send & negotiate", "detail": "Human sends; revisions until signed or lost." }
+      ]
+    },
+    {
+      "id": "talent-sourcing",
+      "group": "talent",
+      "order": 3,
+      "name": "Talent Sourcing / Vetting",
+      "summary": "Parallel pipeline — how 1099 talent enters and stays on the roster.",
+      "ownerHint": "Coordinator / Brenda",
+      "discoverTrack": "wf_talent_sourcing",
+      "steps": [
+        { "id": "t1", "label": "Attract applicants", "detail": "Become a Model, referrals, past talent, market-specific recruiting." },
+        { "id": "t2", "label": "Screen & vet", "detail": "Photos, experience, market fit, references — human judgment heavy.", "ai": { "useCaseIds": ["ROI-07"], "mode": "assist", "label": "Job description drafts (compliance gates)", "confidence": "HIGH", "rolloutPhase": 1, "gate": "design_rules" } },
+        { "id": "t3", "label": "Onboard & profile", "detail": "Paperwork, W-9, StaffConnect profile, availability, markets served." },
+        { "id": "t4", "label": "Roster maintenance", "detail": "Keep profiles current; mark inactive; note preferences and reliability informally." }
+      ]
+    },
+    {
+      "id": "casting-matching",
+      "group": "talent",
+      "order": 4,
+      "name": "Casting / Matching / Booking",
+      "summary": "Match approved talent to a booked job — client may weigh in.",
+      "ownerHint": "Coordinator / Brenda",
+      "discoverTrack": "wf_casting",
+      "steps": [
+        { "id": "c1", "label": "Parse job requirements", "detail": "Roles, look, skills, languages, dress from client brief." },
+        { "id": "c2", "label": "Search roster", "detail": "Filter by market, availability, past performance — often manual.", "ai": { "useCaseIds": ["ROI-08"], "mode": "assist", "label": "Suggest filters — human selects final talent", "confidence": "HIGH", "rolloutPhase": 1, "gate": "high_risk" } },
+        { "id": "c3", "label": "Conflict check", "detail": "Double-bookings, travel time, back-to-back events.", "ai": { "useCaseIds": ["ROI-10"], "mode": "assist", "label": "Flag scheduling conflicts", "confidence": "HIGH", "rolloutPhase": 1 } },
+        { "id": "c4", "label": "Offer & confirm", "detail": "Outreach to talent; accept/decline; client approval if needed." },
+        { "id": "c5", "label": "Booking locked", "detail": "StaffConnect or equivalent updated; talent and client notified." }
+      ]
+    },
+    {
+      "id": "pre-event-prep",
+      "group": "client",
+      "order": 5,
+      "name": "Pre-Event Prep / Logistics",
+      "summary": "The week before — everything talent and client need on the ground.",
+      "ownerHint": "Coordinator",
+      "discoverTrack": "wf_pre_event",
+      "steps": [
+        { "id": "e1", "label": "Call sheet & logistics", "detail": "Times, location, parking, contact, dress, materials." },
+        { "id": "e2", "label": "Brand / role briefing", "detail": "Talking points, do's and don'ts, client-specific training.", "ai": { "useCaseIds": ["ROI-06"], "mode": "assist", "label": "Brand familiarization quizzes (voluntary)", "confidence": "HIGH", "rolloutPhase": 1, "gate": "design_rules" } },
+        { "id": "e3", "label": "COI & compliance docs", "detail": "Insurance certificates, venue requirements, contracts filed." },
+        { "id": "e4", "label": "Talent confirmation blast", "detail": "Reminders; last-minute subs if someone drops." },
+        { "id": "e5", "label": "Client prep touchpoint", "detail": "Final headcount, schedule tweaks, emergency contacts." }
+      ]
+    },
+    {
+      "id": "event-day-ops",
+      "group": "client",
+      "order": 6,
+      "name": "Event Day / Execution",
+      "summary": "Real-time coordination — where reputations are won or lost.",
+      "ownerHint": "Coordinator / field lead",
+      "discoverTrack": "wf_event_day",
+      "steps": [
+        { "id": "x1", "label": "Check-in", "detail": "Talent arrives; sign-in; issue materials; confirm roles." },
+        { "id": "x2", "label": "Run of show", "detail": "Supervise floor; client liaison; handle surprises." },
+        { "id": "x3", "label": "Issue & recovery", "detail": "No-shows, late arrivals, wardrobe, attitude — escalate and replace.", "ai": { "useCaseIds": ["NEW-20"], "mode": "automate_later", "label": "Standby blast & replacement workflow (Phase 2)", "confidence": "HIGH", "rolloutPhase": 2, "gate": "design_rules" } },
+        { "id": "x4", "label": "Timesheets & notes", "detail": "Hours captured; incident notes for recap and payroll." },
+        { "id": "x5", "label": "Wrap & debrief", "detail": "Quick internal what-went-well; flag client follow-ups." }
+      ]
+    },
+    {
+      "id": "post-event-recap",
+      "group": "client",
+      "order": 7,
+      "name": "Post-Event / Recap",
+      "summary": "Close the loop with client and talent while memory is fresh.",
+      "ownerHint": "Coordinator / Brenda",
+      "discoverTrack": "wf_post_event",
+      "steps": [
+        { "id": "r1", "label": "Collect artifacts", "detail": "Photos, attendance, client feedback, talent feedback, expenses." },
+        { "id": "r2", "label": "Draft recap", "detail": "Client-facing summary — often delayed when team is busy.", "ai": { "useCaseIds": ["ROI-03"], "mode": "assist", "label": "Recap draft from bullet notes", "confidence": "HIGH", "rolloutPhase": 1 } },
+        { "id": "r3", "label": "Rich recap (optional)", "detail": "Photo highlights, social-ready snippets for premium clients.", "ai": { "useCaseIds": ["NEW-24"], "mode": "assist", "label": "Multimodal recap (Phase 2)", "confidence": "HIGH", "rolloutPhase": 2 } },
+        { "id": "r4", "label": "Send & archive", "detail": "Human sends to client; files stored for renewals and disputes." },
+        { "id": "r5", "label": "Internal learnings", "detail": "Update talent notes; flag upsell or risk for account team.", "ai": { "useCaseIds": ["NEW-16"], "mode": "assist", "label": "Expansion signals from email (Phase 2)", "confidence": "MEDIUM", "rolloutPhase": 2 } }
+      ]
+    },
+    {
+      "id": "finance-admin",
+      "group": "client",
+      "order": 8,
+      "name": "Finance / Invoicing / Payroll",
+      "summary": "Get paid, pay talent, stay cash-flow sane.",
+      "ownerHint": "Finance / Brenda",
+      "discoverTrack": "wf_finance",
+      "steps": [
+        { "id": "f1", "label": "Timesheet → invoice", "detail": "Client billing from event hours and agreed rates." },
+        { "id": "f2", "label": "Talent payroll", "detail": "1099 payments; expense reimbursements; W-2 where applicable." },
+        { "id": "f3", "label": "Reconciliation", "detail": "Match invoices to timesheets and contracts.", "ai": { "useCaseIds": ["ROI-12"], "mode": "assist", "label": "Invoice vs timesheet cross-check", "confidence": "HIGH", "rolloutPhase": 1 } },
+        { "id": "f4", "label": "AR & collections", "detail": "Follow up on late pay; cash timing matters for payroll.", "ai": { "useCaseIds": ["ROI-11"], "mode": "assist", "label": "Weekly cash-flow forecast from exports", "confidence": "HIGH", "rolloutPhase": 1 } },
+        { "id": "f5", "label": "Expense capture", "detail": "Receipts, travel, misc — often a shoebox until month-end.", "ai": { "useCaseIds": ["ROI-14"], "mode": "assist", "label": "Organize receipts for accounting", "confidence": "HIGH", "rolloutPhase": 1 } }
+      ]
+    },
+    {
+      "id": "comms-automation",
+      "group": "overlay",
+      "order": 9,
+      "name": "Comms & channels",
+      "summary": "How people actually message — spans every phase.",
+      "ownerHint": "Pete's interest area",
+      "discoverTrack": "wf_comms_automation",
+      "steps": [
+        { "id": "k1", "label": "Client email", "detail": "Primary channel for quotes, changes, recaps." },
+        { "id": "k2", "label": "Talent text / WhatsApp", "detail": "Shift offers, reminders, day-of — often personal phones today." },
+        { "id": "k3", "label": "StaffConnect / ops hub", "detail": "Bookings, profiles, availability — system of record when used consistently." },
+        { "id": "k4", "label": "Talent FAQ", "detail": "Repeat questions on pay, location, what to wear.", "ai": { "useCaseIds": ["NEW-02"], "mode": "automate_later", "label": "Supportive FAQ bot — opt-in, human escalation", "confidence": "MEDIUM", "rolloutPhase": 2, "gate": "design_rules" } },
+        { "id": "k5", "label": "Glue & automation", "detail": "Wire channel to trigger (Zapier, Twilio, API) — after one path is proven.", "ai": { "useCaseIds": ["NEW-20"], "mode": "automate_later", "label": "Event triggers → drafted messages", "confidence": "HIGH", "rolloutPhase": 2 } }
+      ]
+    }
+  ]
+}

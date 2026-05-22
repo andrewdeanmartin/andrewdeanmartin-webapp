@@ -1,0 +1,18 @@
+{
+  "title": "Current stack survey",
+  "intro": "Research assumed a toolset — capture what B9 actually uses. Saves locally and syncs to the API when connected.",
+  "fields": [
+    { "id": "filledBy", "label": "Who is filling this out?", "type": "text", "placeholder": "Pete, Brenda, coordinator…" },
+    { "id": "opsHub", "label": "Ops / roster system", "type": "select", "options": ["StaffConnect", "Spreadsheets", "Other", "Not sure"] },
+    { "id": "accounting", "label": "Accounting", "type": "select", "options": ["QuickBooks", "Xero", "Other", "Not sure"] },
+    { "id": "email", "label": "Email", "type": "select", "options": ["Google Workspace", "Microsoft 365", "Mixed", "Not sure"] },
+    { "id": "documents", "label": "Documents & templates", "type": "select", "options": ["Google Drive", "SharePoint / OneDrive", "Dropbox", "Mixed", "Not sure"] },
+    { "id": "crm", "label": "CRM / client tracking", "type": "select", "options": ["None / spreadsheets", "HubSpot", "Folk / Attio", "Salesforce", "Other", "Not sure"] },
+    { "id": "talentComms", "label": "How talent is reached day-to-day", "type": "select", "options": ["Personal cell texts", "Group texts", "WhatsApp informal", "StaffConnect only", "Twilio / business SMS", "Mixed", "Not sure"] },
+    { "id": "aiWorkspace", "label": "AI tools in use today", "type": "select", "options": ["None yet", "ChatGPT (individual accounts)", "ChatGPT Teams", "Claude", "Copilot", "Mixed", "Not sure"] },
+    { "id": "teamSize", "label": "Internal team size (rough)", "type": "text", "placeholder": "e.g. 15 coordinators + Brenda" },
+    { "id": "plannedChanges", "label": "Any 6–12 month plans to change systems?", "type": "textarea", "placeholder": "New CRM, leaving StaffConnect, etc." },
+    { "id": "toolAdmin", "label": "Who administers tools today?", "type": "text", "placeholder": "Brenda, outside IT, Pete…" },
+    { "id": "notes", "label": "Anything else about how work actually flows?", "type": "textarea" }
+  ]
+}

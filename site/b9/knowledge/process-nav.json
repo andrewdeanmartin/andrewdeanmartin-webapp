@@ -1,0 +1,104 @@
+{
+  "navigationHint": "Start with the process map — our best guess at how work flows. Toggle AI overlay, edit what is wrong, then use Q&A to validate.",
+  "groups": [
+    {
+      "id": "client",
+      "label": "Client journey",
+      "description": "How work flows from first inquiry to invoice.",
+      "items": [
+        {
+          "workflowId": "marketing-demand-gen",
+          "discoverTrack": "wf_marketing",
+          "useCases": ["ROI-04", "ROI-05", "NEW-10"],
+          "aiFit": "Draft content, dormant client outreach, RFP intake summaries"
+        },
+        {
+          "workflowId": "discovery-scoping",
+          "discoverTrack": "wf_discovery",
+          "useCases": ["ROI-01", "ROI-02"],
+          "aiFit": "Email triage, brief intake, qualification notes"
+        },
+        {
+          "workflowId": "proposal-quote-pricing",
+          "discoverTrack": "wf_proposal",
+          "useCases": ["ROI-02", "NEW-10", "NEW-11"],
+          "aiFit": "Quote and proposal drafts from rate cards and briefs"
+        },
+        {
+          "workflowId": "pre-event-prep",
+          "discoverTrack": "wf_pre_event",
+          "useCases": ["ROI-06", "ROI-07"],
+          "aiFit": "Checklists, briefing docs, brand training drafts"
+        },
+        {
+          "workflowId": "event-day-ops",
+          "discoverTrack": "wf_event_day",
+          "useCases": ["ROI-10", "NEW-20"],
+          "aiFit": "Conflict flags, no-show recovery drafts, day-of comms"
+        },
+        {
+          "workflowId": "post-event-recap",
+          "discoverTrack": "wf_post_event",
+          "useCases": ["ROI-03", "NEW-24"],
+          "aiFit": "Client recaps and follow-ups from event notes"
+        },
+        {
+          "workflowId": "finance-admin",
+          "discoverTrack": "wf_finance",
+          "useCases": ["ROI-11", "ROI-12", "ROI-14"],
+          "aiFit": "Cash visibility, invoice checks, expense capture"
+        }
+      ]
+    },
+    {
+      "id": "talent",
+      "label": "Talent pipeline",
+      "description": "Runs in parallel — sourcing through booking.",
+      "items": [
+        {
+          "workflowId": "talent-sourcing",
+          "discoverTrack": "wf_talent_sourcing",
+          "useCases": ["ROI-07", "NEW-02"],
+          "aiFit": "Job description drafts, onboarding checklists (compliance gates apply)"
+        },
+        {
+          "workflowId": "casting-matching",
+          "discoverTrack": "wf_casting",
+          "useCases": ["ROI-08", "ROI-10"],
+          "aiFit": "Decision-support filters — humans always pick final talent"
+        }
+      ]
+    },
+    {
+      "id": "overlay",
+      "label": "Cross-cutting",
+      "description": "Layers that touch every phase.",
+      "items": [
+        {
+          "workflowId": "comms-automation",
+          "discoverTrack": "wf_comms_automation",
+          "useCases": ["NEW-02", "NEW-20"],
+          "aiFit": "WhatsApp/SMS FAQ, standby fills — wire after basics, human review first"
+        },
+        {
+          "workflowId": "client-success-expansion",
+          "discoverTrack": "wf_discovery",
+          "useCases": ["NEW-16", "NEW-17", "ROI-05"],
+          "aiFit": "Expansion signals, QBR prep, win-back drafts"
+        }
+      ]
+    }
+  ],
+  "foundation": {
+    "discoverTrack": "setup",
+    "label": "Getting started",
+    "description": "Who you are, tools in use, ground rules — always included in a session.",
+    "href": "/b9/discover.html"
+  },
+  "strategy": {
+    "discoverTrack": "strategy",
+    "label": "Business strategy",
+    "description": "Eight leadership questions (RFP mix, ambition, talent AI tolerance).",
+    "href": "/b9/discover.html?strategy=1"
+  }
+}

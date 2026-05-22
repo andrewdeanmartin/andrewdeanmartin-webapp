@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin — B9 Transformation</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/og-image.png">
+  <link rel="manifest" href="/b9/manifest.webmanifest">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="B9 Guide">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="/b9/js/b9-theme.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/b9/b9.css">
+</head>
+<body class="b9-app">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="b9-site-header"></div>
+  <nav class="b9-subnav" id="b9-nav" aria-label="B9 guide"></nav>
+  <main id="main-content" class="b9-main b9-main--wide">
+    <div class="b9-hero">
+      <h1>Session review</h1>
+      <p>Andrew — review Discover sessions, add notes, regenerate outcomes.</p>
+    </div>
+    <div class="b9-card" id="stack-profile-card">
+      <h2>Current stack survey</h2>
+      <p class="b9-muted">Latest saved profile from Tools page (server when API connected).</p>
+      <pre id="stack-profile-json" style="white-space:pre-wrap;font-size:0.8125rem;max-height:320px;overflow:auto">Loading…</pre>
+    </div>
+    <div class="b9-card">
+      <h2>Workspace backup</h2>
+      <p class="b9-muted">Download full session store (sessions, workspace, stack profile).</p>
+      <button type="button" class="b9-btn b9-btn--secondary" id="admin-backup">Download backup JSON</button>
+    </div>
+    <div class="b9-card">
+      <table class="b9-admin-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Role</th>
+            <th>Track</th>
+            <th>Branch</th>
+            <th>Answers</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="sessions-body"></tbody>
+      </table>
+    </div>
+    <div class="b9-card" id="detail" style="display:none">
+      <h2>Session detail</h2>
+      <pre id="detail-json" style="white-space:pre-wrap;font-size:0.8125rem;max-height:400px;overflow:auto"></pre>
+      <label for="admin-notes">Advisor notes</label>
+      <textarea class="b9-textarea" id="admin-notes" rows="4"></textarea>
+      <p style="margin-top:1rem">
+        <button type="button" class="b9-btn b9-btn--gold" id="save-notes">Save notes</button>
+        <button type="button" class="b9-btn" id="regenerate">Regenerate outcome</button>
+        <label style="margin-left:1rem"><input type="checkbox" id="reviewed"> Reviewed</label>
+      </p>
+    </div>
+  </main>
+  <div id="b9-site-footer"></div>
+  <script src="/b9/js/b9-shell.js"></script>
+  <script src="/b9/js/b9-pwa.js"></script>
+  <script src="/b9/js/b9-config.js"></script>
+  <script src="/b9/js/b9-auth.js"></script>
+  <script src="/b9/js/b9-nav.js"></script>
+  <script src="/b9/js/b9-api.js"></script>
+  <script src="/b9/js/admin.js"></script>
+</body>
+</html>

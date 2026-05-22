@@ -1,0 +1,292 @@
+{
+  "disclaimer": "Directional estimates only — not quotes. Actual costs depend on headcount, message volume, and build choices. Consult vendors before budgeting.",
+  "levels": {
+    "low": {
+      "key": "low",
+      "label": "Low — Assist",
+      "tagline": "People run the process; AI drafts on request"
+    },
+    "medium": {
+      "key": "medium",
+      "label": "Medium — Connected",
+      "tagline": "Shared templates + light automation; human approves external sends"
+    },
+    "high": {
+      "key": "high",
+      "label": "High — Agentic",
+      "tagline": "Event-triggered workflows; humans at decision gates and exceptions only"
+    }
+  },
+  "sharedTechnologies": {
+    "chatWorkspace": "ChatGPT Teams or Claude for Work (~$30/user/mo)",
+    "staffConnect": "StaffConnect (existing ops hub)",
+    "email": "Gmail / Outlook (existing)",
+    "qbo": "QuickBooks or similar (existing)",
+    "zapier": "Zapier or Make ($20–100/mo)",
+    "twilio": "Twilio SMS/WhatsApp API (~$20–150/mo by volume)",
+    "whippy": "Whippy / Sense unified inbox ($200–600/mo)",
+    "contractor": "Integration contractor ($75–150/hr or fixed SOW)"
+  },
+  "byProcess": {
+    "marketing-demand-gen": {
+      "low": {
+        "summary": "Manual posting; AI drafts social and win-back copy in chat workspace.",
+        "technologies": ["ChatGPT Teams", "Canva or native social tools", "Google Drive content library"],
+        "costMonthly": { "min": 45, "max": 200 },
+        "costSetup": { "min": 0, "max": 500 },
+        "setupNote": "Templates + prompt library",
+        "peopleImpact": "Brenda or marketing still posts everything"
+      },
+      "medium": {
+        "summary": "Content calendar in Drive; scheduled posts; AI batch-drafts campaigns; dormant client list + draft outreach.",
+        "technologies": ["ChatGPT Teams", "Canva Pro", "Buffer or Later ($15–50/mo)", "Google Sheets client list"],
+        "costMonthly": { "min": 100, "max": 350 },
+        "costSetup": { "min": 500, "max": 2000 },
+        "setupNote": "Calendar + 2 win-back templates",
+        "peopleImpact": "Coordinator runs calendar; Brenda approves brand voice"
+      },
+      "high": {
+        "summary": "CRM-lite pipeline; automated nurture sequences with human approval queue; RFP portal monitoring alerts.",
+        "technologies": ["HubSpot Starter or similar ($50–200/mo)", "ChatGPT Teams", "Zapier alerts from RFP portals"],
+        "costMonthly": { "min": 200, "max": 600 },
+        "costSetup": { "min": 3000, "max": 10000 },
+        "setupNote": "CRM setup + integration SOW",
+        "peopleImpact": "Brenda owns strategy; 1 coordinator manages queue"
+      }
+    },
+    "discovery-scoping": {
+      "low": {
+        "summary": "Coordinator triages email manually; copies threads into AI for draft replies and brief summaries.",
+        "technologies": ["ChatGPT Teams", "Gmail/Outlook"],
+        "costMonthly": { "min": 150, "max": 250 },
+        "costSetup": { "min": 0, "max": 300 },
+        "setupNote": "Inbox triage prompts",
+        "peopleImpact": "Coordinator saves 30–60 min/day on drafts"
+      },
+      "medium": {
+        "summary": "Shared intake template; AI sorts/prioritizes inbox labels; structured brief form; handoff doc auto-generated.",
+        "technologies": ["ChatGPT Teams", "Gmail filters + labels", "Google Form or Typeform brief", "Zapier → Google Doc"],
+        "costMonthly": { "min": 180, "max": 350 },
+        "costSetup": { "min": 1000, "max": 4000 },
+        "setupNote": "Brief form + Zapier workflow",
+        "peopleImpact": "Coordinator reviews drafts; no send without human"
+      },
+      "high": {
+        "summary": "Inbound email classified and routed; draft responses queued; CRM/StaffConnect job stub created on qualify.",
+        "technologies": ["ChatGPT API + Gmail API", "Zapier/Make", "StaffConnect (if API available)"],
+        "costMonthly": { "min": 250, "max": 500 },
+        "costSetup": { "min": 5000, "max": 15000 },
+        "setupNote": "Custom integration — 4–8 weeks",
+        "peopleImpact": "Human approves every client-facing send"
+      }
+    },
+    "proposal-quote-pricing": {
+      "low": {
+        "summary": "Rate card in Sheet/Docs; AI drafts quote from brief paste; human prices and sends.",
+        "technologies": ["ChatGPT Teams", "Google Sheets rate card", "Google Docs proposal template"],
+        "costMonthly": { "min": 150, "max": 250 },
+        "costSetup": { "min": 500, "max": 1500 },
+        "setupNote": "Standardize 2–3 proposal templates",
+        "peopleImpact": "Quote turnaround target: 24–48h"
+      },
+      "medium": {
+        "summary": "Brief → auto-filled proposal shell; contract clause checklist; RFP summary assist for enterprise deals.",
+        "technologies": ["ChatGPT Teams", "Google Apps Script or Zapier", "ROI-13 clause checklist doc"],
+        "costMonthly": { "min": 200, "max": 400 },
+        "costSetup": { "min": 2000, "max": 6000 },
+        "setupNote": "Quote generator workflow",
+        "peopleImpact": "Coordinator produces first draft; Brenda reviews margin"
+      },
+      "high": {
+        "summary": "StaffConnect/export trigger builds quote package; RFP drafter for procurement path; e-sign handoff.",
+        "technologies": ["ChatGPT Teams", "AutoRFP.ai or Loopio ($500–1500/mo) for heavy RFP", "PandaDoc/DocuSign"],
+        "costMonthly": { "min": 400, "max": 2000 },
+        "costSetup": { "min": 8000, "max": 25000 },
+        "setupNote": "Only if RFP volume justifies Loopio-class tool",
+        "peopleImpact": "Brenda on enterprise; coordinator on standard quotes"
+      }
+    },
+    "talent-sourcing": {
+      "low": {
+        "summary": "AI drafts job descriptions and onboarding checklists; humans run all vetting.",
+        "technologies": ["ChatGPT Teams", "Google Docs role templates"],
+        "costMonthly": { "min": 150, "max": 250 },
+        "costSetup": { "min": 500, "max": 2000 },
+        "setupNote": "Compliance-reviewed JD templates (ROI-07)",
+        "peopleImpact": "No automated screening — design rules required"
+      },
+      "medium": {
+        "summary": "Structured application intake; AI summarizes applicant packets for coordinator review.",
+        "technologies": ["ChatGPT Teams", "Google Form application", "StaffConnect profiles"],
+        "costMonthly": { "min": 180, "max": 350 },
+        "costSetup": { "min": 2000, "max": 6000 },
+        "setupNote": "Intake form + summary prompts",
+        "peopleImpact": "Coordinator reads AI summary; makes all hire/no-hire calls"
+      },
+      "high": {
+        "summary": "Application triage bot (FAQ + status); profile enrichment suggestions — still no auto-reject.",
+        "technologies": ["Twilio + ChatGPT API", "StaffConnect", "Legal review for NYC/IL/CA if matching"],
+        "costMonthly": { "min": 300, "max": 700 },
+        "costSetup": { "min": 10000, "max": 30000 },
+        "setupNote": "High compliance surface — counsel first",
+        "peopleImpact": "Brenda explicit sign-off required before live"
+      }
+    },
+    "casting-matching": {
+      "low": {
+        "summary": "Coordinator searches roster manually; AI suggests search criteria and availability questions.",
+        "technologies": ["ChatGPT Teams", "StaffConnect export to Sheet"],
+        "costMonthly": { "min": 150, "max": 250 },
+        "costSetup": { "min": 0, "max": 500 },
+        "setupNote": "Matching assist prompts only",
+        "peopleImpact": "Humans always select final talent"
+      },
+      "medium": {
+        "summary": "Export roster → AI filters shortlist with rationale; conflict check spreadsheet; draft offer messages.",
+        "technologies": ["ChatGPT Teams", "Google Sheets", "ROI-10 conflict rules"],
+        "costMonthly": { "min": 180, "max": 350 },
+        "costSetup": { "min": 1500, "max": 5000 },
+        "setupNote": "Shortlist workflow + conflict template",
+        "peopleImpact": "Coordinator confirms every booking"
+      },
+      "high": {
+        "summary": "StaffConnect-integrated shortlist; automated conflict flags; draft outreach queue — human confirms send.",
+        "technologies": ["StaffConnect API (if available)", "ChatGPT API", "Zapier"],
+        "costMonthly": { "min": 250, "max": 600 },
+        "costSetup": { "min": 8000, "max": 20000 },
+        "setupNote": "Bias audit if AEDT in NYC/IL — $5k–15k one-time",
+        "peopleImpact": "No auto-booking without human click"
+      }
+    },
+    "pre-event-prep": {
+      "low": {
+        "summary": "AI generates call sheets and briefing checklists from brief paste; coordinator distributes manually.",
+        "technologies": ["ChatGPT Teams", "Google Docs templates"],
+        "costMonthly": { "min": 150, "max": 250 },
+        "costSetup": { "min": 500, "max": 1500 },
+        "setupNote": "Call sheet + briefing templates",
+        "peopleImpact": "Coordinator sends via email/text as today"
+      },
+      "medium": {
+        "summary": "Booking confirmed → auto-generated prep packet; voluntary brand quiz (ROI-06) with human review.",
+        "technologies": ["ChatGPT Teams", "Google Forms quiz", "Zapier notification on new booking"],
+        "costMonthly": { "min": 200, "max": 400 },
+        "costSetup": { "min": 2000, "max": 6000 },
+        "setupNote": "Quiz compliance framing required",
+        "peopleImpact": "Brand training opt-in only"
+      },
+      "high": {
+        "summary": "StaffConnect event → prep task list + doc bundle + reminder sequence; COI tracker alerts.",
+        "technologies": ["StaffConnect", "Zapier/Make", "ChatGPT API", "Shared Drive structure"],
+        "costMonthly": { "min": 250, "max": 500 },
+        "costSetup": { "min": 6000, "max": 15000 },
+        "setupNote": "Ops automation SOW",
+        "peopleImpact": "Coordinator handles exceptions only"
+      }
+    },
+    "event-day-ops": {
+      "low": {
+        "summary": "Field lead uses checklists; AI drafts comms for issues; all coordination manual.",
+        "technologies": ["ChatGPT Teams (mobile)", "Paper or Sheet run-of-show"],
+        "costMonthly": { "min": 150, "max": 250 },
+        "costSetup": { "min": 0, "max": 500 },
+        "setupNote": "Event-day comms prompt pack",
+        "peopleImpact": "No change to day-of staffing model"
+      },
+      "medium": {
+        "summary": "Standby list in Sheet; AI drafts no-show/recovery texts; coordinator approves and sends.",
+        "technologies": ["ChatGPT Teams", "Google Sheets standby pool", "Personal or Twilio SMS (manual send)"],
+        "costMonthly": { "min": 180, "max": 400 },
+        "costSetup": { "min": 1500, "max": 5000 },
+        "setupNote": "No-show playbook + templates",
+        "peopleImpact": "Recovery time measured as KPI"
+      },
+      "high": {
+        "summary": "No-show trigger → standby blast with accept link; issue triage bot for coordinators; real-time status board.",
+        "technologies": ["Twilio", "StaffConnect", "ChatGPT API", "Simple web dashboard or Whippy"],
+        "costMonthly": { "min": 400, "max": 900 },
+        "costSetup": { "min": 15000, "max": 40000 },
+        "setupNote": "NEW-20 class build — 6–8 weeks + pilot events",
+        "peopleImpact": "Human grace period before auto-send; TCPA on SMS"
+      }
+    },
+    "post-event-recap": {
+      "low": {
+        "summary": "Coordinator bullet notes → AI draft recap → human edits and sends to client.",
+        "technologies": ["ChatGPT Teams", "Email"],
+        "costMonthly": { "min": 150, "max": 250 },
+        "costSetup": { "min": 300, "max": 1000 },
+        "setupNote": "Recap template + 48h SLA",
+        "peopleImpact": "Big Phase 1 win — low risk"
+      },
+      "medium": {
+        "summary": "Structured debrief form → auto draft recap + internal talent notes; Canva for visuals.",
+        "technologies": ["ChatGPT Teams", "Google Form debrief", "Canva Pro", "Zapier → Doc draft"],
+        "costMonthly": { "min": 200, "max": 400 },
+        "costSetup": { "min": 2000, "max": 5000 },
+        "setupNote": "Debrief form + recap workflow",
+        "peopleImpact": "Coordinator 15 min vs 60 min per recap"
+      },
+      "high": {
+        "summary": "Event closed in StaffConnect → multimodal recap (photos + narrative) queued for approval → client portal/email.",
+        "technologies": ["ChatGPT multimodal", "Canva Pro", "Zapier", "Google Drive assets"],
+        "costMonthly": { "min": 250, "max": 550 },
+        "costSetup": { "min": 8000, "max": 20000 },
+        "setupNote": "NEW-24 pipeline",
+        "peopleImpact": "Brenda reviews premium client recaps"
+      }
+    },
+    "finance-admin": {
+      "low": {
+        "summary": "Weekly QBO export → AI cash summary; manual invoice/timesheet spot checks.",
+        "technologies": ["ChatGPT Teams", "QuickBooks", "Google Sheets"],
+        "costMonthly": { "min": 150, "max": 250 },
+        "costSetup": { "min": 0, "max": 500 },
+        "setupNote": "Forecast spreadsheet template",
+        "peopleImpact": "Finance/Brenda weekly 30-min review"
+      },
+      "medium": {
+        "summary": "Scheduled exports → invoice audit checklist; expense photo → categorized log.",
+        "technologies": ["ChatGPT Teams", "QBO", "Google Sheets", "Receipt app (Expensify $5–10/user)"],
+        "costMonthly": { "min": 200, "max": 450 },
+        "costSetup": { "min": 1500, "max": 5000 },
+        "setupNote": "Audit routine for one billing cycle",
+        "peopleImpact": "Catch billing errors before send"
+      },
+      "high": {
+        "summary": "Automated reconcile alerts; cash crunch forecaster on schedule; AP/AR exception queue.",
+        "technologies": ["Dryrun or Float ($100–300/mo)", "QBO API + Zapier", "ChatGPT API"],
+        "costMonthly": { "min": 350, "max": 800 },
+        "costSetup": { "min": 5000, "max": 15000 },
+        "setupNote": "Finance automation SOW",
+        "peopleImpact": "Human approves all payments"
+      }
+    },
+    "comms-automation": {
+      "low": {
+        "summary": "Same channels as today; AI drafts all outbound; copy-paste send from personal phones/email.",
+        "technologies": ["ChatGPT Teams", "Existing phones/email"],
+        "costMonthly": { "min": 150, "max": 250 },
+        "costSetup": { "min": 0, "max": 300 },
+        "setupNote": "Message template library",
+        "peopleImpact": "Pete's wiring idea starts here — no new infra"
+      },
+      "medium": {
+        "summary": "Twilio SMS or WhatsApp Business pilot; FAQ doc; human approval before bulk send; Zapier glue to StaffConnect.",
+        "technologies": ["Twilio ($20–100/mo)", "ChatGPT API", "Zapier/Make", "StaffConnect exports"],
+        "costMonthly": { "min": 250, "max": 550 },
+        "costSetup": { "min": 5000, "max": 15000 },
+        "setupNote": "TCPA opt-in + STOP — 6–8 week pilot",
+        "peopleImpact": "20–30 talent opt-in pilot"
+      },
+      "high": {
+        "summary": "Unified inbox (Whippy/Sense); talent FAQ bot with escalation; event triggers to standby pool.",
+        "technologies": ["Whippy or Sense ($200–600/mo)", "Twilio", "StaffConnect API", "ChatGPT API"],
+        "costMonthly": { "min": 500, "max": 1200 },
+        "costSetup": { "min": 20000, "max": 50000 },
+        "setupNote": "Full omnichannel — Phase 2+ only",
+        "peopleImpact": "Brenda gates automated talent comms"
+      }
+    }
+  }
+}

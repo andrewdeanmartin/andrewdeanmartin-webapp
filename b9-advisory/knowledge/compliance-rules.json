@@ -1,0 +1,35 @@
+{
+  "rules": [
+    {
+      "useCaseIds": ["ROI-08", "NEW-02"],
+      "title": "Automated employment decision tools (AEDT)",
+      "trigger": "geography mentions NYC OR talent matching pilots",
+      "message": "NYC Local Law 144 may require annual bias audit and 10-day candidate notice before using AI in hiring/casting decisions affecting NYC talent. Ship to non-NYC talent first or consult employment counsel."
+    },
+    {
+      "useCaseIds": ["ROI-07", "ROI-08"],
+      "title": "Illinois HB 3773",
+      "trigger": "geography mentions Illinois OR Illinois",
+      "message": "Illinois requires disclosure when AI is used in employment decisions. Ensure job postings and matching workflows include required notices for IL talent."
+    },
+    {
+      "useCaseIds": ["ROI-08"],
+      "title": "California ADMT (2027)",
+      "trigger": "geography mentions California OR CA",
+      "message": "California ADMT effective Jan 2027 — plan pre-use notice, opt-out, and access rights in matching workflows now."
+    },
+    {
+      "useCaseIds": ["ROI-06", "NEW-02"],
+      "title": "DOL 1099 classification",
+      "trigger": "talent-facing training or mandatory comms",
+      "message": "Mandatory training or discipline-like scoring can suggest employee status for 1099 talent. Frame as voluntary brand education; never gate bookings on AI scores."
+    },
+    {
+      "useCaseIds": ["NEW-02"],
+      "title": "TCPA consent",
+      "trigger": "talent_ai_tolerance is open OR staff track mentions SMS",
+      "message": "SMS to talent requires TCPA consent, STOP handling, and opt-in at onboarding. Prefer in-app over SMS where possible."
+    }
+  ],
+  "generalCounselNote": "Consult B9 employment counsel before piloting talent matching (ROI-08), talent FAQ (NEW-02), or no-show auto-replacement (NEW-20)."
+}

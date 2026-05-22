@@ -1,0 +1,38 @@
+# Render Blueprint — B9 Transform API
+# Docs: site/b9/DEPLOY.md
+services:
+  - type: web
+    name: b9-transform-api
+    runtime: node
+    rootDir: backend
+    plan: starter
+    buildCommand: npm install
+    startCommand: node src/index.js
+    healthCheckPath: /health
+    disk:
+      name: b9-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: USE_JSON_STORE
+        value: "1"
+      - key: DATA_DIR
+        value: /data
+      - key: ALLOWED_ORIGINS
+        value: https://andrewdeanmartin.com,https://www.andrewdeanmartin.com
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_API_KEY
+        generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: LLM_PROVIDER
+        value: anthropic
+      - key: LLM_MODEL_FAST
+        value: claude-3-5-haiku-20241022
+      - key: LLM_MODEL_SYNTH
+        value: claude-sonnet-4-20250514

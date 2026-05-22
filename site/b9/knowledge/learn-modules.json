@@ -1,0 +1,124 @@
+{
+  "modules": [
+    {
+      "id": "L1",
+      "title": "What AI tools actually are",
+      "durationMin": 5,
+      "summary": "A practical mental model — not magic, not a replacement for your team.",
+      "sections": [
+        {
+          "heading": "Pattern-matching assistants, not coworkers",
+          "body": "Today's AI tools (ChatGPT, Claude, Copilot, Gemini, and others) are large language models: they predict useful text from patterns in training data. They excel at first drafts, summaries, reformatting, and brainstorming. They do not know your roster, your client history, or what happened at last week's event unless you give them that context — and even then they can be wrong."
+        },
+        {
+          "heading": "What they are good at",
+          "body": "Turning messy inputs into structured outputs: bullet lists from call notes, draft emails from bullet points, checklists from SOPs, \"what am I missing?\" reviews before something goes out. Think of them as a fast intern who never gets tired but needs supervision."
+        },
+        {
+          "heading": "What they are not",
+          "body": "They are not accountable. They cannot sign contracts, promise talent availability, or make hiring decisions on their own. Anything client-facing or talent-facing still needs a human who owns the outcome. That is not being cautious — it is how the tools work."
+        }
+      ]
+    },
+    {
+      "id": "L2",
+      "title": "Where AI fits in a process",
+      "durationMin": 6,
+      "summary": "AI belongs at specific steps — never as the whole workflow.",
+      "sections": [
+        {
+          "heading": "The draft → review → send pattern",
+          "body": "The most reliable pattern for B9: AI produces a draft or suggestion; a coordinator or lead reviews it; a person sends or commits. AI sits before the decision point, not after it. If a step currently ends with \"someone clicks Send,\" that person stays in the loop."
+        },
+        {
+          "heading": "Good fits in event staffing ops",
+          "body": "First drafts of quotes and recaps, summarizing RFPs, turning event notes into client-ready language, generating internal checklists, flagging missing fields in a brief, organizing inbox threads before a human replies. These are high-volume, low-stakes-until-reviewed tasks."
+        },
+        {
+          "heading": "Poor fits (or extra gates required)",
+          "body": "Final talent selection, automated outreach to talent without review, scoring or ranking candidates, brand quizzes that affect hiring, and anything that looks like a legal commitment. These need explicit rules — covered in module L5 — before any pilot."
+        }
+      ]
+    },
+    {
+      "id": "L3",
+      "title": "How B9's work flows",
+      "durationMin": 7,
+      "summary": "Map tools to phases of the business, not to vendor hype.",
+      "sections": [
+        {
+          "heading": "Client side: eight phases",
+          "body": "Marketing → Discovery → Proposal → Casting → Pre-Event → Event Day → Post-Event → Finance. Most early AI wins sit where people retype the same information: Discovery (understanding the ask), Proposal (drafting scope), Post-Event (recaps), and Finance (reconciling and follow-ups)."
+        },
+        {
+          "heading": "Talent side: runs in parallel",
+          "body": "Sourcing, vetting, roster management, and day-of coordination happen alongside client work. Talent experience is a cross-cutting concern — how talent feels supported affects retention and event quality. AI that touches talent comms needs Brenda's explicit comfort level."
+        },
+        {
+          "heading": "Three layers over everything",
+          "body": "Talent Experience, Client Success, and Compliance/Risk apply in every phase. When evaluating a use case, ask: which phase does this help, and which layer does it touch? That framing beats asking \"which AI tool is best?\""
+        }
+      ]
+    },
+    {
+      "id": "L4",
+      "title": "Types of tools (and how to choose)",
+      "durationMin": 6,
+      "summary": "Categories matter more than brand names — vendors change every six months.",
+      "sections": [
+        {
+          "heading": "Four categories you will encounter",
+          "body": "1) Chat workspaces — shared AI for drafting (team accounts with admin controls). 2) Automation connectors — Zapier, Make, or built-in flows that move data between apps. 3) AI embedded in tools you already use — email, spreadsheets, accounting. 4) Custom builds — only when exports and templates hit a ceiling."
+        },
+        {
+          "heading": "Questions to ask before adopting anything",
+          "body": "Where does our data go? Can we turn it off without breaking ops? Who approves output before it reaches clients or talent? What does it cost per seat at our headcount? Can we swap vendors in 90 days if something better ships? If you cannot answer those, stay at templates and manual copy-paste."
+        },
+        {
+          "heading": "A sensible starting stack for B9",
+          "body": "StaffConnect for ops, email for client comms, QuickBooks (or similar) for finance, plus one shared chat workspace for the team. That covers most Phase 1 use cases without a platform bet. The specific vendor for the chat workspace is a budget and admin-comfort decision — not a strategy decision."
+        }
+      ]
+    },
+    {
+      "id": "L5",
+      "title": "Operating rules",
+      "durationMin": 5,
+      "summary": "Governance, compliance, and measurement — the part that makes this stick.",
+      "sections": [
+        {
+          "heading": "Rule 1: Human approval on external comms",
+          "body": "AI drafts; a person sends anything to clients or talent until Brenda explicitly opens talent-side automation. No exceptions during Phase 1."
+        },
+        {
+          "heading": "Rule 2: Compliance gates on four areas",
+          "body": "Talent matching, job descriptions, brand quizzes, and talent FAQ bots need design rules and often legal review before pilots — especially in NYC, IL, and CA. Flag these early; do not \"just try it\" on live talent."
+        },
+        {
+          "heading": "Rule 3: Measure at 90 days",
+          "body": "Pick 2–3 metrics before you start: quote turnaround, inbox response time, recap delivery time, or event-day recovery time. If you cannot measure it, defer the use case. Your job is to pick starting workflows, get weekly usage, and prove time back — not to deploy the most AI."
+        }
+      ]
+    },
+    {
+      "id": "L6",
+      "title": "Wiring channels together (WhatsApp, SMS, glue)",
+      "durationMin": 6,
+      "summary": "How Pete-style \"connect X to Y\" ideas fit — without skipping compliance.",
+      "sections": [
+        {
+          "heading": "Three layers, not one big integration",
+          "body": "1) Channel — where messages live (WhatsApp Business, SMS via Twilio, email, StaffConnect). 2) Trigger — what event starts an action (no-show, new inquiry, event ended). 3) Action — draft a message, create a task, update a sheet. AI usually sits in the action layer. Most failures come from wiring all three at once before any single path works manually."
+        },
+        {
+          "heading": "WhatsApp and SMS are operational channels, not magic",
+          "body": "Talent and clients already text. WhatsApp Business API (via Twilio or a unified inbox like Whippy) can work for FAQs, shift reminders, and standby fills — but outbound business messaging requires opt-in, STOP handling, and Brenda's comfort on automated sends. Phase 1 default: AI drafts, human sends from the existing phone or inbox."
+        },
+        {
+          "heading": "Sensible first wires for B9",
+          "body": "Low risk: new inquiry email → AI draft reply in inbox; event notes → AI draft recap → human sends to client. Medium (after Phase 1): opt-in talent FAQ on SMS/WhatsApp with escalation to a coordinator. Higher (Phase 2): no-show trigger → templated standby blast with human approval on first N events. Glue tools like Zapier/Make are fine for experiments — document what data leaves B9 and keep a kill switch."
+        }
+      ]
+    }
+  ]
+}

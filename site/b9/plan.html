@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Your Plan — B9 Transformation</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/og-image.png">
+  <link rel="manifest" href="/b9/manifest.webmanifest">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="B9 Guide">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="/b9/js/b9-theme.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/b9/b9.css">
+</head>
+<body class="b9-app">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="b9-site-header"></div>
+  <nav class="b9-subnav" id="b9-nav" aria-label="B9 guide"></nav>
+  <main id="main-content" class="b9-main">
+    <div class="b9-hero">
+      <h1>Your Plan</h1>
+      <p id="plan-subtitle">Personalized roadmap based on your Discover session.</p>
+    </div>
+    <div id="plan-empty" class="b9-card">
+      <p>No plan generated yet. Complete a <a href="/b9/discover.html">Discover</a> session first — or export a <a href="/b9/">facilitation pack</a> from Start Here with your process map and stack survey.</p>
+      <p style="margin-top:1rem"><button type="button" class="b9-btn b9-btn--secondary" id="export-pack-empty">Download facilitation pack</button></p>
+    </div>
+    <div class="b9-card">
+      <h2>Compliance gates (before talent-facing pilots)</h2>
+      <p class="b9-muted">Check when true — saved for the whole team.</p>
+      <label class="b9-toggle"><input type="checkbox" id="gate-counsel"> Counsel / compliance briefed</label><br>
+      <label class="b9-toggle"><input type="checkbox" id="gate-internal"> First pilot is internal-only (no talent-facing automation)</label><br>
+      <label class="b9-toggle"><input type="checkbox" id="gate-talent"> We understand talent comms / model-contact rules</label>
+      <p class="b9-msg b9-msg--ok" id="gate-status" style="margin-top:0.75rem"></p>
+    </div>
+    <div id="plan-content" style="display:none">
+      <div class="b9-card b9-card--muted">
+        <p><strong>How to read this plan:</strong> Generated from your Discover answers plus research defaults — not a vendor quote. Validate with Andrew before integrator conversations. Pick <strong>one pilot</strong> for the first 30 days.</p>
+      </div>
+      <div class="b9-card b9-card--muted" id="one-pilot-callout">
+        <h2>Your one pilot (30 days)</h2>
+        <p class="b9-muted">Choose email triage (ROI-01) <em>or</em> quote turnaround (ROI-02). Defer WhatsApp, CRM, and StaffConnect replacement until assist-first pilots prove value.</p>
+      </div>
+      <div class="b9-card">
+        <h2>Snapshot</h2>
+        <p id="snapshot"></p>
+      </div>
+      <div class="b9-card">
+        <h2>Recommended path</h2>
+        <p><span class="b9-badge" id="branch-badge"></span></p>
+        <p id="branch-rationale"></p>
+      </div>
+      <div class="b9-card">
+        <h2>Start with these 3</h2>
+        <div class="b9-outcome-grid" id="three-start"></div>
+      </div>
+      <div class="b9-card" id="connector-section" style="display:none">
+        <h2>Wiring &amp; channels</h2>
+        <p class="b9-muted" id="connector-intro"></p>
+        <div id="connector-patterns"></div>
+      </div>
+      <div class="b9-card">
+        <h2>90-day checklist</h2>
+        <div id="checklist"></div>
+      </div>
+      <div class="b9-card" id="compliance-section" style="display:none">
+        <h2>Compliance heads-up</h2>
+        <ul id="compliance-list"></ul>
+      </div>
+      <div class="b9-card">
+        <h2>What we are NOT doing yet</h2>
+        <ul id="not-now" class="b9-checklist"></ul>
+      </div>
+      <p>
+        <button type="button" class="b9-btn" id="download-md">Download Markdown</button>
+        <button type="button" class="b9-btn b9-btn--secondary" id="export-pack-plan" style="margin-left:0.5rem">Full facilitation pack</button>
+        <button type="button" class="b9-btn b9-btn--secondary" id="print-plan" style="margin-left:0.5rem">Print</button>
+      </p>
+      <p class="b9-muted">Directional recommendations — not legal or financial advice. Consult counsel before talent-facing pilots.</p>
+    </div>
+  </main>
+  <div id="b9-site-footer"></div>
+  <script src="/b9/js/b9-shell.js"></script>
+  <script src="/b9/js/b9-pwa.js"></script>
+  <script src="/b9/js/b9-config.js"></script>
+  <script src="/b9/js/b9-auth.js"></script>
+  <script src="/b9/js/b9-nav.js"></script>
+  <script src="/b9/js/b9-api.js"></script>
+  <script src="/b9/js/b9-workspace.js"></script>
+  <script src="/b9/js/b9-export.js"></script>
+  <script src="/b9/js/plan.js"></script>
+</body>
+</html>

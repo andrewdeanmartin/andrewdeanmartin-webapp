@@ -1,0 +1,59 @@
+{
+  "useCases": [
+    {"id": "ROI-01", "name": "Email Triage & Drafting Assistant", "phase": 1, "category": "Efficiency", "compliance": "none", "confidence": "HIGH", "effortWeeks": 1, "description": "Sort inbound email, draft replies for human review.", "success90d": "Inbox response time down 30%+"},
+    {"id": "ROI-02", "name": "Quote & Proposal Generator", "phase": 1, "category": "Revenue", "compliance": "none", "confidence": "HIGH", "effortWeeks": 2, "description": "Structured quotes and proposals from rate cards and briefs.", "success90d": "Quote turnaround under 24 hours"},
+    {"id": "ROI-03", "name": "Automated Post-Event Reporting", "phase": 1, "category": "Quality", "compliance": "none", "confidence": "HIGH", "effortWeeks": 1, "description": "Draft client recaps from event notes.", "success90d": "Recap sent within 48 hours of event"},
+    {"id": "ROI-04", "name": "Social Media Content Engine", "phase": 1, "category": "Revenue", "compliance": "none", "confidence": "MEDIUM", "effortWeeks": 1, "description": "Draft social posts for review.", "success90d": "Consistent weekly content calendar"},
+    {"id": "ROI-05", "name": "Dormant Client Win-Back Campaign", "phase": 1, "category": "Revenue", "compliance": "none", "confidence": "HIGH", "effortWeeks": 1, "description": "Re-engage inactive clients with personalized outreach drafts.", "success90d": "At least 2 dormant clients re-contacted"},
+    {"id": "ROI-06", "name": "Training Quiz Creator", "phase": 1, "category": "Quality", "compliance": "design_rules", "confidence": "HIGH", "effortWeeks": 2, "description": "Voluntary brand familiarization quizzes — not mandatory employment training.", "success90d": "Pilot on one event brand kit"},
+    {"id": "ROI-07", "name": "Job Description Writer", "phase": 1, "category": "Efficiency", "compliance": "design_rules", "confidence": "HIGH", "effortWeeks": 1, "description": "Draft role descriptions with W-2/1099 classification check. No screening logic.", "success90d": "Template library for top 5 role types"},
+    {"id": "ROI-08", "name": "Talent Matching Assistant", "phase": 1, "category": "Efficiency", "compliance": "high_risk", "confidence": "HIGH", "effortWeeks": 3, "description": "Decision-support filters — humans always select final talent.", "success90d": "Pilot on non-NYC events only"},
+    {"id": "ROI-09", "name": "Review / Reputation Responder", "phase": 1, "category": "Quality", "compliance": "none", "confidence": "HIGH", "effortWeeks": 1, "description": "Draft responses to reviews for human approval.", "success90d": "All new reviews responded within 72h"},
+    {"id": "ROI-10", "name": "Conflict Detection (Double-Booking)", "phase": 1, "category": "Efficiency", "compliance": "none", "confidence": "HIGH", "effortWeeks": 1, "description": "Flag scheduling conflicts before event day.", "success90d": "Zero double-book incidents in pilot month"},
+    {"id": "ROI-11", "name": "Cash Crunch Forecaster", "phase": 1, "category": "Finance", "compliance": "none", "confidence": "HIGH", "effortWeeks": 1, "description": "Weekly cash flow visibility from QBO exports.", "success90d": "Weekly forecast routine established"},
+    {"id": "ROI-12", "name": "Invoice vs Timesheet Auditor", "phase": 1, "category": "Finance", "compliance": "none", "confidence": "HIGH", "effortWeeks": 1, "description": "Cross-check invoices against timesheets.", "success90d": "One billing cycle audited clean"},
+    {"id": "ROI-13", "name": "Contract Red Flag Scanner", "phase": 1, "category": "Risk", "compliance": "none", "confidence": "HIGH", "effortWeeks": 1, "description": "Highlight risky clauses in client contracts.", "success90d": "Threshold doc + 3 contracts reviewed"},
+    {"id": "ROI-14", "name": "Receipt & Expense Digital Shoebox", "phase": 1, "category": "Finance", "compliance": "none", "confidence": "HIGH", "effortWeeks": 1, "description": "Organize receipts and expenses for accounting.", "success90d": "Expense capture workflow live"},
+    {"id": "NEW-10", "name": "RFP / RFI Auto-Drafter", "phase": 2, "group": "A", "category": "Revenue", "compliance": "none", "confidence": "HIGH", "effortWeeks": 3, "description": "Draft RFP responses leveraging WBENC/NMSDC positioning.", "success90d": "2 RFP drafts completed faster than baseline"},
+    {"id": "NEW-11", "name": "Capability Deck Personalizer", "phase": 2, "group": "A", "category": "Revenue", "compliance": "none", "confidence": "MEDIUM", "effortWeeks": 2, "description": "Tailor capability decks per enterprise prospect.", "success90d": "1 personalized deck per major pitch"},
+    {"id": "NEW-13", "name": "Tier 1 Spend Reporting Generator", "phase": 2, "group": "A", "category": "Revenue", "compliance": "none", "confidence": "HIGH", "effortWeeks": 4, "description": "Diverse-spend reports for enterprise renewal conversations.", "success90d": "Report delivered to 1 Tier 1 client"},
+    {"id": "NEW-20", "name": "Real-Time No-Show Auto-Replacement", "phase": 2, "group": "B", "category": "Quality", "compliance": "design_rules", "confidence": "HIGH", "effortWeeks": 8, "description": "Alert bench talent and draft replacement workflow on no-shows.", "success90d": "Pilot on 3 events with documented recovery time"},
+    {"id": "NEW-24", "name": "Multimodal Event Recap Generator", "phase": 2, "group": "B", "category": "Quality", "compliance": "none", "confidence": "HIGH", "effortWeeks": 4, "description": "Recaps with photos/video highlights.", "success90d": "2 multimodal recaps delivered"},
+    {"id": "NEW-16", "name": "Client Expansion Signal Detector", "phase": 2, "group": "C", "category": "Revenue", "compliance": "none", "confidence": "MEDIUM", "effortWeeks": 4, "description": "Surface buried growth signals from email threads.", "success90d": "3 expansion alerts acted on"},
+    {"id": "NEW-17", "name": "Pre-QBR Account Brief Generator", "phase": 2, "group": "C", "category": "Efficiency", "compliance": "none", "confidence": "HIGH", "effortWeeks": 3, "description": "Auto-assemble QBR prep from StaffConnect + QBO exports.", "success90d": "QBR prep under 30 minutes"},
+    {"id": "NEW-02", "name": "Talent FAQ Chatbot (Supportive)", "phase": 2, "group": "D", "category": "Quality", "compliance": "design_rules", "confidence": "MEDIUM", "effortWeeks": 6, "description": "24/7 supportive FAQ for talent — opt-in, not surveillance.", "success90d": "20-30 talent opt-in pilot"}
+  ],
+  "phase1QuickWins": ["ROI-01", "ROI-02", "ROI-03", "ROI-11", "ROI-13"],
+  "complianceRedesignRequired": ["ROI-06", "ROI-07", "ROI-08", "NEW-02", "NEW-20"],
+  "phase1Checklist": {
+    "foundation": {
+      "label": "Days 1-30 — Foundation",
+      "items": [
+        "Set up ChatGPT Teams workspace + usage policy",
+        "Deploy Email Triage (ROI-01)",
+        "Standardize rate cards and proposal templates (ROI-02)",
+        "Establish baseline metrics (response time, quote turnaround)",
+        "Apply compliance redesign to Job Description Writer (ROI-07) before use"
+      ]
+    },
+    "acceleration": {
+      "label": "Days 31-60 — Acceleration",
+      "items": [
+        "Full Quote Generator workflow live (ROI-02)",
+        "Post-event recap template deployed (ROI-03)",
+        "Cash flow weekly routine (ROI-11)",
+        "Invoice audit pilot (ROI-12)",
+        "Conflict detection for scheduling (ROI-10)"
+      ]
+    },
+    "optimization": {
+      "label": "Days 61-90 — Optimization",
+      "items": [
+        "Measure KPIs vs baseline",
+        "Compliance review on 4 sensitive use cases",
+        "Select Phase 2 branch priorities from discovery answers",
+        "Document what worked and what to stop"
+      ]
+    }
+  }
+}

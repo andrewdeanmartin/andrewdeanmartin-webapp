@@ -38,6 +38,10 @@ const localAssets = [
   '/agent-pipeline-run/',
   '/agent-pipeline-run/00-input-schemas.json',
   '/private/login.html',
+  '/b9/login.html',
+  '/b9/b9.css',
+  '/b9/knowledge/learn-modules.json',
+  '/b9/knowledge/question-tracks.json',
 ];
 
 const ids = ['hero', 'about', 'capabilities', 'demos', 'impact', 'connect', 'main-content'];

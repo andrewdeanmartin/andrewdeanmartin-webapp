@@ -1,0 +1,60 @@
+{
+  "intro": "Pete's instinct — wire WhatsApp (or SMS) to StaffConnect, email, or AI — is valid. The pattern is: pick a channel, pick a trigger, keep humans on anything that commits B9. Start with drafts and one workflow, not a platform rebuild.",
+  "patterns": [
+    {
+      "id": "talent-faq-channel",
+      "title": "Talent FAQ on WhatsApp or SMS",
+      "useCaseIds": ["NEW-02"],
+      "summary": "Talent asks operational questions (pay date, shift details, what to wear). AI answers from an approved FAQ — escalates to a coordinator when unsure.",
+      "levels": [
+        { "level": "L0", "label": "Manual", "detail": "Coordinator copies FAQ into WhatsApp replies. No automation." },
+        { "level": "L1", "label": "Draft assist", "detail": "AI drafts replies; human sends from phone or unified inbox." },
+        { "level": "L2", "label": "Connected pilot", "detail": "Twilio WhatsApp/SMS + FAQ knowledge base + human handoff queue. 20–30 talent opt-in." },
+        { "level": "L3", "label": "Unified inbox", "detail": "Whippy/Sense-style omnichannel — only after L2 proves value." }
+      ],
+      "gates": ["TCPA/opt-in for SMS", "Brenda sign-off before automated sends", "No booking penalties from chat usage"]
+    },
+    {
+      "id": "event-day-blast",
+      "title": "Event-day triggers (no-show, standby fill)",
+      "useCaseIds": ["NEW-20"],
+      "summary": "When someone no-shows, blast standby talent with shift details + accept link. AI drafts message; coordinator approves send.",
+      "levels": [
+        { "level": "L0", "label": "Manual", "detail": "Spreadsheet standby list + copy-paste texts." },
+        { "level": "L1", "label": "Templates", "detail": "Saved WhatsApp/SMS templates + AI-filled fields." },
+        { "level": "L2", "label": "Triggered send", "detail": "StaffConnect status change → Twilio message (with grace period + call first)." }
+      ],
+      "gates": ["Operational SMS only (not marketing)", "15-min grace before no-show trigger", "Human approves first 10 sends"]
+    },
+    {
+      "id": "client-recap-delivery",
+      "title": "Post-event recap → client channel",
+      "useCaseIds": ["ROI-03", "NEW-24"],
+      "summary": "Event ends → notes/photos → AI draft recap → human review → email or client-preferred channel.",
+      "levels": [
+        { "level": "L0", "label": "Manual", "detail": "Coordinator writes recap in email." },
+        { "level": "L1", "label": "AI draft", "detail": "Chat workspace draft from bullet notes." },
+        { "level": "L2", "label": "Semi-automated", "detail": "Form/checklist submit triggers draft + review task in inbox." }
+      ],
+      "gates": ["Human sends all client-facing output in Phase 1"]
+    },
+    {
+      "id": "glue-automation",
+      "title": "Glue layer (Zapier / Make / webhooks)",
+      "useCaseIds": ["ROI-01", "ROI-02"],
+      "summary": "Connect tools Pete already named: new StaffConnect booking → Slack/email alert; new inquiry → draft quote shell in Drive.",
+      "levels": [
+        { "level": "L0", "label": "Exports", "detail": "CSV export → paste into AI." },
+        { "level": "L1", "label": "Light glue", "detail": "Zapier/Make: trigger on new row, email, or form — output to draft doc or task list." },
+        { "level": "L2", "label": "API", "detail": "Direct StaffConnect API + Twilio — only if L1 proves ROI and API access exists." }
+      ],
+      "gates": ["Document what data leaves B9", "Kill switch per automation"]
+    }
+  ],
+  "vendors": [
+    { "name": "Twilio", "role": "WhatsApp + SMS API", "when": "L2 pilots; ~$0.01/msg + WhatsApp business approval" },
+    { "name": "Whippy / Sense", "role": "Staffing unified inbox", "when": "After channel validated; omnichannel at scale" },
+    { "name": "Zapier / Make", "role": "No-code glue", "when": "First wiring experiments without dev" },
+    { "name": "StaffConnect API", "role": "System of record for bookings", "when": "When exports feel too slow — confirm API access first" }
+  ]
+}

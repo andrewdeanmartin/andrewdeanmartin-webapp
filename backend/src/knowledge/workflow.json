@@ -1,0 +1,78 @@
+{
+  "sequencedPhases": [
+    {
+      "id": "marketing-demand-gen",
+      "phase": 0,
+      "name": "Marketing / Demand Gen",
+      "description": "How leads arrive — SEO, partnerships, RFP portals, WBENC/NMSDC visibility, referrals."
+    },
+    {
+      "id": "discovery-scoping",
+      "phase": 1,
+      "name": "Discovery / Scoping",
+      "description": "Initial inquiry handling, qualification, brief intake — first 24-72 hours."
+    },
+    {
+      "id": "proposal-quote-pricing",
+      "phase": 2,
+      "name": "Proposal / Quote / Pricing",
+      "description": "Proposals, RFP responses, capability decks, pricing, scope-of-work."
+    },
+    {
+      "id": "talent-sourcing",
+      "phase": 3,
+      "name": "Talent Sourcing / Vetting / Onboarding",
+      "description": "Parallel pipeline — how 1099 talent gets discovered, vetted, onboarded, profiled."
+    },
+    {
+      "id": "casting-matching",
+      "phase": 4,
+      "name": "Casting / Matching / Booking",
+      "description": "Match talent to roles, client approval, confirm bookings."
+    },
+    {
+      "id": "pre-event-prep",
+      "phase": 5,
+      "name": "Pre-Event Prep / Logistics",
+      "description": "Call sheets, briefing books, brand training, travel, COIs, equipment."
+    },
+    {
+      "id": "event-day-ops",
+      "phase": 6,
+      "name": "Event Day / Execution",
+      "description": "Check-in, real-time issues, supervision, no-show recovery."
+    },
+    {
+      "id": "post-event-recap",
+      "phase": 7,
+      "name": "Post-Event / Recap",
+      "description": "Recaps, client feedback, talent feedback, asset archival."
+    },
+    {
+      "id": "finance-admin",
+      "phase": 8,
+      "name": "Finance / Invoicing / Payroll",
+      "description": "Invoicing, AR, payroll, expenses, cash flow, 1099/W-2."
+    }
+  ],
+  "crossCutting": [
+    {
+      "id": "talent-experience",
+      "layer": "A",
+      "name": "Talent Experience / Retention",
+      "description": "Supply-side service layer throughout every phase."
+    },
+    {
+      "id": "client-success-expansion",
+      "layer": "B",
+      "name": "Client Success / Account Expansion",
+      "description": "QBR prep, expansion signals, renewal artifacts, Tier 1 reporting."
+    },
+    {
+      "id": "compliance-risk",
+      "layer": "C",
+      "name": "Compliance / Risk",
+      "description": "TCPA, AEDT, 1099 classification, contracts, COIs."
+    }
+  ]
+}

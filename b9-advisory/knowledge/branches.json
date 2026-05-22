@@ -1,0 +1,42 @@
+{
+  "branches": {
+    "A": {
+      "id": "A",
+      "name": "Procurement-led growth",
+      "description": "Prioritize RFP automation, capability decks, and Tier 1 spend reporting.",
+      "trigger": "RFP/procurement pipeline >= 20% AND ambition is growth or exit-grooming",
+      "priorityGroups": ["A", "C", "B"],
+      "phase2Sequence": ["NEW-10", "NEW-11", "NEW-13", "NEW-17", "NEW-16"]
+    },
+    "B": {
+      "id": "B",
+      "name": "Operational excellence",
+      "description": "Prioritize event-day quality, no-show recovery, and premium recaps.",
+      "trigger": "RFP < 20%, pain in ops/quality/no-shows, or default branch",
+      "priorityGroups": ["B", "C", "A"],
+      "phase2Sequence": ["NEW-20", "NEW-24", "NEW-17", "NEW-13"]
+    },
+    "C": {
+      "id": "C",
+      "name": "Account expansion",
+      "description": "Prioritize client retention, QBR prep, and buried expansion signals.",
+      "trigger": "Retained clients >= 30 AND pain in retention/repeat-book",
+      "priorityGroups": ["C", "B", "A"],
+      "phase2Sequence": ["NEW-17", "NEW-16", "NEW-13", "NEW-24"]
+    },
+    "D": {
+      "id": "D",
+      "name": "Talent-led differentiation",
+      "description": "Prioritize supportive talent experience alongside operational wins.",
+      "trigger": "Talent AI tolerance open AND active talent >= 500",
+      "priorityGroups": ["D", "B", "C"],
+      "phase2Sequence": ["NEW-02", "NEW-20", "NEW-24", "NEW-17"]
+    }
+  },
+  "classificationRules": [
+    { "priority": 1, "branch": "A", "condition": "rfp_pct >= 20 && ambition_in(['growth','exit'])" },
+    { "priority": 2, "branch": "D", "condition": "talent_ai_tolerance == 'open' && talent_count >= 500" },
+    { "priority": 3, "branch": "C", "condition": "retained_clients >= 30 && pain_in(['retention','repeat','client'])" },
+    { "priority": 4, "branch": "B", "condition": "default" }
+  ]
+}

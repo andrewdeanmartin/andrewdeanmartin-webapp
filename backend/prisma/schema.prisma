@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id        String    @id @default(uuid())
+  name      String
+  slug      String    @unique
+  metadata  Json?
+  createdAt DateTime  @default(now())
+  sessions  Session[]
+}
+
+model Session {
+  id            String         @id @default(uuid())
+  clientId      String
+  client        Client         @relation(fields: [clientId], references: [id])
+  role          String
+  track         String
+  status        String         @default("in_progress")
+  branch        String?
+  createdBy     String
+  tradeoffPrefs Json?
+  auditLog      Json           @default("[]")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  answers       Answer[]
+  learningNotes LearningNote[]
+  outcome       Outcome?
+}
+
+model Answer {
+  id           String   @id @default(uuid())
+  sessionId    String
+  session      Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  questionId   String
+  questionText String
+  trackId      String   @default("")
+  rawAnswer    String
+  structured   Json?
+  createdAt    DateTime @default(now())
+}
+
+model LearningNote {
+  id        String   @id @default(uuid())
+  sessionId String
+  session   Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  category  String
+  content   String
+  sourceQ   String?
+  createdAt DateTime @default(now())
+}
+
+model Outcome {
+  id              String   @id @default(uuid())
+  sessionId       String   @unique
+  session         Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  branch          String
+  branchRationale String
+  threeToStart    Json
+  phase1Checklist Json
+  complianceFlags Json
+  markdown        String
+  generatedAt     DateTime @default(now())
+  reviewedByAdmin Boolean  @default(false)
+  adminNotes      String?
+}

@@ -1,0 +1,67 @@
+{
+  "tradeoffs": [
+    {
+      "id": "T1",
+      "title": "Templates vs custom build",
+      "question": "How much custom software do we build?",
+      "optionA": { "label": "Templates + ChatGPT Teams", "summary": "Start with prompts, shared docs, and light automation. Fastest path." },
+      "optionB": { "label": "Custom platform", "summary": "Build integrated tools from scratch. Higher cost and maintenance." },
+      "recommendation": "A",
+      "recommendationText": "Phase 1 should be templates + ChatGPT Teams. Build custom only where B9 is unique."
+    },
+    {
+      "id": "T2",
+      "title": "Assist vs automate",
+      "question": "Should AI send messages to talent and clients directly?",
+      "optionA": { "label": "Assist (human sends)", "summary": "AI drafts; a person reviews and sends. Safer for brand and compliance." },
+      "optionB": { "label": "Automate (AI sends)", "summary": "AI sends routine messages. Faster but higher trust and compliance risk." },
+      "recommendation": "A",
+      "recommendationText": "Default to assist until Brenda confirms talent-side AI is acceptable."
+    },
+    {
+      "id": "T3",
+      "title": "Buy vs build vs configure",
+      "question": "How do we add new capabilities?",
+      "optionA": { "label": "Configure existing tools", "summary": "ChatGPT Teams, StaffConnect exports, QuickBooks — extend what you have." },
+      "optionB": { "label": "Buy dedicated SaaS", "summary": "RFP tools, staffing platforms — pay for proven workflows." },
+      "recommendation": "A",
+      "recommendationText": "Configure first, buy when volume justifies it, build orchestration on Render only when needed."
+    },
+    {
+      "id": "T4",
+      "title": "Exports vs API integrations",
+      "question": "How do we connect AI to StaffConnect and accounting?",
+      "optionA": { "label": "Manual exports / copy-paste", "summary": "Export CSV or copy data into AI workspace. Zero integration cost." },
+      "optionB": { "label": "Live API integrations", "summary": "Real-time data sync. Higher build cost and vendor dependency." },
+      "recommendation": "A",
+      "recommendationText": "Exports first. API integrations only after a pilot proves ROI."
+    },
+    {
+      "id": "T5",
+      "title": "One AI vendor vs multi-model",
+      "question": "Do we lock into one AI provider?",
+      "optionA": { "label": "One workspace vendor", "summary": "ChatGPT Teams for the team day-to-day. Simple admin." },
+      "optionB": { "label": "Model-agnostic backend", "summary": "Swap models as capabilities improve. Slightly more setup." },
+      "recommendation": "both",
+      "recommendationText": "ChatGPT Teams for daily work; model-agnostic orchestration layer for guided workflows like this app."
+    },
+    {
+      "id": "T6",
+      "title": "Speed vs compliance depth",
+      "question": "How fast do we ship talent-facing AI?",
+      "optionA": { "label": "Ship safe wins first", "summary": "Email triage, quotes, recaps — 10 use cases with minimal compliance risk." },
+      "optionB": { "label": "Move fast on matching/scoring", "summary": "Talent ranking, flake detection — higher regulatory exposure." },
+      "recommendation": "A",
+      "recommendationText": "Ship 10 Phase 1 use cases as-is. Redesign 4 compliance-sensitive ones before talent-facing pilots."
+    },
+    {
+      "id": "T7",
+      "title": "Point wiring vs unified inbox",
+      "question": "How do we connect WhatsApp, SMS, and StaffConnect?",
+      "optionA": { "label": "One workflow at a time", "summary": "Twilio or Zapier for a single pilot (FAQ or no-show). Prove it before buying a platform." },
+      "optionB": { "label": "Unified inbox (Whippy/Sense)", "summary": "Omnichannel from day one. Higher cost; cleaner ops if volume justifies it." },
+      "recommendation": "A",
+      "recommendationText": "Pete's wiring instinct is right — start with one trigger → one channel → human review. Unified inbox after a 90-day pilot proves the channel."
+    }
+  ]
+}
