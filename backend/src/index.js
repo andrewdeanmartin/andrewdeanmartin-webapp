@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { corsMiddleware } from './config/cors.js';
-import { authMiddleware, adminMiddleware } from './config/auth.js';
+import { authMiddleware, authOrAdminKeyMiddleware, adminMiddleware } from './config/auth.js';
 import v1Router from './routes/v1.js';
 import adminRouter from './routes/admin.js';
 import { jsonStore } from './db/jsonStore.js';
@@ -30,7 +30,7 @@ if (process.env.USE_JSON_STORE === '1') {
 }
 
 app.use('/v1', authMiddleware, v1Router);
-app.use('/v1/admin', authMiddleware, adminMiddleware, adminRouter);
+app.use('/v1/admin', authOrAdminKeyMiddleware, adminMiddleware, adminRouter);
 
 app.use((err, req, res, next) => {
   if (err.message === 'CORS blocked') {
