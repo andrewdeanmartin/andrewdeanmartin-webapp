@@ -1,4 +1,4 @@
-var B9_CACHE = 'b9-guide-v2';
+var B9_CACHE = 'b9-guide-v4';
 var B9_STATIC = [
   '/styles.css',
   '/favicon.svg',

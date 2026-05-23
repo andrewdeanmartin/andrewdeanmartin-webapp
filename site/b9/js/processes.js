@@ -252,36 +252,70 @@
         var m = mergedStep(p, step);
         var aiBlock = '';
         if (showAi && m.ai && !m.aiHidden) {
-          var modeLabel =
-            m.ai.mode === 'automate_later' ? 'Automate later' : 'Assist (human review)';
-          var gate = m.ai.gate ? ' · Gate: ' + m.ai.gate : '';
-          var pills = (m.ai.useCaseIds || [])
-            .map(function (id) {
-              return '<span class="b9-pill" title="' + escapeHtml(useCases[id] || id) + '">' + id + '</span>';
-            })
-            .join('');
+          if (m.ai.none) {
+            aiBlock =
+              '<div class="b9-ai-overlay b9-ai-overlay--none">' +
+              '<span class="b9-ai-overlay__tag">AI overlay</span>' +
+              '<strong>' +
+              escapeHtml(m.ai.label || 'No strong recommendation yet') +
+              '</strong>' +
+              (m.ai.idea
+                ? '<p class="b9-ai-overlay__idea">' + escapeHtml(m.ai.idea) + '</p>'
+                : '') +
+              (editMode
+                ? '<label class="b9-muted"><input type="checkbox" data-hide-ai="' +
+                  step.id +
+                  '"> Not applicable for B9</label>'
+                : '') +
+              '</div>';
+          } else {
+            var modeLabel =
+              m.ai.mode === 'automate_later' ? 'Automate later' : 'Assist (human review)';
+            var gate = m.ai.gate ? ' · Gate: ' + m.ai.gate : '';
+            var pills = (m.ai.useCaseIds || [])
+              .map(function (id) {
+                return '<span class="b9-pill" title="' + escapeHtml(useCases[id] || id) + '">' + id + '</span>';
+              })
+              .join('');
+            var ideaLine = m.ai.idea
+              ? '<p class="b9-ai-overlay__idea">' + escapeHtml(m.ai.idea) + '</p>'
+              : '';
+            var pilotBadge =
+              m.ai.priority === 'pilot'
+                ? '<span class="b9-ai-overlay__pilot">30-day pilot candidate</span>'
+                : '';
+            aiBlock =
+              '<div class="b9-ai-overlay' +
+              (m.ai.priority === 'pilot' ? ' b9-ai-overlay--pilot' : '') +
+              '">' +
+              pilotBadge +
+              '<span class="b9-ai-overlay__tag">AI · ' +
+              escapeHtml(modeLabel) +
+              '</span>' +
+              '<strong>' +
+              escapeHtml(m.ai.label) +
+              '</strong>' +
+              ideaLine +
+              '<span class="b9-muted"> Phase ' +
+              m.ai.rolloutPhase +
+              ' · ' +
+              m.ai.confidence +
+              gate +
+              '</span>' +
+              (pills ? '<div class="b9-pills">' + pills + '</div>' : '') +
+              (editMode
+                ? '<label class="b9-muted"><input type="checkbox" data-hide-ai="' +
+                  step.id +
+                  '"> Not applicable for B9</label>'
+                : '') +
+              '</div>';
+          }
+        } else if (showAi && !m.ai && !editMode) {
           aiBlock =
-            '<div class="b9-ai-overlay">' +
-            '<span class="b9-ai-overlay__tag">AI · ' +
-            escapeHtml(modeLabel) +
-            '</span>' +
-            '<strong>' +
-            escapeHtml(m.ai.label) +
-            '</strong>' +
-            '<span class="b9-muted"> Phase ' +
-            m.ai.rolloutPhase +
-            ' · ' +
-            m.ai.confidence +
-            gate +
-            '</span>' +
-            '<div class="b9-pills">' +
-            pills +
-            '</div>' +
-            (editMode
-              ? '<label class="b9-muted"><input type="checkbox" data-hide-ai="' +
-                step.id +
-                '"> Not applicable for B9</label>'
-              : '') +
+            '<div class="b9-ai-overlay b9-ai-overlay--none">' +
+            '<span class="b9-ai-overlay__tag">AI overlay</span>' +
+            '<strong>No strong recommendation yet</strong>' +
+            '<p class="b9-muted">Validate this step with Pete or Brenda before mapping AI.</p>' +
             '</div>';
         } else if (editMode && m.ai) {
           aiBlock =

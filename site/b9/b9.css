@@ -370,13 +370,33 @@
 }
 
 .b9-msg {
-  color: #b42318;
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
   min-height: 1.25rem;
 }
 
+.b9-msg--error {
+  color: #b42318;
+}
+
+.b9-msg--info {
+  color: var(--color-text-secondary);
+}
+
 .b9-msg--ok {
   color: var(--color-success);
+}
+
+.b9-login__wake {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.b9-login__wake .b9-muted {
+  font-size: 0.8125rem;
 }
 
 .b9-discover-layout {
@@ -729,6 +749,48 @@
 .b9-ai-overlay strong {
   display: block;
   margin-bottom: 0.15rem;
+}
+
+.b9-ai-overlay__idea {
+  margin: 0.35rem 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.b9-ai-overlay--muted {
+  opacity: 0.85;
+  border-left-color: var(--color-border);
+  background: var(--color-bg-secondary);
+}
+
+.b9-ai-overlay--none {
+  border-left-color: var(--color-border);
+  background: var(--color-bg-secondary);
+  opacity: 0.92;
+}
+
+.b9-ai-overlay--none strong {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.b9-ai-overlay--pilot {
+  border-left-color: var(--b9-gold, #b8860b);
+  box-shadow: inset 0 0 0 1px rgba(184, 134, 11, 0.15);
+}
+
+.b9-ai-overlay__pilot {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--b9-gold, #b8860b);
+  background: rgba(184, 134, 11, 0.12);
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  margin-bottom: 0.35rem;
 }
 
 .b9-map-notes {

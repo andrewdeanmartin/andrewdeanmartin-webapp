@@ -68,6 +68,12 @@ class CleanUrlHandler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory=ROOT, **kwargs)
 
     def do_GET(self):
+        path = urlparse(self.path).path
+        if path == '/api/b9-auth':
+            env = load_env_local()
+            secret = env.get('B9_JWT_SECRET') or env.get('ADM_PRIVATE_SECRET')
+            self._json_response(200, {'ok': True, 'service': 'b9-auth', 'ready': bool(secret)})
+            return
         self.path = self._resolve_clean_url(self.path)
         return super().do_GET()
 

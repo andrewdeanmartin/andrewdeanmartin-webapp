@@ -37,7 +37,11 @@
       <input id="password" name="password" type="password" required autocomplete="current-password" autofocus>
       <button type="submit" class="b9-btn b9-btn--gold" id="submit" style="width:100%">Continue</button>
     </form>
-    <p class="b9-msg" id="msg" role="alert"></p>
+    <p class="b9-msg" id="msg" role="status" aria-live="polite"></p>
+    <p class="b9-login__wake">
+      <button type="button" class="b9-btn b9-btn--secondary b9-btn--sm" id="wake-server">Wake up login server</button>
+      <span class="b9-muted" id="wake-hint">First visit after idle? This avoids a cold-start hiccup.</span>
+    </p>
   </main>
   <script src="/b9/js/b9-shell.js"></script>
   <script src="/b9/js/b9-pwa.js"></script>
@@ -47,36 +51,109 @@
     (function () {
       var params = new URLSearchParams(window.location.search);
       var msg = document.getElementById('msg');
-      if (params.get('err') === 'config') {
-        msg.textContent = 'This area is not configured on the server yet.';
+      var RETRY_DELAYS = [1000, 2000, 3000];
+      var MAX_ATTEMPTS = 4;
+
+      function setStatus(text, tone) {
+        msg.textContent = text || '';
+        msg.className = 'b9-msg' + (tone ? ' b9-msg--' + tone : '');
       }
+
+      if (params.get('err') === 'config') {
+        setStatus('This area is not configured on the server yet.', 'error');
+      }
+
+      function warmupAuth() {
+        return fetch('/api/b9-auth', {
+          method: 'GET',
+          credentials: 'same-origin',
+        }).then(function (r) {
+          return r.json().catch(function () {
+            return { ok: false };
+          });
+        }).catch(function () {
+          return { ok: false };
+        });
+      }
+
+      function authRequest(payload) {
+        return fetch('/api/b9-auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          credentials: 'same-origin',
+        }).then(function (r) {
+          return r.text().then(function (text) {
+            var j = {};
+            try { j = text ? JSON.parse(text) : {}; } catch (e) { j = null; }
+            return { ok: r.ok, status: r.status, j: j, raw: text };
+          });
+        });
+      }
+
+      function authWithRetry(payload, attempt, onRetry) {
+        return authRequest(payload).catch(function (err) {
+          if (attempt >= MAX_ATTEMPTS - 1) throw err;
+          if (onRetry) onRetry(attempt + 1);
+          var delay = RETRY_DELAYS[attempt] || 3000;
+          return new Promise(function (resolve) {
+            setTimeout(resolve, delay);
+          }).then(function () {
+            return authWithRetry(payload, attempt + 1, onRetry);
+          });
+        });
+      }
+
+      warmupAuth().then(function (j) {
+        if (j && j.ok) return;
+        setStatus('Waking up login server in the background…', 'info');
+        return warmupAuth();
+      }).then(function (j) {
+        if (j && j.ok) setStatus('', '');
+      }).catch(function () {});
+
+      document.getElementById('wake-server').addEventListener('click', function () {
+        var btn = this;
+        btn.disabled = true;
+        setStatus('Waking up login server — this takes about 30 seconds…', 'info');
+        warmupAuth()
+          .then(function (j) {
+            if (j && j.ok && j.ready !== false) {
+              setStatus('Server is ready — enter your password and click Continue.', 'ok');
+            } else {
+              setStatus('Server is still waking up — wait a moment, then click Continue.', 'info');
+            }
+          })
+          .catch(function () {
+            setStatus('Server is still waking up — wait about 30 seconds, then try Continue again.', 'info');
+          })
+          .finally(function () {
+            btn.disabled = false;
+          });
+      });
+
       document.getElementById('form').addEventListener('submit', function (e) {
         e.preventDefault();
         var btn = document.getElementById('submit');
         btn.disabled = true;
-        msg.textContent = '';
-        fetch('/api/b9-auth', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            password: document.getElementById('password').value,
-            role: document.getElementById('role').value
-          }),
-          credentials: 'same-origin'
+        setStatus('Signing in…', 'info');
+        var payload = {
+          password: document.getElementById('password').value,
+          role: document.getElementById('role').value,
+        };
+        authWithRetry(payload, 0, function (attempt) {
+          if (attempt === 1) {
+            setStatus('Server is waking up — trying again…', 'info');
+          } else {
+            setStatus('Still waking up — one more try (' + (attempt + 1) + ' of ' + MAX_ATTEMPTS + ')…', 'info');
+          }
         })
-          .then(function (r) {
-            return r.text().then(function (text) {
-              var j = {};
-              try { j = text ? JSON.parse(text) : {}; } catch (e) { j = null; }
-              return { ok: r.ok, status: r.status, j: j, raw: text };
-            });
-          })
           .then(function (x) {
             if (x.j === null) {
-              msg.textContent =
-                'Auth API returned an unexpected response (HTTP ' +
-                x.status +
-                '). Use https://www.andrewdeanmartin.com/b9/login for production, or restart local dev with scripts/serve-site.py.';
+              setStatus(
+                'Unexpected server response (HTTP ' + x.status + '). Wait 30 seconds and try again.',
+                'error'
+              );
               return;
             }
             if (x.ok && x.j && x.j.ok) {
@@ -84,15 +161,22 @@
               window.location.replace('/b9/');
               return;
             }
-            msg.textContent = x.j && x.j.error === 'not_configured'
-              ? 'Server configuration incomplete — set B9_JWT_SECRET and B9_ACCESS_PASSWORD in Vercel, then redeploy.'
-              : 'Incorrect password.';
+            setStatus(
+              x.j && x.j.error === 'not_configured'
+                ? 'Server configuration incomplete — set B9_JWT_SECRET and B9_ACCESS_PASSWORD in Vercel, then redeploy.'
+                : 'Incorrect password.',
+              'error'
+            );
           })
-          .catch(function (err) {
-            msg.textContent =
-              'Could not reach the auth API. If local: run python3 scripts/serve-site.py (not plain http.server). If production: use https://www.andrewdeanmartin.com/b9/login';
+          .catch(function () {
+            setStatus(
+              'Login server may still be waking up. Wait about 30 seconds and click Continue again — no need to re-enter your password.',
+              'info'
+            );
           })
-          .finally(function () { btn.disabled = false; });
+          .finally(function () {
+            btn.disabled = false;
+          });
       });
     })();
   </script>
