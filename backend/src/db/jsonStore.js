@@ -104,6 +104,14 @@ export const jsonStore = {
 
   async addAnswer(sessionId, answer) {
     const store = load();
+    const existing = store.answers.find(
+      (a) =>
+        a.sessionId === sessionId &&
+        a.trackId === answer.trackId &&
+        a.questionId === answer.questionId
+    );
+    if (existing) return existing;
+
     const row = { id: id(), sessionId, ...answer, createdAt: new Date().toISOString() };
     store.answers.push(row);
     save(store);

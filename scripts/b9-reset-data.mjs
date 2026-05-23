@@ -3,9 +3,11 @@
  * Reset all B9 server data (sessions, workspace, stack). Admin only.
  *
  * Usage:
- *   node scripts/b9-reset-data.mjs --target prod --password "$B9_ACCESS_PASSWORD"
+ *   node scripts/b9-reset-data.mjs --target prod
+ *   (reads site/.env.local — set B9_ADMIN_API_KEY or B9_ADMIN_PASSWORD)
  *   node scripts/b9-reset-data.mjs --target local --password b9local
  */
+import './load-site-env.mjs';
 import https from 'https';
 import http from 'http';
 

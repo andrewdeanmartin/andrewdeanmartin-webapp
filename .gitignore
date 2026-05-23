@@ -12,6 +12,10 @@ Thumbs.db
 # Dependencies
 node_modules/
 
+# Local secrets (Vercel pulls / prod E2E passwords)
+site/.env.local
+backend/.env
+
 # Build artifacts
 *.log
 

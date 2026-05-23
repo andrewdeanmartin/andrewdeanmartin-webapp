@@ -130,11 +130,19 @@
     }
     currentQuestion = payload.question;
     currentTrackId = payload.trackId;
-    var prog = payload.progress || { answered: 0, total: 1 };
+    var prog = payload.progress || { answered: 0, total: 1, track: { index: 1, total: 1 } };
+    var trackProg = prog.track || { index: (prog.answered || 0) + 1, total: prog.total || 1 };
     var pct = prog.total ? (prog.answered / prog.total) * 100 : 0;
     var section = payload.trackLabel ? payload.trackLabel + ' · ' : '';
     document.getElementById('progress-text').textContent =
-      section + 'Question ' + (prog.answered + 1) + ' of ' + prog.total;
+      section +
+      'Question ' +
+      trackProg.index +
+      ' of ' +
+      trackProg.total +
+      (prog.total > trackProg.total
+        ? ' · ' + prog.answered + ' of ' + prog.total + ' overall'
+        : '');
     document.getElementById('qa-bar').style.width = pct + '%';
     document.getElementById('why-asking').textContent = currentQuestion.why
       ? 'Why we ask: ' + currentQuestion.why

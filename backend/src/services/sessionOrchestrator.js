@@ -2,6 +2,32 @@ import { jsonStore, useJsonStore } from '../db/jsonStore.js';
 import { getAllQuestionsForSession, getQuestionTrack } from '../db/knowledge.js';
 import { extractLearning } from '../llm/provider.js';
 
+function answerKey(trackId, questionId) {
+  return `${trackId}:${questionId}`;
+}
+
+function buildAnsweredSet(answers) {
+  return new Set((answers || []).map((a) => answerKey(a.trackId, a.questionId)));
+}
+
+function countAnsweredInTrack(trackId, track, answeredIds) {
+  return track.questions.filter((q) => answeredIds.has(answerKey(trackId, q.id))).length;
+}
+
+function buildProgress(session, tracks, trackId, track) {
+  const answeredIds = buildAnsweredSet(session.answers);
+  const trackAnswered = countAnsweredInTrack(trackId, track, answeredIds);
+  return {
+    answered: answeredIds.size,
+    total: countTotalQuestions(tracks),
+    track: {
+      answered: trackAnswered,
+      index: trackAnswered + 1,
+      total: track.questions.length,
+    },
+  };
+}
+
 function defaultTracksForRole(role) {
   if (role === 'brenda') return ['setup', 'strategy', 'wf_proposal', 'wf_post_event'];
   return ['setup', 'wf_discovery', 'wf_proposal', 'wf_post_event'];
@@ -25,29 +51,34 @@ export async function getNextQuestion(sessionId) {
   const session = await getSession(sessionId);
   if (!session) return null;
 
-  const answeredIds = new Set(session.answers.map((a) => `${a.trackId}:${a.questionId}`));
+  const answeredIds = buildAnsweredSet(session.answers);
   const tracks = session.completedTracks || [session.track];
 
   for (const trackId of tracks) {
     const track = getQuestionTrack(trackId);
     if (!track) continue;
     for (const q of track.questions) {
-      const key = `${trackId}:${q.id}`;
+      const key = answerKey(trackId, q.id);
       if (!answeredIds.has(key)) {
         return {
           question: q,
           trackId,
           trackLabel: track.label || trackId,
-          progress: {
-            answered: session.answers.length,
-            total: countTotalQuestions(tracks),
-          },
+          progress: buildProgress(session, tracks, trackId, track),
         };
       }
     }
   }
 
-  return { complete: true, progress: { answered: session.answers.length, total: session.answers.length } };
+  const sessionAnswered = answeredIds.size;
+  return {
+    complete: true,
+    progress: {
+      answered: sessionAnswered,
+      total: sessionAnswered,
+      track: { answered: sessionAnswered, index: sessionAnswered, total: sessionAnswered },
+    },
+  };
 }
 
 function countTotalQuestions(trackIds) {

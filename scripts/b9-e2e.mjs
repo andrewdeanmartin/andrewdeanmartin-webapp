@@ -4,8 +4,10 @@
  *
  * Usage:
  *   node scripts/b9-e2e.mjs --target local
- *   node scripts/b9-e2e.mjs --target prod --password "$B9_E2E_PASSWORD"
+ *   node scripts/b9-e2e.mjs --target prod
+ *   (reads site/.env.local — set B9_E2E_PASSWORD there)
  */
+import './load-site-env.mjs';
 import http from 'http';
 import https from 'https';
 
