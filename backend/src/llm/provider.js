@@ -16,10 +16,15 @@ export async function complete({ system, messages, model, maxTokens = 1024 }) {
     return null;
   }
 
-  if (provider === 'openai') {
-    return completeOpenAI({ system, messages, model: model || process.env.LLM_MODEL_SYNTH, maxTokens, apiKey });
+  try {
+    if (provider === 'openai') {
+      return await completeOpenAI({ system, messages, model: model || process.env.LLM_MODEL_SYNTH, maxTokens, apiKey });
+    }
+    return await completeAnthropic({ system, messages, model: model || process.env.LLM_MODEL_SYNTH, maxTokens, apiKey });
+  } catch (err) {
+    console.warn('[llm] request failed:', err.message);
+    return null;
   }
-  return completeAnthropic({ system, messages, model: model || process.env.LLM_MODEL_SYNTH, maxTokens, apiKey });
 }
 
 async function completeAnthropic({ system, messages, model, maxTokens, apiKey }) {
