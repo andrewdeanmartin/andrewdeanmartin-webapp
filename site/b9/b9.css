@@ -727,6 +727,21 @@
   margin: 0.25rem 0 0;
 }
 
+.b9-map-step__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.b9-map-step-add {
+  margin-top: 0.75rem;
+}
+
+.b9-map-step--custom .b9-map-step__num {
+  background: var(--b9-accent);
+}
+
 .b9-ai-overlay {
   margin-top: 0.75rem;
   padding: 0.75rem;

@@ -47,8 +47,85 @@
   function saveCustom() {
     localStorage.setItem(STORAGE_CUSTOM, JSON.stringify(custom));
     if (window.B9Workspace) B9Workspace.patch({ processCustom: custom });
+    var hasEdits = Object.keys(custom).length > 0;
     document.getElementById('reset-custom').style.display =
-      Object.keys(custom).length ? 'inline-block' : 'none';
+      hasEdits ? 'inline-block' : 'none';
+  }
+
+  function processMeta(processId) {
+    var block = custom[processId];
+    if (!block || typeof block !== 'object') {
+      return { hiddenSteps: [], addedSteps: [], notes: '' };
+    }
+    return {
+      hiddenSteps: block.hiddenSteps || [],
+      addedSteps: block.addedSteps || [],
+      notes: block.notes || '',
+    };
+  }
+
+  function ensureProcessBlock(processId) {
+    if (!custom[processId] || typeof custom[processId] !== 'object') {
+      custom[processId] = {};
+    }
+    return custom[processId];
+  }
+
+  function getEffectiveSteps(process) {
+    var meta = processMeta(process.id);
+    var hidden = new Set(meta.hiddenSteps);
+    var base = (process.steps || [])
+      .filter(function (s) { return !hidden.has(s.id); })
+      .map(function (s) { return { id: s.id, label: s.label, detail: s.detail, ai: s.ai, isCustom: false }; });
+    var added = (meta.addedSteps || []).map(function (s) {
+      return {
+        id: s.id,
+        label: s.label || 'New step',
+        detail: s.detail || '',
+        ai: null,
+        isCustom: true,
+      };
+    });
+    return base.concat(added);
+  }
+
+  function addProcessStep(processId) {
+    var block = ensureProcessBlock(processId);
+    block.addedSteps = block.addedSteps || [];
+    var id = 'custom-' + Date.now().toString(36);
+    block.addedSteps.push({
+      id: id,
+      label: 'New step',
+      detail: 'Describe what happens here.',
+    });
+    saveCustom();
+    refreshPipelines();
+    renderDetail();
+    var input = document.querySelector('[data-step-label="' + id + '"]');
+    if (input) {
+      input.focus();
+      input.select();
+    }
+  }
+
+  function removeProcessStep(processId, stepId, isCustom) {
+    var block = ensureProcessBlock(processId);
+    if (isCustom) {
+      block.addedSteps = (block.addedSteps || []).filter(function (s) { return s.id !== stepId; });
+    } else {
+      block.hiddenSteps = block.hiddenSteps || [];
+      if (block.hiddenSteps.indexOf(stepId) === -1) block.hiddenSteps.push(stepId);
+    }
+    delete custom[processId + ':' + stepId];
+    saveCustom();
+    refreshPipelines();
+    renderDetail();
+  }
+
+  function refreshPipelines() {
+    renderPipeline('pipeline-client', 'client');
+    renderPipeline('pipeline-talent', 'talent');
+    renderPipeline('pipeline-overlay', 'overlay');
   }
 
   function saveTom() {
@@ -107,7 +184,7 @@
   }
 
   function mergedNotes(process) {
-    return (custom[process.id] && custom[process.id].notes) || '';
+    return processMeta(process.id).notes;
   }
 
   function renderMaturitySelector(process) {
@@ -185,7 +262,7 @@
 
     el.innerHTML = items
       .map(function (p) {
-        var aiCount = (p.steps || []).filter(function (s) { return s.ai; }).length;
+        var aiCount = getEffectiveSteps(p).filter(function (s) { return s.ai; }).length;
         var lv = getTargetLevel(p.id);
         var lvLabel = (maturityData.levels[lv] && maturityData.levels[lv].label) || lv;
         return (
@@ -204,7 +281,7 @@
           '<span class="b9-pipeline-node__meta">' +
           lvLabel.split('—')[0].trim() +
           ' · ' +
-          (p.steps || []).length +
+          (getEffectiveSteps(p).length) +
           ' steps' +
           (aiCount ? ' · ' + aiCount + ' AI' : '') +
           '</span></button>'
@@ -247,7 +324,7 @@
     var editMode = document.getElementById('edit-mode').checked;
     var notes = mergedNotes(p);
 
-    var stepsHtml = (p.steps || [])
+    var stepsHtml = getEffectiveSteps(p)
       .map(function (step, idx) {
         var m = mergedStep(p, step);
         var aiBlock = '';
@@ -328,7 +405,9 @@
 
         if (editMode) {
           return (
-            '<li class="b9-map-step b9-map-step--edit">' +
+            '<li class="b9-map-step b9-map-step--edit' +
+            (step.isCustom ? ' b9-map-step--custom' : '') +
+            '">' +
             '<span class="b9-map-step__num">' +
             (idx + 1) +
             '</span>' +
@@ -344,12 +423,22 @@
             escapeHtml(m.detail) +
             '</textarea>' +
             aiBlock +
+            '<div class="b9-map-step__toolbar">' +
+            '<button type="button" class="b9-btn b9-btn--secondary b9-btn--sm" data-remove-step="' +
+            step.id +
+            '" data-custom-step="' +
+            (step.isCustom ? '1' : '0') +
+            '">Remove step</button>' +
+            (step.isCustom ? '<span class="b9-muted">Added by you</span>' : '') +
+            '</div>' +
             '</div></li>'
           );
         }
 
         return (
-          '<li class="b9-map-step">' +
+          '<li class="b9-map-step' +
+          (step.isCustom ? ' b9-map-step--custom' : '') +
+          '">' +
           '<span class="b9-map-step__num">' +
           (idx + 1) +
           '</span>' +
@@ -390,9 +479,15 @@
           ? '<div class="b9-map-notes"><strong>Your notes:</strong> ' + escapeHtml(notes) + '</div>'
           : '') +
       '<h3 style="margin-top:1.5rem">Current-state steps</h3>' +
+      (editMode
+        ? '<p class="b9-muted">Rename steps to match B9, remove steps that don\'t apply, or add missing ones.</p>'
+        : '') +
       '<ol class="b9-map-steps">' +
       stepsHtml +
-      '</ol>';
+      '</ol>' +
+      (editMode
+        ? '<p class="b9-map-step-add"><button type="button" class="b9-btn b9-btn--secondary b9-btn--sm" id="add-step">+ Add step</button></p>'
+        : '');
 
     el.querySelectorAll('input[name="maturity-' + p.id + '"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
@@ -408,20 +503,51 @@
     if (editMode) {
       el.querySelectorAll('[data-step-label]').forEach(function (input) {
         input.addEventListener('change', function () {
-          var key = p.id + ':' + input.getAttribute('data-step-label');
-          custom[key] = custom[key] || {};
-          custom[key].label = input.value;
+          var stepId = input.getAttribute('data-step-label');
+          var key = p.id + ':' + stepId;
+          var block = ensureProcessBlock(p.id);
+          var added = (block.addedSteps || []).find(function (s) { return s.id === stepId; });
+          if (added) {
+            added.label = input.value;
+          } else {
+            custom[key] = custom[key] || {};
+            custom[key].label = input.value;
+          }
           saveCustom();
         });
       });
       el.querySelectorAll('[data-step-detail]').forEach(function (ta) {
         ta.addEventListener('change', function () {
-          var key = p.id + ':' + ta.getAttribute('data-step-detail');
-          custom[key] = custom[key] || {};
-          custom[key].detail = ta.value;
+          var stepId = ta.getAttribute('data-step-detail');
+          var key = p.id + ':' + stepId;
+          var block = ensureProcessBlock(p.id);
+          var added = (block.addedSteps || []).find(function (s) { return s.id === stepId; });
+          if (added) {
+            added.detail = ta.value;
+          } else {
+            custom[key] = custom[key] || {};
+            custom[key].detail = ta.value;
+          }
           saveCustom();
         });
       });
+      el.querySelectorAll('[data-remove-step]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var stepId = btn.getAttribute('data-remove-step');
+          var isCustom = btn.getAttribute('data-custom-step') === '1';
+          var msg = isCustom
+            ? 'Remove this step?'
+            : 'Remove this step from your map? Reset my edits restores the default map.';
+          if (!window.confirm(msg)) return;
+          removeProcessStep(p.id, stepId, isCustom);
+        });
+      });
+      var addBtn = document.getElementById('add-step');
+      if (addBtn) {
+        addBtn.addEventListener('click', function () {
+          addProcessStep(p.id);
+        });
+      }
       el.querySelectorAll('[data-hide-ai]').forEach(function (cb) {
         cb.addEventListener('change', function () {
           var key = p.id + ':' + cb.getAttribute('data-hide-ai');
@@ -510,6 +636,21 @@
       lines.push('- **People impact:** ' + (row.mat.peopleImpact || ''));
       var notes = mergedNotes(row.process);
       if (notes) lines.push('- **B9 notes:** ' + notes);
+      var meta = processMeta(row.process.id);
+      if ((meta.hiddenSteps && meta.hiddenSteps.length) || (meta.addedSteps && meta.addedSteps.length)) {
+        lines.push('- **Current-state steps (customized):**');
+        getEffectiveSteps(row.process).forEach(function (step, i) {
+          var m = mergedStep(row.process, step);
+          lines.push(
+            '  ' +
+              (i + 1) +
+              '. ' +
+              m.label +
+              (m.detail ? ' — ' + m.detail : '') +
+              (step.isCustom ? ' _(added)_' : '')
+          );
+        });
+      }
       lines.push('');
     });
 
@@ -577,6 +718,9 @@
     custom = {};
     localStorage.removeItem(STORAGE_CUSTOM);
     if (window.B9Workspace) B9Workspace.patch({ processCustom: {} });
+    renderPipeline('pipeline-client', 'client');
+    renderPipeline('pipeline-talent', 'talent');
+    renderPipeline('pipeline-overlay', 'overlay');
     renderDetail();
     document.getElementById('reset-custom').style.display = 'none';
   });
