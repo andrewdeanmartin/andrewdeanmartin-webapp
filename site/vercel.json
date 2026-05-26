@@ -1,4 +1,12 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "andrewdeanmartin.com" }],
+      "destination": "https://www.andrewdeanmartin.com/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/b9-api/:path*",

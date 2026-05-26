@@ -24,7 +24,7 @@ You do **not** need Render for local dev (`USE_JSON_STORE=1` on `:3001`). You **
 
 | Piece | Host | URL |
 |-------|------|-----|
-| Portal (`/b9/*`) | Vercel | `https://andrewdeanmartin.com/b9/` |
+| Portal (`/b9/*`) | Vercel | `https://www.andrewdeanmartin.com/b9/` |
 | Login API | Vercel serverless | `/api/b9-auth` |
 | Transform API | Render | `https://b9-transform-api.onrender.com` |
 | Browser → API | Vercel rewrite | `/b9-api/*` → Render (same-origin, no CORS hassle) |
@@ -120,7 +120,7 @@ Redeploy after adding env vars (Vercel → Deployments → ⋮ → Redeploy).
 
 ### 3. Smoke test production
 
-1. `https://andrewdeanmartin.com/b9/login` — sign in with `B9_ACCESS_PASSWORD`.
+1. `https://www.andrewdeanmartin.com/b9/login` — sign in with `B9_ACCESS_PASSWORD` (share this URL with `www`, not the bare domain).
 2. **Discover** — start a session, answer one question (checks JWT + API).
 3. **Tools** — fill stack survey, **Save** (checks `PUT /v1/client/stack-profile`).
 4. **Admin** — sign in as admin; confirm sessions list and stack profile appear.

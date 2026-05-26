@@ -6,7 +6,18 @@ window.B9_CONFIG = {
 };
 
 (function () {
-  if (typeof window === 'undefined' || window.location.hostname !== 'localhost') return;
+  if (typeof window === 'undefined') return;
+  var host = window.location.hostname;
+  if (host === 'andrewdeanmartin.com') {
+    window.location.replace(
+      'https://www.andrewdeanmartin.com' +
+        window.location.pathname +
+        window.location.search +
+        window.location.hash
+    );
+    return;
+  }
+  if (host !== 'localhost') return;
   if (localStorage.getItem('b9_api_token')) return;
   fetch(window.B9_CONFIG.apiUrl + '/dev/token?role=pete')
     .then(function (r) { return r.json(); })

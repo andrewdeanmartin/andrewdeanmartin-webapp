@@ -17,6 +17,7 @@
   <script src="/b9/js/b9-theme.js"></script>
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/b9/b9.css">
+  <link rel="canonical" href="https://www.andrewdeanmartin.com/b9/login">
 </head>
 <body class="b9-app b9-login">
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -25,6 +26,13 @@
     <h1>B9 <span>Transformation</span></h1>
     <p class="b9-muted">Sign in to continue. Ask Andrew if you need access.</p>
     <p class="b9-muted" style="font-size:0.8125rem;border-top:1px solid var(--color-border);padding-top:0.75rem;margin-top:0.5rem"><strong>Confidential.</strong> Private client materials — not for distribution.</p>
+    <div class="b9-login__url" id="login-url-box">
+      <p class="b9-login__url-label"><strong>Bookmark this link</strong> (include <code>www</code> — required for sign-in, especially in Safari)</p>
+      <p class="b9-login__url-row">
+        <a class="b9-login__url-link" id="login-url" href="https://www.andrewdeanmartin.com/b9/login">www.andrewdeanmartin.com/b9/login</a>
+        <button type="button" class="b9-btn b9-btn--secondary b9-btn--sm" id="copy-login-url">Copy link</button>
+      </p>
+    </div>
     <form id="form">
       <label for="role">I am</label>
       <select id="role" name="role">
@@ -51,8 +59,9 @@
     (function () {
       var params = new URLSearchParams(window.location.search);
       var msg = document.getElementById('msg');
-      var RETRY_DELAYS = [1000, 2000, 3000];
-      var MAX_ATTEMPTS = 4;
+      var RETRY_DELAYS = [1500, 3000, 5000, 8000];
+      var MAX_ATTEMPTS = 5;
+      var FETCH_TIMEOUT_MS = 45000;
 
       function setStatus(text, tone) {
         msg.textContent = text || '';
@@ -62,6 +71,19 @@
       if (params.get('err') === 'config') {
         setStatus('This area is not configured on the server yet.', 'error');
       }
+
+      var LOGIN_URL = 'https://www.andrewdeanmartin.com/b9/login';
+
+      document.getElementById('copy-login-url').addEventListener('click', function () {
+        var btn = this;
+        navigator.clipboard.writeText(LOGIN_URL).then(function () {
+          var prev = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function () {
+            btn.textContent = prev;
+          }, 2000);
+        });
+      });
 
       function warmupAuth() {
         return fetch('/api/b9-auth', {
@@ -77,18 +99,35 @@
       }
 
       function authRequest(payload) {
+        var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        var timer = controller
+          ? setTimeout(function () {
+              controller.abort();
+            }, FETCH_TIMEOUT_MS)
+          : null;
         return fetch('/api/b9-auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
           credentials: 'same-origin',
-        }).then(function (r) {
-          return r.text().then(function (text) {
-            var j = {};
-            try { j = text ? JSON.parse(text) : {}; } catch (e) { j = null; }
-            return { ok: r.ok, status: r.status, j: j, raw: text };
+          signal: controller ? controller.signal : undefined,
+        })
+          .then(function (r) {
+            if (timer) clearTimeout(timer);
+            return r.text().then(function (text) {
+              var j = {};
+              try {
+                j = text ? JSON.parse(text) : {};
+              } catch (e) {
+                j = null;
+              }
+              return { ok: r.ok, status: r.status, j: j, raw: text };
+            });
+          })
+          .catch(function (err) {
+            if (timer) clearTimeout(timer);
+            throw err;
           });
-        });
       }
 
       function authWithRetry(payload, attempt, onRetry) {
@@ -164,15 +203,27 @@
             setStatus(
               x.j && x.j.error === 'not_configured'
                 ? 'Server configuration incomplete — set B9_JWT_SECRET and B9_ACCESS_PASSWORD in Vercel, then redeploy.'
-                : 'Incorrect password.',
+                : x.status === 401
+                  ? 'Incorrect password for that role. Use the shared portal password, or the role-specific password Andrew sent you.'
+                  : 'Sign-in failed (HTTP ' + x.status + '). Try again in a moment.',
               'error'
             );
           })
-          .catch(function () {
+          .catch(function (err) {
+            var onWww = window.location.hostname === 'www.andrewdeanmartin.com';
             setStatus(
-              'Login server may still be waking up. Wait about 30 seconds and click Continue again — no need to re-enter your password.',
+              onWww
+                ? 'Could not reach the login server after several tries. Click “Wake up login server”, wait 30 seconds, then Continue again.'
+                : 'Redirecting to www.andrewdeanmartin.com — use that URL for sign-in (required for cookies in Safari).',
               'info'
             );
+            if (!onWww && window.location.hostname === 'andrewdeanmartin.com') {
+              window.location.replace(
+                'https://www.andrewdeanmartin.com' +
+                  window.location.pathname +
+                  window.location.search
+              );
+            }
           })
           .finally(function () {
             btn.disabled = false;

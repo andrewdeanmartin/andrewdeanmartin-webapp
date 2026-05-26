@@ -23,7 +23,7 @@ Background: **Learn** (AI basics), **Decide** (tradeoff cards).
 
 ## First facilitated session (~60 min)
 
-1. Sign in at `/b9/login` (role-specific password if configured).
+1. Sign in at **`https://www.andrewdeanmartin.com/b9/login`** (always include `www`; share this exact link with Pete — not the bare domain).
 2. **Process Map** — walk client journey; toggle AI overlay; fix wrong steps; set **3 processes at Low** maturity; apply **Balanced** or **Pete wiring** preset if helpful.
 3. **Export TOM** (copy or download from Process Map).
 4. **Tools** — fill **baseline metrics** and **stack survey** together.
@@ -62,6 +62,9 @@ Use **separate passwords per role** in Vercel when possible:
 | `B9_ACCESS_PASSWORD` | Shared fallback |
 
 Login shows a confidentiality notice. Do not email passwords — use 1Password or similar.
+
+**Portal link for Pete (copy exactly):** `https://www.andrewdeanmartin.com/b9/login`  
+The `www` prefix is required — bare `andrewdeanmartin.com` breaks sign-in in Safari (including Private Browsing).
 
 ---
 
